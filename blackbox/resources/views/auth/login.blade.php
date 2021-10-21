@@ -76,6 +76,7 @@
 
         <form class="auth-login-form mt-2" method="POST" action="{{ route('login') }}">
           @csrf
+          
           <div class="mb-1">
             <label for="login-email" class="form-label">Email</label>
             <input
@@ -123,6 +124,16 @@
               <input class="form-check-input" type="checkbox" id="remember" name="remember" tabindex="3" {{ old('remember') ? 'checked' : '' }} />
               <label class="form-check-label" for="remember"> Remember Me </label>
             </div>
+          </div>
+          <div class="text-center mb-2">
+            {!! htmlFormSnippet([
+              "theme" => "light",
+              "size" => "normal",
+              "tabindex" => "3",
+              "callback" => "callbackFunction",
+              "expired-callback" => "expiredCallbackFunction",
+              "error-callback" => "errorCallbackFunction",
+            ]) !!}
           </div>
           <button type="submit" class="btn btn-primary w-100" tabindex="4">Sign in</button>
         </form>

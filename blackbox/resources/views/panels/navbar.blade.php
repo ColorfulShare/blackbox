@@ -65,8 +65,8 @@
         <ul class="nav navbar-nav align-items-center ms-auto">
           <li class="nav-item dropdown dropdown-language">
             <a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true">
-              <i class="flag-icon flag-icon-us"></i>
-              <span class="selected-language">English</span>
+              <i class="flag-icon flag-icon-mx"></i>
+              <span class="selected-language">ESPAÑOL</span>
             </a>
             {{----}}
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag">
@@ -83,7 +83,7 @@
                 <i class="flag-icon flag-icon-pt"></i> PORTUGUÉS
               </a>
               <a href="#googtrans(es|es)" class="dropdown-item lang-select" data-language="es" alt="ESPAÑOL">
-                <i class="flag-icon flag-icon-es"></i> ESPAÑOL
+                <i class="flag-icon flag-icon-mx"></i> ESPAÑOL
               </a>
             </div>
           </li>
@@ -330,9 +330,15 @@
             <a class="dropdown-item" href="{{url('page/faq')}}">
               <i class="me-50" data-feather="help-circle"></i> FAQ
             </a>
-            <a class="dropdown-item" href="{{url('auth/login-v2')}}">
-              <i class="me-50" data-feather="power"></i> Logout
-            </a>
+          
+            <form method="POST" class="" action="{{ route('logout') }}">
+              @csrf 
+              <button class="dropdown-item w-100" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        this.closest('form').submit();">
+                  <i class="mr-50" data-feather="power"></i> Cerrar sesion
+              </button>
+            </form>
+      
           </div>
         </li>
       </ul>
