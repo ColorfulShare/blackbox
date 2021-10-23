@@ -15,6 +15,8 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\MiscellaneousController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ChartsController;
+use App\Http\Controllers\OrdenPurchasesController;
+use App\Models\OrdenPurchases;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +34,16 @@ use App\Http\Controllers\ChartsController;
 
 Route::middleware('auth')->group(function(){
 
-    Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
         Route::get('ecommerce', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
+    });
+
+    Route::group(['prefix' => 'ordenes'], function () {
+        Route::get('/', [OrdenPurchasesController::class, 'index'])->name('orders.index');
+        Route::post('/cambiarStatus', [OrdenPurchasesController::class, 'cambiar_status'])->name('orders.cambiarStatus');
     });
 });
 
