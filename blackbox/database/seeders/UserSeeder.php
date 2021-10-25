@@ -17,20 +17,30 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name'=> 'admin',
+            'firstname'=> 'admin',
             'lastname'=> Str::random(5),
+            'username'=> 'admin',
+            'phone'=> '04121234567',
+            'wallet'=> 'wallet',
             'email'=> 'admin@blackbox.com',
             'admin'=> '1',
             'password' => Hash::make('12345678'),
+            'referred_id' => 0,
+            'binary_id' =>'0'
 
         ]);
 
         User::create([
-            'name'=> 'luis',
+            'firstname'=> 'luis',
             'lastname'=> Str::random(5),
+            'username'=> 'luis',
+            'phone'=> '04241234567',
+            'wallet'=> 'walletwallet',
             'email'=> 'luisalbertobri16@gmail.com',
             'admin'=> '0',
             'password' => Hash::make('12345678'),
+            'referred_id' => 1,
+            'binary_id' =>'1'
 
         ]);
     }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+//use App\Http\Controllers\TreeController;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -49,11 +52,23 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        try{
+            return Validator::make($data, [
+                'g-recaptcha-response' => 'recaptcha',
+                'firstname' => ['required', 'string', 'max:255'],
+                'lastname' => ['required', 'string', 'max:255'],
+                'username' => ['required', 'string', 'max:255'],
+                'countrie_id' => ['required'],
+                'terms' => ['required'],
+                'phone' => ['required'],
+                'wallet' => ['required'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+        }catch (\throwable $th){
+            dd($th);
+        }
+            
     }
 
     /**
@@ -64,11 +79,46 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+
+        $binary_side = '';
+        $binary_id = 0;
+        if (!empty($data['referred_id'])) {
+            $userR = User::find($data['referred_id']);
+
+            //s$binary_id = $this->treeController->getPosition($data['referred_id'], $userR->binary_side_register);
+            $binary_side = $userR->binary_side_register;
+        }
+        $billetera = [
+            'activa' => 'USDTTR20',
+            'USDTTR20' => $data['wallet'],
+            'BTC' => ''
+        ];
+
+        $user = User::create([
+
+            
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'username' => $data['username'],
+            'phone' => $data['phone'],
+            'countrie_id' => $data['countrie_id'],
+            'wallet' => json_encode($billetera),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'referred_id' => $data['referred_id'],
+            'binary_id' => $binary_id,
+            'binary_side' => $binary_side,
         ]);
+
+        $encriptado = Crypt::encryptString($user->id);
+        $ruta = route('checkemail', $encriptado);
+
+        Mail::send('mails.checkemail', ['ruta' => $ruta], function($message) use ($user) {
+            $message->subject('Bienvenido a Blackbox');
+            $message->to($user->email);
+        });
+
+        return $user;
     }
 
     // Register
