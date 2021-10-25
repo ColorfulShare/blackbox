@@ -16,6 +16,9 @@ use App\Http\Controllers\MiscellaneousController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ChartsController;
 use App\Http\Controllers\DoubleAutenticationController;
+use App\Http\Controllers\TiendaController;
+use App\Http\Controllers\OrdenPurchasesController;
+use App\Models\OrdenPurchases;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,12 +61,25 @@ Route::middleware('auth')->group(function(){
     Route::get('/2fact', [DoubleAutenticationController::class, 'index'])->name('2fact');
     Route::post('/2fact', [DoubleAutenticationController::class, 'checkCodeLogin'])->name('2fact.post');
 
-
+    //DASHBOARD
     Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
-        Route::get('ecommerce', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard-ecommerce');
     });
+
+    //TIENDA
+    Route::prefix('shop')->group(function (){
+        Route::get('/', [TiendaController::class, 'index'])->name('shop');
+        Route::post('/', [TiendaController::class, 'proccess'])->name('shop.proccess');
+    });
+
+    Route::group(['prefix' => 'ordenes'], function () {
+        Route::get('/', [OrdenPurchasesController::class, 'index'])->name('orders.index');
+        Route::post('/cambiarStatus', [OrdenPurchasesController::class, 'cambiar_status'])->name('orders.cambiarStatus');
+    });
+
 });
 
 

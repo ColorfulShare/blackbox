@@ -1,0 +1,136 @@
+{
+  "menu": [
+    {
+      "url": "/",
+      "name": "Dashboard",
+      "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1",
+      "icon": "home",
+      "slug": "dashboard"
+    },
+    {
+      "name": "Ordenes",
+      "icon": "file-text",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/ordenes",
+          "name": "Lista",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Activación manual",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+    {
+      "name": "Red",
+      "icon": "sidebar",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Matriz",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Referidos",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Usuarios",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+    {
+      "url": "/",
+      "name": "Inversiones",
+      "icon": "shopping-cart",
+      "slug": ""
+    },
+    {
+      "name": "De Interés",
+      "icon": "sidebar",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Noticias",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Documentos",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Banner",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+    {
+      "name": "Informes",
+      "icon": "sidebar",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Comisiones",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+    {
+      "url": "/",
+      "name": "Educación",
+      "icon": "shopping-cart",
+      "slug": ""
+    },
+    {
+      "name": "Retiros",
+      "icon": "sidebar",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Solicitudes",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Realizados",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+    {
+      "url": "/",
+      "name": "Tickets",
+      "icon": "shopping-cart",
+      "slug": ""
+    },
+    {
+      "url": "/",
+      "name": "Operador de Bonos",
+      "icon": "shopping-cart",
+      "slug": ""
+    }
+  ]
+}

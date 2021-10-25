@@ -35,6 +35,7 @@ class ResetPasswordController extends Controller
         'bodyClass' => "bg-full-screen-image",
         'blankPage' => true
       ];
+    
       return view('auth.passwords.reset')->with(
           ['token' => $token, 'email' => $request->email, 'pageConfigs' => $pageConfigs]
       );
