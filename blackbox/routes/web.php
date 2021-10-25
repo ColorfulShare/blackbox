@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function(){
     Route::prefix('shop')->group(function (){
         Route::get('/', [TiendaController::class, 'index'])->name('shop');
         Route::post('/', [TiendaController::class, 'proccess'])->name('shop.proccess');
+        Route::post('/store', [TiendaController::class, 'store'])->name('shop.store');
     });
 
     Route::group(['prefix' => 'ordenes'], function () {

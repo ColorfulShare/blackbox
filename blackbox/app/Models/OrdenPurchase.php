@@ -12,8 +12,8 @@ class OrdenPurchase extends Model
     protected $table = 'orden_purchases';
 
     protected $fillable = [
-        'user_id','amount', 'fee', 'idtransacion',
-        'status'
+        'user_id','amount', 'fee', 'comprobante',
+        'status', 'package_id', 'hash', 'type_payment'
     ];
 
     public function user()
@@ -24,5 +24,10 @@ class OrdenPurchase extends Model
     public function inversion()
     {
         return $this->hasOne('App\Models\Inversion', 'orden_purchases_id');
+    }
+
+    public function package()
+    {
+        return $this->belongsTo('App\Models\Package', 'package_id', 'id');
     }
 }

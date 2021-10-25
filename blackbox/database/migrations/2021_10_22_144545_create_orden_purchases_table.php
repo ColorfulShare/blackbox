@@ -19,8 +19,10 @@ class CreateOrdenPurchasesTable extends Migration
             $table->foreignId('package_id')->nullable()->constrained('packages');
             $table->integer('amount');
             $table->decimal('fee');
-            $table->string('transaction_id')->nullable()->comment('ID de la transacion');
-            $table->enum('status', [0, 1, 2, 3])->default(0)->comment('0 - En Espera, 1 - Completada, 2 - Rechazada, 3 - Cancelada');
+            $table->string('hash')->nullable();
+            $table->string('comprobante')->nullable();
+            $table->enum('type_payment', ['USDT_TRC20', 'USDT_ERC20', 'BTC'])->nullable();
+            $table->enum('status', [0, 1, 2, 3])->default(0)->comment('0 - En Espera, 1 - finalizado, 2 - Aprobado, 3 Rechazada');
             $table->timestamps();
         });
     }
