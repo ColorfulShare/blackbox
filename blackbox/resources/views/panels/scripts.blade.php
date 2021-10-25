@@ -1,5 +1,7 @@
 <!-- BEGIN: Vendor JS-->
 <script src="{{ asset(mix('vendors/js/vendors.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+
 <!-- BEGIN Vendor JS-->
 <!-- BEGIN: Page Vendor JS-->
 <script src="{{asset(mix('vendors/js/ui/jquery.sticky.js'))}}"></script>

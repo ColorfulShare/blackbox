@@ -24,12 +24,12 @@ class Helper
             'pageHeader' => true,
             'contentLayout' => 'default',
             'blankPage' => false,
-            'defaultLanguage' => 'en',
+            'defaultLanguage' => 'es',
             'direction' => env('MIX_CONTENT_DIRECTION', 'ltr'),
         ];
-
         // if any key missing of array from custom.php file it will be merge and set a default value from dataDefault array and store in data variable
         $data = array_merge($DefaultData, config('custom.custom'));
+        
 
         // All options available in the template
         $allOptions = [
@@ -49,7 +49,7 @@ class Helper
             'blankPage' => array(false, true),
             'sidebarPositionClass' => array('content-left-sidebar' => 'sidebar-left', 'content-right-sidebar' => 'sidebar-right', 'content-detached-left-sidebar' => 'sidebar-detached sidebar-left', 'content-detached-right-sidebar' => 'sidebar-detached sidebar-right', 'default' => 'default-sidebar-position'),
             'contentsidebarClass' => array('content-left-sidebar' => 'content-right', 'content-right-sidebar' => 'content-left', 'content-detached-left-sidebar' => 'content-detached content-right', 'content-detached-right-sidebar' => 'content-detached content-left', 'default' => 'default-sidebar'),
-            'defaultLanguage' => array('en' => 'en', 'fr' => 'fr', 'de' => 'de', 'pt' => 'pt'),
+            'defaultLanguage' => array('en' => 'en', 'fr' => 'fr', 'de' => 'de', 'pt' => 'pt', 'es' => 'es'),
             'direction' => array('ltr', 'rtl'),
         ];
 

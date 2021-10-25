@@ -1,6 +1,8 @@
 <?php
 
 return [
+    "Tienda" => "Tienda",
+
     "Apps & Pages" => "Apps & Pages",
     "User Interface" => "User Interface",
     "Dashboards" => "Dashboards",

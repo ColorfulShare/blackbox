@@ -4,7 +4,6 @@
 
 <!DOCTYPE html>
 @php $configData = Helper::applClasses(); @endphp
-
 <html class="loading {{($configData['theme'] === 'light') ? '' : $configData['layoutTheme'] }}"
 lang="@if(session()->has('locale')){{session()->get('locale')}}@else{{$configData['defaultLanguage']}}@endif"
 data-textdirection="{{ env('MIX_CONTENT_DIRECTION') === 'rtl' ? 'rtl' : 'ltr' }}"
@@ -67,6 +66,43 @@ data-asset-path="{{ asset('/')}}">
           height: 14
         });
       }
+
+      @if(session('success'))  
+          toastr['success']('{{ session('success') }}', '¡Exitoso!', {
+                  closeButton: true,
+                  tapToDismiss: false
+              });
+      @endif
+
+      @if(session('danger'))
+          toastr['error']('{{ session('danger') }}', 'Error', {
+                  closeButton: true,
+                  tapToDismiss: false
+              });
+      @endif
+
+      @if(session('warning'))
+          toastr['warning']('{{ session('warning') }}', 'Advertenecia', {
+                  closeButton: true,
+                  tapToDismiss: false
+              });
+      @endif
+
+      @if(session('info'))
+          toastr['info']('{{ session('info') }}', 'Informacion', {
+                  closeButton: true,
+                  tapToDismiss: false
+              });
+      @endif
+
+      @if(isset($errors))
+        @foreach ($errors->all() as $message)
+          toastr['error']('{{ $message }}', 'Validación fallida', {
+                  closeButton: true,
+                  tapToDismiss: false
+              });
+        @endforeach
+      @endif
     })
   </script>
 

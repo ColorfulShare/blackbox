@@ -25,7 +25,7 @@ class ForgotPasswordController extends Controller
         'bodyClass' => "bg-full-screen-image",
         'blankPage' => true
       ];
-
+      
       return view('/auth/passwords/email', [
         'pageConfigs' => $pageConfigs
       ]);
