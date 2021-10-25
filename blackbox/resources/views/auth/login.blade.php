@@ -76,7 +76,7 @@
 
         <form class="auth-login-form mt-2" method="POST" action="{{ route('login') }}">
           @csrf
-          
+
           <div class="mb-1">
             <label for="login-email" class="form-label">Email</label>
             <input
