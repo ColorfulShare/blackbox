@@ -20,6 +20,11 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->string('referral_code')->unique()->nullable();
+            $table->unsignedBigInteger('referred_by')->nullable();
+            $table->foreign('referred_by')->references('id')->on('users');
+
             $table->enum('admin', [0, 1])->default(0)->comment('permite saber si un usuario es admin o no');
             $table->enum('status', [0, 1, 2])->default(0)->comment('0 - inactivo, 1 - activo, 2 - eliminado');
             $table->date('expired_status')->nullable();

@@ -45,6 +45,9 @@
             <p class="card-text m-auto w-75">
               You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.
             </p>
+           <div>
+                {{route('referral.link', ['referralCode' => auth()->user()->referral_code])}}
+            </div>
           </div>
         </div>
       </div>
