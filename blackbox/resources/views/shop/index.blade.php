@@ -25,11 +25,11 @@
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <div class="card-header d-flex align-items-center p-2">
-                                            <img src="{{asset('assets/img/packages/'.$items->price.'.jpeg')}}" alt="" style="width: 100%; heigh:100%;">
+                                            <img src="{{asset('assets/img/packages/'.$items->price.'.jpeg')}}" alt="" style="width: 100%; heigh:100%;" alt="{{$items->price}}">
                                         </div>
+                                        {{$items->price}}
                                         
-                                        
-                                        <form action="{{route('shop.proccess')}}" method="POST" target="_blank" class="">
+                                        <form action="{{route('shop.proccess')}}" method="POST" class="">
                                             @csrf
                                             <input type="hidden" name="idproduct" value="{{$items->id}}">
                                             <button class="w-100 btn btn-block btn-primary"type="submit">Comprar

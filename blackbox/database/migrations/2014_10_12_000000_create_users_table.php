@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('admin', [0, 1])->default(0)->comment('permite saber si un usuario es admin o no');
             $table->enum('status', [0, 1, 2])->default(0)->comment('0 - inactivo, 1 - activo, 2 - eliminado');
+            $table->date('expired_status');
             $table->rememberToken();
             $table->timestamps();
         });

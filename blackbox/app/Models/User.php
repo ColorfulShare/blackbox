@@ -21,7 +21,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'token_google',
-        'activar_2fact'
+        'activar_2fact',
+        'expired_status'
     ];
 
     /**
@@ -41,6 +42,10 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    protected $dates = [
+        'expired_status'
     ];
 
 }
