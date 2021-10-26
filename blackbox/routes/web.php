@@ -4,6 +4,7 @@ use App\Models\OrdenPurchase;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\AppsController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\PagesController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\TableController;
 use App\Http\Controllers\ChartsController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ComponentsController;
@@ -19,7 +21,6 @@ use App\Http\Controllers\MiscellaneousController;
 use App\Http\Controllers\UserInterfaceController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\OrdenPurchasesController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\DoubleAutenticationController;
 
 /*
@@ -282,6 +283,10 @@ Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
 //Ruta de enlace de referidos
 Route::get('r/{referralCode}', [ReferralController::class, 'link'])->name('referral.link');
+
+//Ruta referidos administrador red
+Route::get('rAdminRed/{referral_admin_red_code}', [ReferralController::class, 'linkAdminRed'])->name('referral.Admin.Red.link');
+
 Route::get('/cookie', function () {
     return Cookie::get('referral');
 });

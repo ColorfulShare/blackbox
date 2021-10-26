@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cookie;
 
 class RegisterController extends Controller
 {
@@ -68,7 +69,7 @@ class RegisterController extends Controller
         }catch (\throwable $th){
             dd($th);
         }
-            
+
     }
 
     /**
@@ -96,7 +97,7 @@ class RegisterController extends Controller
 
         $user = User::create([
 
-            
+
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
             'username' => $data['username'],
@@ -106,7 +107,9 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'referral_code' => User::getUniqueReferralCode(),
-            'referred_by' => $this->getReferredBy()
+            'referred_by' => $this->getReferredBy(),
+            'referral_admin_red_code'=>User::getUniqueAdminRedReferralCode(),
+            'referred_red_by'=> $this->getReferredAdmiBy(),
         ]);
 
         $encriptado = Crypt::encryptString($user->id);
@@ -128,5 +131,23 @@ class RegisterController extends Controller
         return view('/auth/register', [
         'pageConfigs' => $pageConfigs
         ]);
+    }
+
+    private function getReferredBy(){
+        $referralCode = Cookie::get('referral');
+        if($referralCode){
+            return User::where('referral_code', $referralCode)->value('id');
+
+        }
+        return null;
+    }
+
+    private function getReferredAdmiBy(){
+        $referral_admin_red_code = Cookie::get('referralAdminRed');
+        if($referral_admin_red_code){
+            return User::where('referral_admin_red_code', $referral_admin_red_code)->value('id');
+
+        }
+        return null;
     }
 }

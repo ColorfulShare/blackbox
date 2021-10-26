@@ -41,13 +41,15 @@
             </div>
           </div>
           <div class="text-center">
-            <h1 class="mb-1 text-white">Congratulations John,</h1>
+            <h1 class="mb-1 text-white">Congratulations {{ auth()->user()->firstname}}</h1>
             <p class="card-text m-auto w-75">
-              You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.
+              You Referral normal <strong>Link:</strong>
             </p>
            <div>
-                {{route('referral.link', ['referralCode' => auth()->user()->referral_code])}}
+                <strong>{{route('referral.link', ['referralCode' => auth()->user()->referral_code])}}</strong>
             </div>
+                 <strong>{{route('referral.Admin.Red.link', ['referral_admin_red_code' => auth()->user()->referral_admin_red_code])}}</strong>
+
           </div>
         </div>
       </div>

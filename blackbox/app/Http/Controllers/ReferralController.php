@@ -16,4 +16,15 @@ class ReferralController extends Controller
 
     return redirect('/');
 }
+
+public function linkAdminRed(Request $request, $referral_admin_red_code)
+{
+    if (!$request->hasCookie('referralAdminRed')) {
+        $cookie = cookie('referralAdminRed', $referral_admin_red_code, 60 * 24 * 7);
+
+        return redirect('/')->withCookie($cookie);
+    }
+
+    return redirect('/');
+}
 }

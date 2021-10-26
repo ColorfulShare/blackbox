@@ -39,7 +39,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'date_reset_points_binary',
         'not_payment_binary_point_direct',
         'referral_code',
-        'referred_by'
+        'referred_by',
+        'referral_admin_red_code',
+        'referred_red_by'
     ];
 
     /**
@@ -73,13 +75,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $code;
     }
 
-    private function getReferredBy(){
-        $referralCode = Cookie::get('referral');
-        if($referralCode){
-            return User::where('referral_code', $referralCode)->value('id');
-
-        }
-        return null;
+    public static function getUniqueAdminRedReferralCode(){
+        do{
+            $codeAdminRed = Str::random(8);
+        }while(User::where('referral_admin_red_code',$codeAdminRed));
+        return $codeAdminRed;
     }
 
 }
