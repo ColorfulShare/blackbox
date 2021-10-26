@@ -18,6 +18,7 @@ use App\Http\Controllers\ChartsController;
 use App\Http\Controllers\DoubleAutenticationController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\OrdenPurchasesController;
+use App\Http\Controllers\UserController;
 use App\Models\OrdenPurchases;
 
 /*
@@ -255,6 +256,11 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('lock-screen', [AuthenticationController::class, 'lock_screen'])->name('auth-lock_screen');
 });
 /* Route Authentication Pages */
+
+/* */
+    Route::get('checkEmail/{id}', [UserController::class, 'checkEmail'])->name('checkemail');
+/*  */
+
 
 /* Route Charts */
 Route::group(['prefix' => 'chart'], function () {

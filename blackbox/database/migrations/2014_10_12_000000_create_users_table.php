@@ -15,16 +15,31 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('lastname')->nullable();
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('username');
+            $table->string('phone');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->Integer('countrie_id')->default(0);
+            $table->longText('wallet');
             $table->string('password');
             $table->enum('admin', [0, 1])->default(0)->comment('permite saber si un usuario es admin o no');
             $table->enum('status', [0, 1, 2])->default(0)->comment('0 - inactivo, 1 - activo, 2 - eliminado');
             $table->date('expired_status')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->bigInteger('referred_id')->default(1)->comment('ID del usuario patrocinador');
+            $table->bigInteger('binary_id')->default(1)->comment('ID del usuario binario');
+            $table->enum('binary_side', ['I', 'D'])->nullable()->comment('Permite saber si esta en la derecha o izquierda en el binario');
+            $table->enum('binary_side_register', ['I', 'D'])->default('I')->comment('Permite saber porque lado va a registrar a un nuevo usuario');
+
+            $table->bigInteger('point_rank')->unsigned()->nullable();
+            $table->bigInteger('rank_id')->unsigned()->default(0)->nullable();
+            $table->date('date_reset_points_binary')->nullable();
+            $table->tinyInteger('not_payment_binary_point_direct')->default(0)->comment('0 - paga los puntos, 1 - no paga los puntos');
+
         });
     }
 

@@ -7,7 +7,26 @@
 <link rel="stylesheet" href="{{ asset(mix('css/base/pages/page-auth.css')) }}">
 @endsection
 
+@php
+  $referred = null;
+@endphp
+@if ( request()->referred_id != null )
+@php
+  $referred = DB::table('users')
+  ->select('firstname' , 'lastname')
+  ->where('ID', '=', request()->referred_id)
+  ->first();
+@endphp
+@endif
+
 @section('content')
+
+<div class="card-header">
+  
+  @if (!empty($referred))
+    <h6 class="text-center col-12">Registro Referido por {{$referred->firstname}} {{$referred->lastname}}</h6>
+  @endif
+</div>
 <div class="auth-wrapper auth-v1 px-2">
   <div class="auth-inner py-2">
     <!-- Register v1 -->
@@ -76,36 +95,106 @@
 
         <form class="auth-register-form mt-2" method="POST" action="{{ route('register') }}">
           @csrf
+
+          {{-- Campo de Referido --}}
+          @if ( request()->referred_id != null )
+            <input type="hidden" name="referred_id" value="{{request()->referred_id}}">
+          @else
+            <input type="hidden" name="referred_id" value="1">
+          @endif
+          
           <div class="mb-1">
-            <label for="register-username" class="form-label">Username</label>
+            <label for="firstname" class="form-label">Nombre</label>
             <input
-              type="text"
-              class="form-control @error('name') is-invalid @enderror"
-              id="register-username"
-              name="name"
-              placeholder="johndoe"
-              aria-describedby="register-username"
+            type="text"
+              class="form-control @error('firstname') is-invalid @enderror"
+              id="firstname"
+              name="firstname"
+              placeholder="Nombre"
+              aria-describedby="firstname"
               tabindex="1"
               autofocus
-              value="{{ old('name') }}"
+              value="{{ old('firstname') }}"
+              required
             />
-            @error('name')
+            @error('firstname')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+            <div class="mb-1">
+              <label for="lastname" class="form-label">Apellido</label>
+            <input
+              type="text"
+              class="form-control @error('lastname') is-invalid @enderror"
+              id="lastname"
+              name="lastname"
+              placeholder="Apellido"
+              aria-describedby="lastname"
+              tabindex="1"
+              autofocus
+              value="{{ old('lastname') }}"
+              required
+              />
+              @error('lastname')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+            <div class="mb-1">
+              <label for="username" class="form-label">Usuario</label>
+              <input
+                type="text"
+                class="form-control @error('username') is-invalid @enderror"
+                id="username"
+                name="username"
+                placeholder="Usuario"
+                aria-describedby="username"
+                tabindex="1"
+                autofocus
+                value="{{ old('username') }}"
+                required
+              />
+              @error('username')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
+          <div class="mb-1">
+            <label for="phone" class="form-label">Teléfono</label>
+            <input
+              type="text"
+              class="form-control @error('phone') is-invalid @enderror"
+              id="phone"
+              name="phone"
+              placeholder="Teléfono"
+              aria-describedby="phone"
+              tabindex="1"
+              autofocus
+              value="{{ old('phone') }}"
+              required
+            />
+            @error('phone')
               <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
               </span>
             @enderror
           </div>
           <div class="mb-1">
-            <label for="register-email" class="form-label">Email</label>
+            <label for="email" class="form-label">Correo Electrónico</label>
             <input
-              type="text"
+              type="email"
               class="form-control @error('email') is-invalid @enderror"
-              id="register-email"
+              id="email"
               name="email"
-              placeholder="john@example.com"
-              aria-describedby="register-email"
+              placeholder="Correo Electronico"
+              aria-describedby="email"
               tabindex="2"
               value="{{ old('email') }}"
+              required
             />
             @error('email')
               <span class="invalid-feedback" role="alert">
@@ -115,17 +204,83 @@
           </div>
 
           <div class="mb-1">
-            <label for="register-password" class="form-label">Password</label>
+            <label for="email-confirm" class="form-label">Confirmar Correo Electrónico</label>
+            <input
+              type="email"
+              class="form-control @error('email-confirm') is-invalid @enderror"
+              id="email-confirm"
+              name="email-confirm"
+              placeholder="Confirmar Correo Electrónico"
+              aria-describedby="email-confirm"
+              tabindex="2"
+              autocomplete="email"
+              required
+            />
+            @error('email-confirm')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+
+          
+          <div class="mb-1">
+              <label for="countrie_id" class="form-label">País</label>
+              <select 
+                name="countrie_id" 
+                id="	countrie_id"
+                class="form-control @error('countrie_id') is-invalid @enderror"
+                required 
+                data-toggle="select"
+              >
+                  <option value="">Elegir pais</option>
+                  @foreach(App\Models\Countrie::all() as $countrie)
+                  <option value="{{$countrie->id}}">{{$countrie->name}}</option>
+                  @endforeach
+              </select>
+              @error('countrie_id')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+          </div>
+
+          <div class="mb1">
+            <label for="wallet" class="form-label">Billetera USDT TRC20</label>
+            <input 
+              id="wallet" 
+              type="text" 
+              class="form-control @error('wallet') is-invalid @enderror"
+              name="wallet" 
+              value="{{ old('wallet') }}" 
+              required 
+              autocomplete="wallet" 
+              autofocus
+              placeholder="Billetera USDT TRC20"
+            />
+
+            @error('wallet')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+        
+
+          <div class="mb-1">
+            <label for="password" class="form-label">Contraseña</label>
 
             <div class="input-group input-group-merge form-password-toggle @error('password') is-invalid @enderror">
               <input
                 type="password"
                 class="form-control form-control-merge @error('password') is-invalid @enderror"
-                id="register-password"
+                id="password"
                 name="password"
-                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                aria-describedby="register-password"
+                placeholder="Ingrese una contraseña"
+                aria-describedby="password"
                 tabindex="3"
+                required
+                autocomplete="password"
               />
               <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
             </div>
@@ -137,38 +292,60 @@
           </div>
 
           <div class="mb-1">
-            <label for="register-password-confirm" class="form-label">Confirm Password</label>
+            <label for="password-confirm" class="form-label">Confirme su contraseña</label>
 
             <div class="input-group input-group-merge form-password-toggle">
               <input
                 type="password"
                 class="form-control form-control-merge"
-                id="register-password-confirm"
+                id="password-confirm"
                 name="password_confirmation"
-                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                aria-describedby="register-password"
+                placeholder="Confirme su contraseña"
+                aria-describedby="password-confirm"
                 tabindex="3"
+                required
               />
               <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
             </div>
           </div>
 
-          <div class="mb-1">
+          <div class=" mb-1">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="register-privacy-policy" tabindex="4" />
-              <label class="form-check-label" for="register-privacy-policy">
-                I agree to <a href="#">privacy policy & terms</a>
+              <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="terms" 
+                tabindex="4" 
+                name="terms"
+              />
+              <label class="form-check-label" for="terms">
+                Acepto los <a href="#">Términos y Condiciones</a>
               </label>
+              @error('terms')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
             </div>
           </div>
-          <button type="submit" class="btn btn-primary w-100" tabindex="5">Sign up</button>
+          <div class="text-center mb-2">
+            {!! htmlFormSnippet([
+              "theme" => "light",
+              "size" => "normal",
+              "tabindex" => "3",
+              "callback" => "callbackFunction",
+              "expired-callback" => "expiredCallbackFunction",
+              "error-callback" => "errorCallbackFunction",
+            ]) !!}
+          </div>
+          <button type="submit" class="btn btn-primary w-100" tabindex="5">Registrarme</button>
         </form>
 
         <p class="text-center mt-2">
-          <span>Already have an account?</span>
+          <span>¿Ya tienes una cuenta?</span>
           @if (Route::has('login'))
           <a href="{{ route('login') }}">
-            <span>Sign in instead</span>
+            <span>Inicia sesión</span>
           </a>
           @endif
         </p>
