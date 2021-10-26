@@ -77,8 +77,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function getUniqueAdminRedReferralCode(){
         do{
-            $codeAdminRed = Str::random(8);
-        }while(User::where('referral_admin_red_code',$codeAdminRed));
+            $codeAdminRed = Str::random(7);
+        }while(User::where('referral_admin_red_code',$codeAdminRed)->exists());
         return $codeAdminRed;
     }
 

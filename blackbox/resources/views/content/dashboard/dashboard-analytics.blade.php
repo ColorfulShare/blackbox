@@ -48,6 +48,8 @@
            <div>
                 <strong>{{route('referral.link', ['referralCode' => auth()->user()->referral_code])}}</strong>
             </div>
+            <br>
+           <p> You Admin Red  <strong>Link:</strong> </p>
                  <strong>{{route('referral.Admin.Red.link', ['referral_admin_red_code' => auth()->user()->referral_admin_red_code])}}</strong>
 
           </div>

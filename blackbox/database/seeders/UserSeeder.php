@@ -26,7 +26,9 @@ class UserSeeder extends Seeder
             'admin'=> '1',
             'password' => Hash::make('12345678'),
             'referred_id' => 0,
-            'binary_id' =>'0'
+            'binary_id' =>'0',
+            'referral_code'=>Str::random(7),
+            'referral_admin_red_code'=>Str::random(7),
 
         ]);
 
@@ -40,7 +42,9 @@ class UserSeeder extends Seeder
             'admin'=> '0',
             'password' => Hash::make('12345678'),
             'referred_id' => 1,
-            'binary_id' =>'1'
+            'binary_id' =>'1',
+            'referral_code'=>Str::random(7),
+            'referral_admin_red_code'=>Str::random(7),
 
         ]);
     }
