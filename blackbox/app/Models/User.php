@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -35,9 +37,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'point_rank',
         'rank_id',
         'date_reset_points_binary',
-        'not_payment_binary_point_direct'
-
-        
+        'not_payment_binary_point_direct',
+        'referral_code',
+        'referred_by'
     ];
 
     /**
@@ -62,5 +64,22 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $dates = [
         'expired_status'
     ];
+
+    public static function getUniqueReferralCode()
+    {
+        do{
+            $code = Str::random(7);
+        }while (User::where('referral_code',$code)->exists());
+        return $code;
+    }
+
+    private function getReferredBy(){
+        $referralCode = Cookie::get('referral');
+        if($referralCode){
+            return User::where('referral_code', $referralCode)->value('id');
+
+        }
+        return null;
+    }
 
 }

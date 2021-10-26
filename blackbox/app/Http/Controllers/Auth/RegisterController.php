@@ -105,9 +105,8 @@ class RegisterController extends Controller
             'wallet' => json_encode($billetera),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'referred_id' => $data['referred_id'],
-            'binary_id' => $binary_id,
-            'binary_side' => $binary_side,
+            'referral_code' => User::getUniqueReferralCode(),
+            'referred_by' => $this->getReferredBy()
         ]);
 
         $encriptado = Crypt::encryptString($user->id);
