@@ -61,6 +61,12 @@ Route::get('/storage-link', function() {
 
 Route::middleware('auth')->group(function(){
 
+    Route::middleware('admin')->group(function(){
+
+        Route::put('/cambiar-porcentaje', [UserController::class, 'cambiarPorcentaje'])->name('cambiarPorcentaje');
+
+    });
+
     // 2fact
     Route::get('/2fact', [DoubleAutenticationController::class, 'index'])->name('2fact');
     Route::post('/2fact', [DoubleAutenticationController::class, 'checkCodeLogin'])->name('2fact.post');

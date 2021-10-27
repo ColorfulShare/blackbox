@@ -23,31 +23,37 @@
   <div class="row match-height">
     <!-- Greetings Card starts -->
     <div class="col-lg-6 col-md-12 col-sm-12">
-      <div class="card card-congratulations">
+      <div class="card ">
         <div class="card-body text-center">
-          <img
-            src="{{asset('images/elements/decore-left.png')}}"
-            class="congratulations-img-left"
-            alt="card-img-left"
-          />
-          <img
-            src="{{asset('images/elements/decore-right.png')}}"
-            class="congratulations-img-right"
-            alt="card-img-right"
-          />
-          <div class="avatar avatar-xl bg-primary shadow">
-            <div class="avatar-content">
-              <i data-feather="award" class="font-large-1"></i>
-            </div>
+          <div class="card-header d-flex align-items-center text-right pb-0 pt-0 white">
+            <h2 class="mt-1 mb-0"><b>Ganacia Actual</b></h2>
+              @if(auth()->user()->admin == 1)
+                <div class="">
+                    <button class="btn btn-primary bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalPorcentajeGanancia">Cambiar %</button>
+                </div>
+              @endif
           </div>
-          <div class="text-center">
-            <h1 class="mb-1 text-white">Congratulations John,</h1>
-            <p class="card-text m-auto w-75">
-              You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.
-            </p>
-           <div>
-                {{route('referral.link', ['referralCode' => auth()->user()->referral_code])}}
-            </div>
+
+          <div class="card-sub d-flex align-items-center ">
+              <h1 class="gold text-bold-700 mb-0"><b>$ </b></h1>
+          </div>
+
+          <div class="d-flex align-items-center">
+
+              <div class="progress ml-2 mt-5" style="height: 25px;width: 100%;">
+                  <div id="bar" class="progress-bar active" role="progressbar" aria-valuenow="0"
+                      aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                  </div>
+              </div>
+
+              <div class="card-sub d-flex align-items-center mt-5">
+                  <p class="text-bold-700 mb-0">20% </p>
+              </div>
+
+          </div>
+
+          <div class="card-sub align-items-center mt-0 ">
+              <h6 class="text-bold-700 mb-0"><b>Activo </b></h6>
           </div>
         </div>
       </div>
@@ -497,6 +503,32 @@
   <!--/ List DataTable -->
 </section>
 <!-- Dashboard Analytics end -->
+
+<!-- MODAL PARA ACTUALIZAR PORCENTAJE DE GANANCIA -->
+@if(auth()->user()->admin == 1)
+    <div class="modal fade" id="modalPorcentajeGanancia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content bg-lp" >
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Porcentaje</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('cambiarPorcentaje')}}" method="POST">
+                @csrf 
+                @method('PUT')
+                <div class="modal-body bg-lp" >
+                    <label for="porcentaje" class="text-white">Ingrese el nuevo porcentaje de ganancia</label>
+                    <input type="number" step="any" name="porcentaje" class="form-control" required>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary text-white">Guardar</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+@endif
 @endsection
 
 @section('vendor-script')

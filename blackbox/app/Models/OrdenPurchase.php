@@ -30,4 +30,17 @@ class OrdenPurchase extends Model
     {
         return $this->belongsTo('App\Models\Package', 'package_id', 'id');
     }
+
+    public function status()
+    {
+        if ($this->status == '0'){
+            return "Esperando";
+        }elseif($this->status == '1'){
+            return "Finalizado";
+        }elseif($this->status >= '2'){
+            return "Aprobado";
+        }elseif($this->status >= '3'){
+            return "Rechazado";
+        }
+    }
 }
