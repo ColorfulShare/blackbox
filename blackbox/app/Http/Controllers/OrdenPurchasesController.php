@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrdenPurchases;
+use App\Models\OrdenPurchase;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Notifications\userActivacionExitosa;
+use App\Notifications\userActivacionRechazada;
+use Carbon\Carbon;
 
 class OrdenPurchasesController extends Controller
 {
@@ -17,7 +20,7 @@ class OrdenPurchasesController extends Controller
      */
     public function index()
     {
-        $orders = OrdenPurchases::all();
+        $orders = OrdenPurchase::all();
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -26,15 +29,26 @@ class OrdenPurchasesController extends Controller
     {
         try {
             DB::beginTransaction();
-
-            $orden = OrdenPurchases::findOrFail($request->id);
+            
+            $orden = OrdenPurchase::findOrFail($request->id);
             $orden->status = $request->status;
             $orden->save();
+            $user = User::findOrFail($orden->user_id);
 
-            // $user = User::findOrFail($orden->user_id);
-            // $user->status = '1';
-            // $user->save();
+            if($request->status == '2'){
+               
+                
+                $user->status = '1';
+                $user->expired_status = Carbon::now()->addYear(1);
+                $user->save();
+                
+                $user->notify(new userActivacionExitosa());
+                
+            }elseif($request->status == '3'){
 
+                $user->notify(new userActivacionRechazada());
+            }
+                
             DB::commit();
 
             return back()->with('success', 'Orden actualizada exitosamente');
@@ -43,7 +57,7 @@ class OrdenPurchasesController extends Controller
             DB::rollback();
 
             Log::error('OrdenPurchase - cambiar_status -> Error: '.$th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
+            abort(500, "Ocurrio un error, contacte con el administrador");
         }
     }
 
@@ -71,10 +85,10 @@ class OrdenPurchasesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\OrdenPurchases  $ordenPurchases
+     * @param  \App\Models\OrdenPurchase  $OrdenPurchase
      * @return \Illuminate\Http\Response
      */
-    public function show(OrdenPurchases $ordenPurchases)
+    public function show(OrdenPurchase $OrdenPurchase)
     {
         //
     }
@@ -82,10 +96,10 @@ class OrdenPurchasesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\OrdenPurchases  $ordenPurchases
+     * @param  \App\Models\OrdenPurchase  $OrdenPurchase
      * @return \Illuminate\Http\Response
      */
-    public function edit(OrdenPurchases $ordenPurchases)
+    public function edit(OrdenPurchase $OrdenPurchase)
     {
         //
     }
@@ -94,10 +108,10 @@ class OrdenPurchasesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\OrdenPurchases  $ordenPurchases
+     * @param  \App\Models\OrdenPurchase  $OrdenPurchase
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OrdenPurchases $ordenPurchases)
+    public function update(Request $request, OrdenPurchase $OrdenPurchase)
     {
         //
     }
@@ -105,10 +119,10 @@ class OrdenPurchasesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\OrdenPurchases  $ordenPurchases
+     * @param  \App\Models\OrdenPurchase  $OrdenPurchase
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrdenPurchases $ordenPurchases)
+    public function destroy(OrdenPurchase $OrdenPurchase)
     {
         //
     }
