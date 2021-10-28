@@ -22,7 +22,7 @@
 @section('content')
 
 <div class="card-header">
-  
+
   @if (!empty($referred))
     <h6 class="text-center col-12">Registro Referido por {{$referred->firstname}} {{$referred->lastname}}</h6>
   @endif
@@ -87,11 +87,10 @@
               </g>
             </g>
           </svg>
-          <h2 class="brand-text text-primary ms-1">Vuexy</h2>
+          <h2 class="brand-text text-primary ms-1">Registrar</h2>
         </a>
 
-        <h4 class="card-title mb-1">Adventure starts here 🚀</h4>
-        <p class="card-text mb-2">Make your app management easy and fun!</p>
+
 
         <form class="auth-register-form mt-2" method="POST" action="{{ route('register') }}">
           @csrf
@@ -102,7 +101,7 @@
           @else
             <input type="hidden" name="referred_id" value="1">
           @endif
-          
+
           <div class="mb-1">
             <label for="firstname" class="form-label">Nombre</label>
             <input
@@ -115,7 +114,7 @@
               tabindex="1"
               autofocus
               value="{{ old('firstname') }}"
-              required
+
             />
             @error('firstname')
               <span class="invalid-feedback" role="alert">
@@ -135,7 +134,7 @@
               tabindex="1"
               autofocus
               value="{{ old('lastname') }}"
-              required
+
               />
               @error('lastname')
               <span class="invalid-feedback" role="alert">
@@ -155,7 +154,7 @@
                 tabindex="1"
                 autofocus
                 value="{{ old('username') }}"
-                required
+
               />
               @error('username')
                 <span class="invalid-feedback" role="alert">
@@ -175,7 +174,7 @@
               tabindex="1"
               autofocus
               value="{{ old('phone') }}"
-              required
+
             />
             @error('phone')
               <span class="invalid-feedback" role="alert">
@@ -194,7 +193,7 @@
               aria-describedby="email"
               tabindex="2"
               value="{{ old('email') }}"
-              required
+
             />
             @error('email')
               <span class="invalid-feedback" role="alert">
@@ -223,14 +222,14 @@
             @enderror
           </div>
 
-          
+
           <div class="mb-1">
               <label for="countrie_id" class="form-label">País</label>
-              <select 
-                name="countrie_id" 
+              <select
+                name="countrie_id"
                 id="	countrie_id"
                 class="form-control @error('countrie_id') is-invalid @enderror"
-                required 
+                required
                 data-toggle="select"
               >
                   <option value="">Elegir pais</option>
@@ -247,14 +246,14 @@
 
           <div class="mb1">
             <label for="wallet" class="form-label">Billetera USDT TRC20</label>
-            <input 
-              id="wallet" 
-              type="text" 
+            <input
+              id="wallet"
+              type="text"
               class="form-control @error('wallet') is-invalid @enderror"
-              name="wallet" 
-              value="{{ old('wallet') }}" 
-              required 
-              autocomplete="wallet" 
+              name="wallet"
+              value="{{ old('wallet') }}"
+
+              autocomplete="wallet"
               autofocus
               placeholder="Billetera USDT TRC20"
             />
@@ -265,7 +264,7 @@
             </span>
             @enderror
         </div>
-        
+
 
           <div class="mb-1">
             <label for="password" class="form-label">Contraseña</label>
@@ -279,7 +278,7 @@
                 placeholder="Ingrese una contraseña"
                 aria-describedby="password"
                 tabindex="3"
-                required
+
                 autocomplete="password"
               />
               <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
@@ -303,7 +302,7 @@
                 placeholder="Confirme su contraseña"
                 aria-describedby="password-confirm"
                 tabindex="3"
-                required
+
               />
               <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
             </div>
@@ -311,11 +310,11 @@
 
           <div class=" mb-1">
             <div class="form-check">
-              <input 
-                class="form-check-input" 
-                type="checkbox" 
-                id="terms" 
-                tabindex="4" 
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="terms"
+                tabindex="4"
                 name="terms"
               />
               <label class="form-check-label" for="terms">
