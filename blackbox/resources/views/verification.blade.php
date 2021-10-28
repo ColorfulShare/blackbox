@@ -30,7 +30,7 @@
 
                     <div class="card-text mt-2">
                         {{-- <h4 class="text-white card-title">Hola, {{Auth::user()->name}} --}}
-                            <h4 class="text-white card-title">Hola, {{Auth::user()->fullname}}
+                            <h4 class="text-white card-title">Hola, {{Auth::user()->firstname}}
                         </h4>
                     </div>
                     <h5 class="card-text mt-2">
@@ -40,7 +40,7 @@
                         <br><br><br>
                     </h5>
 
-                    <form action="{{ route('verify-account', Auth::user() )}}" method="POST">
+                     <form action="{{ route('verify-account', Auth::user() )}}" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="form-group">

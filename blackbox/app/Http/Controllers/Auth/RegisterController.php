@@ -12,6 +12,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -33,7 +35,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = 'login';
 
     /**
      * Create a new controller instance.
@@ -112,13 +114,33 @@ class RegisterController extends Controller
             'referred_red_by'=> $this->getReferredAdmiBy(),
         ]);
 
-        $encriptado = Crypt::encryptString($user->id);
+        /* $encriptado = Crypt::encryptString($user->id);
         $ruta = route('checkemail', $encriptado);
 
         Mail::send('mails.checkemail', ['ruta' => $ruta], function($message) use ($user) {
             $message->subject('Bienvenido a Blackbox');
             $message->to($user->email);
-        });
+        }); */
+
+        /* $id = Auth::User()->id;
+
+        $user = User::find()->id; */
+        /* $codigo = rand(10,1000000);
+        $user->code_email = $codigo;
+        $user->code_email_date = Carbon::now();
+
+        $dataEmail = [
+            'user' => $user->fullname,
+            'code' => $user->code_email
+        ];
+
+        $user->save();
+
+        Mail::send('mails.SendCodeEmail', ['data' => $dataEmail], function ($msj) use ($user)
+        {
+            $msj->subject('Codigo Email');
+            $msj->to($user->email);
+        }); */
 
         return $user;
     }

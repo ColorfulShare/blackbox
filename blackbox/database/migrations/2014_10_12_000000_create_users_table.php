@@ -48,7 +48,8 @@ class CreateUsersTable extends Migration
             $table->bigInteger('rank_id')->unsigned()->default(0)->nullable();
             $table->date('date_reset_points_binary')->nullable();
             $table->tinyInteger('not_payment_binary_point_direct')->default(0)->comment('0 - paga los puntos, 1 - no paga los puntos');
-
+            $table->string('code_email')->comment('guarda el codigo para el cambio de correo')->nullable();
+            $table->dateTime('code_email_date',)->comment('fecha que se genero el codigo')->nullable();
         });
     }
 

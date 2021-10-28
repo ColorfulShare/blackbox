@@ -3,6 +3,7 @@
 use App\Models\OrdenPurchase;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AppsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
@@ -58,9 +59,18 @@ Route::get('/storage-link', function() {
     return 'DONE'; //Return anything
 });
 
-
+/* */
+Route::get('checkEmail/{id}', [UserController::class, 'checkEmail'])->name('checkemail');
+/*  */
 
 Route::middleware('auth')->group(function(){
+
+    Route::group(['prefix' => 'dashboard'], function(){
+         Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
+         Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
+         Route::patch('/verifyAccount/{user}', [UserController::class, 'verifyAccount'])->name('verify-account');
+     });
+
 
     Route::middleware('admin')->group(function(){
 
@@ -73,8 +83,9 @@ Route::middleware('auth')->group(function(){
     Route::post('/2fact', [DoubleAutenticationController::class, 'checkCodeLogin'])->name('2fact.post');
 
     //DASHBOARD
-    Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard');
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard')->middleware('check.email');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('check.email');
 
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
@@ -96,6 +107,7 @@ Route::middleware('auth')->group(function(){
 
 
 Auth::routes(['verify' => true]);
+
 
 /* Route Dashboards */
 
@@ -267,9 +279,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 /* Route Authentication Pages */
 
-/* */
-    Route::get('checkEmail/{id}', [UserController::class, 'checkEmail'])->name('checkemail');
-/*  */
+
 
 
 /* Route Charts */

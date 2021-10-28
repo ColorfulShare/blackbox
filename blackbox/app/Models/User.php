@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
@@ -41,7 +42,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'referral_code',
         'referred_by',
         'referral_admin_red_code',
-        'referred_red_by'
+        'referred_red_by',
+        'code_email',
+        'code_email_date'
     ];
 
     /**
@@ -82,4 +85,4 @@ class User extends Authenticatable implements MustVerifyEmail
         return $codeAdminRed;
     }
 
-}
+ }

@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\CheckRole::class,
         'google_authenticator' => \App\Http\Middleware\DoubleAutentication::class,
+        'check.email' => \App\Http\Middleware\checkEmail::class
     ];
 }

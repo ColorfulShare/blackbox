@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
+
 class UserSeeder extends Seeder
 {
     /**
@@ -48,4 +49,6 @@ class UserSeeder extends Seeder
 
         ]);
     }
+
+
 }

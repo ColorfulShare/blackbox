@@ -19,9 +19,11 @@ class checkEmail
     public function handle(Request $request, Closure $next)
     {
             if (empty(Auth::user()->email_verified_at)) {
-                Auth::logout();
-                return redirect()->route('login')->with('msj-info', 'Correo Electronico no confirmado, Revise su correo Electronico - ');
-            }   
+                /* Auth::logout();
+                return redirect()->route('login')->with('msj-info', 'Correo Electronico no confirmado, Revise su correo Electronico - '); */
+
+                return redirect()->route('user.verification.email')->with('msj-info', 'Correo electrónico enviado, Revise su correo electrónico');
+            }
         return $next($request);
     }
 }
