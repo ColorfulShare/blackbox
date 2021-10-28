@@ -11,7 +11,7 @@ class Inversion extends Model
 
     protected $fillable = [
         'user_id','orden_purchases_id','invested', 'gain', 'capital',
-        'status'
+        'status','package_id'
     ];
 
     public function orden()

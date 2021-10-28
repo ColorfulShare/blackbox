@@ -36,13 +36,13 @@ class TiendaController extends Controller
                 'fee' => 0,
                 'package_id' => $package->id
             ]);
-            
+
             return view('shop.transaction', compact('user', 'orden'));
         } catch (\Throwable $th) {
             Log::error('TiendaController - proccess -> Error: '.$th);
             abort(500, "Ocurrio un error, contacte con el administrador");
         }
-        
+
         /*
         $user->expired_status = Carbon::now()->addYear(1);
         $user->save();
@@ -57,7 +57,7 @@ class TiendaController extends Controller
             'comprobante' => 'required|mimes:jpg,jpeg,png',
             'type_payment' => 'required'
         ]);
-    
+
         try {
             if($validate){
                 $orden = OrdenPurchase::find($request->orden);
@@ -71,7 +71,7 @@ class TiendaController extends Controller
                     $name = $file->getClientOriginalName();
                     $file->move(public_path('storage') .'/'. $user->id.'/comprobante', $name);
                     $orden->comprobante = $name;
-            
+
                 }
 
                 $orden->save();

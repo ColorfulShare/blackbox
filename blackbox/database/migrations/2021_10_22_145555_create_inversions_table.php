@@ -16,6 +16,7 @@ class CreateInversionsTable extends Migration
         Schema::create('inversions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('package_id')->nullable()->constrained('packages');
             $table->foreignId('orden_purchases_id')->constrained('orden_purchases');
             $table->double('invested');
             $table->double('gain')->default(0);

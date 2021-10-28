@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Log;
 use App\Notifications\userActivacionExitosa;
 use App\Notifications\userActivacionRechazada;
 use Carbon\Carbon;
+use App\Http\Controllers\InversionController;
+use Illuminate\Support\Facades\Auth;
 
 class OrdenPurchasesController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->inversionController = new InversionController();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -29,26 +37,28 @@ class OrdenPurchasesController extends Controller
     {
         try {
             DB::beginTransaction();
-            
+
             $orden = OrdenPurchase::findOrFail($request->id);
             $orden->status = $request->status;
             $orden->save();
             $user = User::findOrFail($orden->user_id);
 
             if($request->status == '2'){
-               
-                
+
+
                 $user->status = '1';
                 $user->expired_status = Carbon::now()->addYear(1);
                 $user->save();
-                
+
+                $this->inversionController->store($orden);
+
                 $user->notify(new userActivacionExitosa());
-                
+
             }elseif($request->status == '3'){
 
                 $user->notify(new userActivacionRechazada());
             }
-                
+
             DB::commit();
 
             return back()->with('success', 'Orden actualizada exitosamente');
