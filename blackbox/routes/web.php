@@ -60,13 +60,13 @@ Route::get('/storage-link', function() {
 });
 
 /* */
-Route::get('checkEmail/{id}', [UserController::class, 'checkEmail'])->name('checkemail');
+//Route::get('checkEmail/{id}', [UserController::class, 'checkEmail'])->name('checkemail');
 /*  */
 
 Route::middleware('auth')->group(function(){
 
     Route::group(['prefix' => 'dashboard'], function(){
-         Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
+         //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
          Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
          Route::patch('/verifyAccount/{user}', [UserController::class, 'verifyAccount'])->name('verify-account');
      });
@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function(){
 });
 
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' =>true]);
 
 
 /* Route Dashboards */

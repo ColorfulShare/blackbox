@@ -17,7 +17,7 @@
 </style>
 
 @section('content')
-<div class="container fluid">
+<div class="container-fluid">
     <div class="mt-2 row">
         <div class="col-12" style="margin: 0 auto">
             <div class="card">
@@ -45,7 +45,7 @@
                         @method('PATCH')
                         <div class="form-group">
                             <input type="text" class="form-control" name="code"
-                                style="color: white; font-weight:bold; background-color: #011E0C;"
+                                style="color: black; font-weight:bold; background-color: #eeeeee;"
                                 >
 
                             @error('code')
@@ -57,7 +57,8 @@
                         <h5 class="card-text mt-2">
                             <button
                                 type="submit"
-                                style="background-color: #28C76F;color: #ffffff;padding: 10px 15px;border-radius: 5px; font-weight: 600; line-height: 26px;">
+                                style="padding: 10px 15px;border-radius: 5px; font-weight: 600; line-height: 26px;"
+                                class="btn btn-primary">
                                 Acceder a tu cuenta
                             </button>
                         </h5>

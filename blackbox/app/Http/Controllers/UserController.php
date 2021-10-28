@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $id = Crypt::decryptString($id);
         User::where('id', $id)->update(['email_verified_at' => Carbon::now()]);
-        return redirect()->route('login')->with('msj-success', 'Correo Electronico confirmado');
+        return redirect()->route('login')->with('alert-success', 'Correo Electronico confirmado');
     }
 
     public function sendCodeEmail(){
@@ -75,12 +75,12 @@ class UserController extends Controller
                 $user->email_verified_at = Carbon::now();
                 $user->save();
 
-                return redirect()->route('dashboard')->with('msj-success', 'Tu usuario ha sido verificado con éxito.');
+                return redirect()->route('dashboard')->with('alert-success', 'Tu usuario ha sido verificado con éxito.');
             }else{
-                return redirect()->back()->with('msj-danger', 'El código está caducado, se ha enviado un nuevo código.');
+                return redirect()->back()->with('alert-danger', 'El código está caducado, se ha enviado un nuevo código.');
             }
         }else{
-            return redirect()->route('user.verification.email')->with('msj-danger', 'El código ingresado no es válido. Por favor revise su correo.');
+            return redirect()->route('user.verification.email')->with('alert-danger', 'El código ingresado no es válido. Por favor revise su correo.');
         }
 
     }
