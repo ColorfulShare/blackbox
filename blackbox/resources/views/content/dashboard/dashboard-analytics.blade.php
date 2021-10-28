@@ -29,7 +29,11 @@
             <h2 class="mt-1 mb-0"><b>Ganacia Actual</b></h2>
               @if(auth()->user()->admin == 1)
                 <div class="">
-                    <button class="btn btn-primary bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalPorcentajeGanancia">Cambiar %</button>
+                    @if(($porcentaje * 100) < 20)
+                      <button class="btn btn-primary bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalPorcentajeGanancia">Cambiar %</button>
+                    @else 
+                      <button class="btn btn-success bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalUsuariosActivos">Usuarios activos</button>
+                    @endif
                 </div>
               @endif
           </div>
@@ -42,12 +46,12 @@
 
               <div class="progress ml-2 mt-5" style="height: 25px;width: 100%;">
                   <div id="bar" class="progress-bar active" role="progressbar" aria-valuenow="0"
-                      aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                      aria-valuemin="0" aria-valuemax="100" style="width: {{($porcentaje * 10000) / 20}}%">
                   </div>
               </div>
 
               <div class="card-sub d-flex align-items-center mt-5">
-                  <p class="text-bold-700 mb-0">20% </p>
+                  <p class="text-bold-700 mb-0">{{$porcentaje * 100}}% </p>
               </div>
 
           </div>
@@ -528,6 +532,52 @@
         </div>
         </div>
     </div>
+
+    <!-- MODAL PARA LA LISTA DE USUARIOS -->
+
+    <div class="modal fade" id="modalUsuariosActivos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Lista de usuarios activos</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <thead>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Número de cuenta</th>
+                <th>Pagar red</th>
+              </thead>
+              <tbody>
+                @if($users != null)
+                  @forelse($users as $user)
+                  <td>{{$user->firstname}} {{$user->lastname}}</td>
+                  <td>{{$user->email}}</td>
+                  <td>{{$user->wallet}}</td>
+                  <td>
+                    <div class="form-check">
+                      <input class="form-check-input" name="user{{$user->id}}" type="checkbox" value="{{$user->id}}" id="checkPagarRed{{$user->id}}" checked>
+                    </div>
+                  </td>
+                  @empty
+                  <td colspan="4" class="text-center">No hay usuarios activos</td>
+                  @endforelse
+                @else                
+                  <td colspan="4" class="text-center">No hay usuarios activos</td>
+                @endif
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Pagar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 @endif
 @endsection
 

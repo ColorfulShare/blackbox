@@ -24,9 +24,20 @@ class UserController extends Controller
         $porcentajeUtilidad = Porcentaje::orderBy('id', 'desc')->first();
 
         if($porcentajeUtilidad == null){
-            Porcentaje::create(['porcentaje' => $porcentaje]);
+            if($porcentaje > 0.20){
+                Porcentaje::create(['porcentaje' => 0.20]);
+            }else{
+                Porcentaje::create(['porcentaje' => $porcentaje]);
+            }
+            
         }else{
-            $porcentajeUtilidad->update(['porcentaje' => ($porcentajeUtilidad->porcentaje + $porcentaje)]);
+            $suma = $porcentajeUtilidad->porcentaje + $porcentaje;
+            if($porcentaje > 0.20){
+                $porcentajeUtilidad->update(['porcentaje' => 0.20]);
+            }else{
+                $porcentajeUtilidad->update(['porcentaje' => $suma]);
+            }
+            
         }
 
         return redirect()->back()->with('msj-success', 'Porcentaje actualizado correctamente');
