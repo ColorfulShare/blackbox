@@ -16,7 +16,44 @@
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('css/base/pages/app-invoice-list.css')) }}">
   @endsection
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+     const linkReferido = @json($linkReferido);
+     const linkAdminRed = @json($linkAdminRed);
 
+    function link(){
+       let aux = document.createElement('input');
+       aux.setAttribute('value',linkReferido);
+       document.body.appendChild(aux);
+       aux.select();
+       document.execCommand('copy');
+       document.body.removeChild(aux);
+       Swal.fire({
+            title: "Link Copiado",
+            icon: 'success',
+            text: "Ya puedes pegarlo en su navegador",
+            type: "success",
+            confirmButtonClass: 'btn btn-outline-primary',
+        })
+}
+
+function linkAdmin(){
+       let aux = document.createElement('input');
+       aux.setAttribute('value',linkAdminRed);
+       document.body.appendChild(aux);
+       aux.select();
+       document.execCommand('copy');
+       document.body.removeChild(aux);
+       Swal.fire({
+            title: "Link Administrador de Red Copiado",
+            icon: 'success',
+            text: "Ya puedes pegarlo en su navegador",
+            type: "success",
+            confirmButtonClass: 'btn btn-outline-primary',
+        })
+}
+
+</script>
 @section('content')
 <!-- Dashboard Analytics Start -->
 <section id="dashboard-analytics">
@@ -31,7 +68,7 @@
                 <div class="">
                     @if(($porcentaje * 100) < 20)
                       <button class="btn btn-primary bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalPorcentajeGanancia">Cambiar %</button>
-                    @else 
+                    @else
                       <button class="btn btn-success bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalUsuariosActivos">Usuarios activos</button>
                     @endif
                 </div>
@@ -73,10 +110,16 @@
               <i data-feather="users" class="font-medium-5"></i>
             </div>
           </div>
-          <h2 class="fw-bolder mt-1">92.6k</h2>
+          <h2 class="fw-bolder mt-1">Link de referido</h2>
           <p class="card-text">Subscribers Gained</p>
+
+<!-- botone para link de referidos -->
+          <div class="btn-group mb-1">
+          <button class="btn btn-sm btn-primary" onclick="link()">normal referred</button>
+          <button class="btn btn-sm btn-danger" onclick=" linkAdmin()">Admin Red</button>
+          </div>
+
         </div>
-        <div id="gained-chart"></div>
       </div>
     </div>
     <!-- Subscribers Chart Card ends -->
@@ -90,11 +133,12 @@
               <i data-feather="package" class="font-medium-5"></i>
             </div>
           </div>
-          <h2 class="fw-bolder mt-1">38.4K</h2>
+          <h2 class="fw-bolder mt-1">blackbox</h2>
           <p class="card-text">Orders Received</p>
+
+
         </div>
-        <div id="order-chart"></div>
-      </div>
+    </div>
     </div>
     <!-- Orders Chart Card ends -->
   </div>
@@ -518,7 +562,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{route('cambiarPorcentaje')}}" method="POST">
-                @csrf 
+                @csrf
                 @method('PUT')
                 <div class="modal-body bg-lp" >
                     <label for="porcentaje" class="text-white">Ingrese el nuevo porcentaje de ganancia</label>
@@ -564,7 +608,7 @@
                   @empty
                   <td colspan="4" class="text-center">No hay usuarios activos</td>
                   @endforelse
-                @else                
+                @else
                   <td colspan="4" class="text-center">No hay usuarios activos</td>
                 @endif
               </tbody>
