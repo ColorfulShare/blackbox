@@ -38,7 +38,7 @@ use App\Http\Controllers\DoubleAutenticationController;
 // Main Page Route
 // Route::get('/', [DashboardController::class,'dashboardEcommerce'])->name('dashboard-ecommerce')->middleware('verified');
 
-Route::get('/clear', function() {
+Route::get('/clear', function () {
     $exitCode = Artisan::call('cache:clear');
     $exitCode = Artisan::call('config:cache');
     $exitCode = Artisan::call('view:clear');
@@ -50,11 +50,11 @@ Route::get('/clear', function() {
     //     });
     return 'DONE'; //Return anything
 });
-Route::get('/optimize', function() {
+Route::get('/optimize', function () {
     $exitCode = Artisan::call('optimize');
     return 'DONE'; //Return anything
 });
-Route::get('/storage-link', function() {
+Route::get('/storage-link', function () {
     $exitCode = Artisan::call('storage:link');
     return 'DONE'; //Return anything
 });
@@ -63,19 +63,18 @@ Route::get('/storage-link', function() {
 //Route::get('checkEmail/{id}', [UserController::class, 'checkEmail'])->name('checkemail');
 /*  */
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->group(function () {
 
-    Route::group(['prefix' => 'dashboard'], function(){
-         //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
-         Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
-         Route::patch('/verifyAccount/{user}', [UserController::class, 'verifyAccount'])->name('verify-account');
-     });
+    Route::group(['prefix' => 'dashboard'], function () {
+        //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
+        Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
+        Route::patch('/verifyAccount/{user}', [UserController::class, 'verifyAccount'])->name('verify-account');
+    });
 
 
-    Route::middleware('admin')->group(function(){
+    Route::middleware('admin')->group(function () {
 
         Route::put('/cambiar-porcentaje', [UserController::class, 'cambiarPorcentaje'])->name('cambiarPorcentaje');
-
     });
 
     // 2fact
@@ -92,7 +91,7 @@ Route::middleware('auth')->group(function(){
     });
 
     //TIENDA
-    Route::prefix('shop')->group(function (){
+    Route::prefix('shop')->group(function () {
         Route::get('/', [TiendaController::class, 'index'])->name('shop');
         Route::post('/', [TiendaController::class, 'proccess'])->name('shop.proccess');
         Route::post('/store', [TiendaController::class, 'store'])->name('shop.store');
@@ -102,11 +101,10 @@ Route::middleware('auth')->group(function(){
         Route::get('/', [OrdenPurchasesController::class, 'index'])->name('orders.index');
         Route::post('/cambiarStatus', [OrdenPurchasesController::class, 'cambiar_status'])->name('orders.cambiarStatus');
     });
-
 });
 
 
-Auth::routes(['verify' =>true]);
+Auth::routes(['verify' => true]);
 
 
 /* Route Dashboards */
@@ -235,6 +233,25 @@ Route::group(['prefix' => 'form'], function () {
     Route::get('repeater', [FormsController::class, 'form_repeater'])->name('form-repeater');
 });
 /* Route Forms */
+
+//Ruta de los Tickets
+Route::prefix('tickets')->group(function () {
+    Route::get('ticket-create', 'TicketsController@create')->name('ticket.create');
+    Route::post('ticket-store', 'TicketsController@store')->name('ticket.store');
+
+    // Para el usuario
+    Route::get('ticket-edit-user/{id}', 'TicketsController@editUser')->name('ticket.edit-user');
+    Route::patch('ticket-update-user/{id}', 'TicketsController@updateUser')->name('ticket.update-user');
+    Route::get('ticket-list-user', 'TicketsController@listUser')->name('ticket.list-user');
+    Route::get('ticket-show-user/{id}', 'TicketsController@showUser')->name('ticket.show-user');
+
+    // Para el Admin
+    Route::get('ticket-edit-admin/{id}', 'TicketsController@editAdmin')->name('ticket.edit-admin');
+    Route::patch('ticket-update-admin/{id}', 'TicketsController@updateAdmin')->name('ticket.update-admin');
+    Route::get('ticket-list-admin', 'TicketsController@listAdmin')->name('ticket.list-admin');
+    Route::get('ticket-show-admin/{id}', 'TicketsController@showAdmin')->name('ticket.show-admin');
+});
+
 
 /* Route Tables */
 Route::group(['prefix' => 'table'], function () {
