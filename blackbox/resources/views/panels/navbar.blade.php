@@ -330,7 +330,12 @@
             <a class="dropdown-item" href="{{url('page/faq')}}">
               <i class="me-50" data-feather="help-circle"></i> FAQ
             </a>
+            @if (session('impersonated_by'))
           
+            <a class="dropdown-item"  href="{{ route('impersonate.stop') }}">
+              <i data-feather='home'></i>Volver al admin
+            </a>
+            @endif
             <form method="POST" class="" action="{{ route('logout') }}">
               @csrf 
               <button class="dropdown-item w-100" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -338,7 +343,6 @@
                   <i class="mr-50" data-feather="power"></i> Cerrar sesion
               </button>
             </form>
-      
           </div>
         </li>
       </ul>

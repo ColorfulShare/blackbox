@@ -542,6 +542,8 @@
             <h5 class="modal-title" id="exampleModalLabel">Lista de usuarios activos</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          <form action="{{route('pagarRed')}}" method="POST">
+          @csrf
           <div class="modal-body">
             <table class="table">
               <thead>
@@ -553,27 +555,34 @@
               <tbody>
                 @if($users != null)
                   @forelse($users as $user)
-                  <td>{{$user->firstname}} {{$user->lastname}}</td>
-                  <td>{{$user->email}}</td>
-                  <td>{{$user->wallet}}</td>
-                  <td>
-                    <div class="form-check">
-                      <input class="form-check-input" name="user{{$user->id}}" type="checkbox" value="{{$user->id}}" id="checkPagarRed{{$user->id}}" checked>
-                    </div>
-                  </td>
+                  <tr>
+                    <td>{{$user->firstname}} {{$user->lastname}}</td>
+                    <td>{{$user->email}}</td>
+                    <td>{{$user->wallet}}</td>
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input" name="user{{$user->id}}" type="checkbox" value="{{$user->id}}" id="checkPagarRed{{$user->id}}" checked>
+                      </div>
+                    </td>
+                  </tr>
                   @empty
-                  <td colspan="4" class="text-center">No hay usuarios activos</td>
+                  <tr>
+                    <td colspan="4" class="text-center">No hay usuarios activos</td>
+                  </tr>
                   @endforelse
-                @else                
-                  <td colspan="4" class="text-center">No hay usuarios activos</td>
+                @else  
+                  <tr>              
+                    <td colspan="4" class="text-center">No hay usuarios activos</td>
+                  </tr>
                 @endif
               </tbody>
             </table>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Pagar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Pagar</button>
           </div>
+          </form>
         </div>
       </div>
     </div>

@@ -10,15 +10,17 @@ use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use App\Models\OrdenPurchase;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Traits\Tree;
 
 class TiendaController extends Controller
 {
     //
+    use Tree;
     public function index(Request $request)
     {
         // title
         View::share('titleg', 'Tienda');
-
+     
         $packages = Package::orderBy('price', 'desc')->paginate();
 
         return view('shop.index', compact('packages'));

@@ -27,6 +27,19 @@
       "icon": "shopping-cart",
       "slug": "shop"
     },
+    {
+      "name": "Inversiones",
+      "icon": "file-text",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/inversiones",
+          "name": "Lista",
+          "icon": "circle",
+          "slug": "inversiones.index"
+        }
+      ]
+    },
 
     {
       "navheader": "Apps & Pages",

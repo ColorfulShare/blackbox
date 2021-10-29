@@ -1,7 +1,9 @@
 <?php
 
 return [
+    "Anualidad" => "Anualidad",
     "Tienda" => "Tienda",
+    "Inversiones" => "Inversiones",
 
     "Apps & Pages" => "Apps & Pages",
     "User Interface" => "User Interface",

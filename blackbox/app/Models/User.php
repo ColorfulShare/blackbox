@@ -69,6 +69,11 @@ class User extends Authenticatable
     protected $dates = [
         'expired_status'
     ];
+    
+    public function inversiones()
+    {
+        return $this->hasMany('App\Models\Inversion', 'user_id');
+    }
 
     public static function getUniqueReferralCode()
     {

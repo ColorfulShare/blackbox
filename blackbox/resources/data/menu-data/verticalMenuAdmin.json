@@ -8,21 +8,47 @@
       "slug": "dashboard"
     },
     {
-      "name": "Ordenes",
-      "icon": "file-text",
+      "name": "Anualidad",
+      "icon": "credit-card",
       "slug": "/",
       "submenu": [
         {
           "url": "/ordenes",
-          "name": "Lista",
+          "name": "Ordenes",
           "icon": "circle",
-          "slug": ""
+          "slug": "orders.index"
         },
         {
-          "url": "/",
+          "url": "/user/activacion",
           "name": "Activación manual",
           "icon": "circle",
-          "slug": ""
+          "slug": "user.activacion"
+        }
+      ]
+    },
+    {
+      "name": "Inversiones",
+      "icon": "dollar-sign",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/inversiones",
+          "name": "Lista",
+          "icon": "circle",
+          "slug": "inversiones.index"
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "icon": "user",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/user/user-list",
+          "name": "Lista",
+          "icon": "circle",
+          "slug": "users.list-user"
         }
       ]
     },
@@ -50,12 +76,6 @@
           "slug": ""
         }
       ]
-    },
-    {
-      "url": "/",
-      "name": "Inversiones",
-      "icon": "shopping-cart",
-      "slug": ""
     },
     {
       "name": "De Interés",

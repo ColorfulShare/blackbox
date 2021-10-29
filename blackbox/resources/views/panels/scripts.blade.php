@@ -16,6 +16,7 @@
 
 @if($configData['blankPage'] === false)
 <script src="{{ asset(mix('js/scripts/customizer.js')) }}"></script>
+
 @endif
 <!-- END: Theme JS-->
 <!-- BEGIN: Page JS-->

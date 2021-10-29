@@ -459,6 +459,7 @@
     "/vendors/js/tables/datatable/dataTables.bootstrap5.min.js": "/vendors/js/tables/datatable/dataTables.bootstrap5.min.js",
     "/vendors/js/tables/datatable/datatables.buttons.min.js": "/vendors/js/tables/datatable/datatables.buttons.min.js",
     "/vendors/js/tables/datatable/datatables.checkboxes.min.js": "/vendors/js/tables/datatable/datatables.checkboxes.min.js",
+    "/vendors/js/tables/datatable/datatables.min.js": "/vendors/js/tables/datatable/datatables.min.js",
     "/vendors/js/tables/datatable/dataTables.responsive.js": "/vendors/js/tables/datatable/dataTables.responsive.js",
     "/vendors/js/tables/datatable/dataTables.responsive.min.js": "/vendors/js/tables/datatable/dataTables.responsive.min.js",
     "/vendors/js/tables/datatable/dataTables.rowGroup.min.js": "/vendors/js/tables/datatable/dataTables.rowGroup.min.js",

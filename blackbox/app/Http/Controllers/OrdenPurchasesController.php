@@ -28,7 +28,7 @@ class OrdenPurchasesController extends Controller
      */
     public function index()
     {
-        $orders = OrdenPurchase::all();
+        $orders = OrdenPurchase::orderBy('id', 'desc')->get();
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -42,15 +42,13 @@ class OrdenPurchasesController extends Controller
             $orden->status = $request->status;
             $orden->save();
             $user = User::findOrFail($orden->user_id);
-
+            
             if($request->status == '2'){
-
-
                 $user->status = '1';
                 $user->expired_status = Carbon::now()->addYear(1);
                 $user->save();
-
-                $this->inversionController->store($orden);
+            
+                $this->inversionController->store($orden, $user);
 
                 $user->notify(new userActivacionExitosa());
 
@@ -58,7 +56,7 @@ class OrdenPurchasesController extends Controller
 
                 $user->notify(new userActivacionRechazada());
             }
-
+        
             DB::commit();
 
             return back()->with('success', 'Orden actualizada exitosamente');

@@ -1,4 +1,4 @@
-@push('custom_js')
+@section('page-script')
 <script>
     $('.myTable').DataTable({
         order: [[ 0, "desc" ]],
@@ -8,4 +8,4 @@
         pageLength: 10
     })
 </script>
-@endpush
+@endsection

@@ -10,9 +10,20 @@ use App\Models\Porcentaje;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Models\Package;
+use App\Http\Controllers\InversionController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Notifications\userActivacionExitosa;
+use App\Models\OrdenPurchase;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->inversionController = new InversionController();
+    }
+
     public function checkEmail($id)
     {
         $id = Crypt::decryptString($id);
@@ -109,5 +120,63 @@ class UserController extends Controller
         }
 
         return redirect()->back()->with('msj-success', 'Porcentaje actualizado correctamente');
+    }
+    
+    public function listUser()
+    {
+
+       $user = User::orderBy('id', 'desc')->get();
+
+        return view('user.list-users', compact('user'));
+    }
+
+    public function activacion()
+    {
+        $user = User::whereDoesntHave('inversiones',function($inversion){
+            $inversion->where('status','=' ,1);
+        })->get();
+        
+        $paquetes = Package::all();
+
+        return view('user.activacion', compact('user', 'paquetes'));
+    }
+
+    public function activar(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $package = Package::find($request->paquete);
+
+            $user = User::findOrFail($request->id);
+
+            $orden = OrdenPurchase::create([
+                'user_id' => $user->id,
+                'amount' => $package->price,
+                'fee' => 0,
+                'package_id' => $package->id,
+                'status' => 2
+            ]);
+
+            $user->status = '1';
+            $user->expired_status = Carbon::now()->addYear(1);
+            $user->save();
+
+            if(isset($request->comision)){
+                $this->inversionController->store($orden, $user);
+            }else{
+                $this->inversionController->store($orden, $user, false);
+            }
+
+            $user->notify(new userActivacionExitosa());
+            DB::commit();
+
+            return back()->with('success', 'Usuario activado exitosamente');
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+
+            Log::error('UserController - activar -> Error: '.$th);
+            abort(500, "Ocurrio un error, contacte con el administrador");
+        }
     }
 }

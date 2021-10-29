@@ -23,6 +23,8 @@ use App\Http\Controllers\UserInterfaceController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\OrdenPurchasesController;
 use App\Http\Controllers\DoubleAutenticationController;
+use App\Http\Controllers\InversionController;
+use App\Http\Controllers\ImpersonateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,15 +69,29 @@ Route::middleware('auth')->group(function(){
 
     Route::group(['prefix' => 'dashboard'], function(){
          //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
-         Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
-         Route::patch('/verifyAccount/{user}', [UserController::class, 'verifyAccount'])->name('verify-account');
+        Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
+        Route::patch('/verifyAccount/{user}', [UserController::class, 'verifyAccount'])->name('verify-account');
      });
 
-
+     //RUTAS ADMIN
     Route::middleware('admin')->group(function(){
 
         Route::put('/cambiar-porcentaje', [UserController::class, 'cambiarPorcentaje'])->name('cambiarPorcentaje');
+        Route::post('/pagar-red', [InversionController::class, 'pagarRed'])->name('pagarRed');
 
+        //USER
+        Route::prefix('user')->group(function(){
+            Route::get('user-list', [UserController::class, 'listUser'])->name('users.list-user');
+            Route::post('/impersonate/{user}/start', [ImpersonateController::class, 'start'])->name('impersonate.start');
+            Route::get('/activacion', [UserController::class, 'activacion'])->name('user.activacion');
+            Route::post('/activar', [UserController::class, 'activar'])->name('user.activar');
+        });
+    });
+    //
+
+    //User
+    Route::prefix('user')->group(function(){
+        Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
     });
 
     // 2fact
@@ -103,6 +119,10 @@ Route::middleware('auth')->group(function(){
         Route::post('/cambiarStatus', [OrdenPurchasesController::class, 'cambiar_status'])->name('orders.cambiarStatus');
     });
 
+    //INVERSIONES
+    Route::group(['prefix' => 'inversiones'], function () {
+        Route::get('/', [InversionController::class, 'index'])->name('inversiones.index');
+    });
 });
 
 
