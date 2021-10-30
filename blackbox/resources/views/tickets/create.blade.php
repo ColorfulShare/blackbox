@@ -27,20 +27,18 @@
                                         <label class="form-label  mb-1" for="message"><b>Mensaje</b></label>
 
 
-                                        <section class="chat-app-window mb-2" style="border: 1px solid #000">
-                                            <div class="active-chat">
-                                                <div class="user-chats ps ps--active-y">
-                                                    <div class="chats chat-thread">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12 mx-auto ">
+                                                    <div class="card">
+                                                        <div class="card-body chat-care">
 
-                                                        <div class="chat-body text-white">
-                                                            <div class="chat-content">
 
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </section>
+                                        </div>
 
                                         <br>
                                         <span class=" text-bold-600">Escriba Su Pregunta</span>
