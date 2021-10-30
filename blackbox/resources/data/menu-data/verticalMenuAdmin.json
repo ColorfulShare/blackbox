@@ -121,9 +121,9 @@
       ]
     },
     {
-      "url": "/",
+      "url": "/tickets/ticket-list-admin",
       "name": "Tickets",
-      "icon": "shopping-cart",
+      "icon": "alert-circle",
       "slug": ""
     },
     {

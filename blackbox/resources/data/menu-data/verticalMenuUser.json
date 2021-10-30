@@ -22,10 +22,17 @@
       ]
     },
     {
-      "url": "/tickets/ticket-list-user",
+      "url": "/shop",
       "name": "Tienda",
       "icon": "shopping-cart",
       "slug": "shop"
+    },
+
+    {
+      "url": "/tickets/ticket-list-user",
+      "name": "Tickets",
+      "icon": "alert-circle",
+      "slug": ""
     },
 
     {
