@@ -105,9 +105,8 @@
                                     </div>
 
 
-
                                     <span class="text-bold-600">Respuesta para el usuario</span>
-                                    <textarea class="form-control  chat-window-message" required type="text" id="message" name="message"></textarea>
+                                    <textarea class="form-control  chat-window-message" type="text" id="message" name="message"></textarea>
                                 </div>
 
                             </div>
