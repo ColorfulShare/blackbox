@@ -46,66 +46,65 @@
                                 <div class="col-12 mt-2 mb-2">
                                     <label class="form-label " for="note"><b>Chat con el usuario</b></label>
 
-                                    <section class="chat-app-window mb-2 py-2 px-2" style="border: 1px solid #000;">
-                                        <div class="active-chat">
-                                            <div class="user-chats ps ps--active-y ">
-                                                <div class="chats chat-thread">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12 mx-auto ">
+                                                <div class="card">
 
-                                                    @foreach ( $message as $item )
-
-
-                                                    {{-- user --}}
-
-                                                    @if ($item->type == 0)
-
-                                                    <div class="card" style="max-width: 400px;">
-                                                        <div class="row g-0">
-                                                            <div class="col-md-3">
-                                                                @if (Auth::user()->photoDB != NULL)
-                                                                <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" height="20" width="20" class="rounded-circle">
-                                                                @else
-                                                                <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" height="40" width="40" style="background-color: black;" class="rounded-circle">
-                                                                @endif
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="card-body">
-                                                                    <div class="email-user mb-1 text-dark">{{ $item->getUser->email}}</div>
-                                                                    <p class="text-dark">{{ $item->message }}</p>
+                                                    <div class="card-body chat-care">
+                                                        <ul class="chat">
+                                                            @foreach ( $message as $item )
+                                                            {{-- user --}}
+                                                            @if ($item->type == 0)
+                                                            <li class="agent clearfix">
+                                                                <span class="chat-img left clearfix mx-2">
+                                                                    @if (Auth::user()->photoDB != NULL)
+                                                                    <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" class="img-circle">
+                                                                    @else
+                                                                    <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" class="img-circle">
+                                                                    @endif
+                                                                </span>
+                                                                <div class="chat-body clearfix">
+                                                                    <div class="header clearfix">
+                                                                        <strong class="primary-font">{{ $item->getUser->email}}</strong>
+                                                                    </div>
+                                                                    <p>
+                                                                        {{ $item->message }}
+                                                                    </p>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                            </li>
 
+                                                            {{-- admin --}}
+                                                            @elseif ($item->type == 1)
+                                                            <li class="admin clearfix">
+                                                                <span class="chat-img right clearfix  mx-2">
+                                                                    @if (Auth::user()->photoDB != NULL)
+                                                                    <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" class="img-circle">
+                                                                    @else
+                                                                    <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" class="img-circle">
+                                                                    @endif
+                                                                </span>
+                                                                <div class="chat-body clearfix">
+                                                                    <div class="header clearfix">
 
-
-
-                                                    {{-- admin --}}
-                                                    @elseif ($item->type == 1)
-                                                    <div class="card" style="max-width: 400px;">
-                                                        <div class="row g-0">
-                                                            <div class="col-md-3">
-                                                                @if (Auth::user()->photoDB != NULL)
-                                                                <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" height="20" width="20" class="rounded-circle">
-                                                                @else
-                                                                <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" height="40" width="40" style="background-color: black;" class="rounded-circle">
-                                                                @endif
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <div class="card-body">
-                                                                    <div class="email-user mb-1 text-dark">{{ $item->getAdmin->email}}</div>
-                                                                    <p class="text-dark">{{ $item->message }}</p>
+                                                                        <strong class="right primary-font">{{ $item->getAdmin->email}}</strong>
+                                                                    </div>
+                                                                    <p>
+                                                                        {{ $item->message }}
+                                                                    </p>
                                                                 </div>
-                                                            </div>
-                                                        </div>
+                                                            </li>
+                                                            @endif
+                                                            @endforeach
+                                                        </ul>
                                                     </div>
-                                                    @endif
-
-                                                    @endforeach
 
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>
+                                    </div>
+
+
 
                                     <span class="text-bold-600">Respuesta para el usuario</span>
                                     <textarea class="form-control  chat-window-message" required type="text" id="message" name="message"></textarea>
@@ -114,7 +113,7 @@
                             </div>
 
                             <div class="col-12">
-                                <button type="submit"  class="col-12 btn btn-danger mb-1 waves-effect waves-light float-right">Enviar
+                                <button type="submit" class="col-12 btn btn-danger mb-1 waves-effect waves-light float-right">Enviar
                                     Ticket</button>
                             </div>
                     </div>
