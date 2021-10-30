@@ -22,7 +22,7 @@
       ]
     },
     {
-      "url": "/shop",
+      "url": "/tickets/ticket-list-user",
       "name": "Tienda",
       "icon": "shopping-cart",
       "slug": "shop"

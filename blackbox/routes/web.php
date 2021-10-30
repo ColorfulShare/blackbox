@@ -23,6 +23,7 @@ use App\Http\Controllers\UserInterfaceController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\OrdenPurchasesController;
 use App\Http\Controllers\DoubleAutenticationController;
+use App\Http\Controllers\TicketsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -235,21 +236,21 @@ Route::group(['prefix' => 'form'], function () {
 /* Route Forms */
 
 //Ruta de los Tickets
-Route::prefix('tickets')->group(function () {
-    Route::get('ticket-create', 'TicketsController@create')->name('ticket.create');
-    Route::post('ticket-store', 'TicketsController@store')->name('ticket.store');
+Route::group(['prefix' => 'tickets'], function () {
+    Route::get('ticket-create', [TicketsController::class, 'create'])->name('ticket.create');
+    Route::post('ticket-store', [TicketsController::class, 'store'])->name('ticket.store');
 
     // Para el usuario
-    Route::get('ticket-edit-user/{id}', 'TicketsController@editUser')->name('ticket.edit-user');
-    Route::patch('ticket-update-user/{id}', 'TicketsController@updateUser')->name('ticket.update-user');
-    Route::get('ticket-list-user', 'TicketsController@listUser')->name('ticket.list-user');
-    Route::get('ticket-show-user/{id}', 'TicketsController@showUser')->name('ticket.show-user');
+    Route::get('ticket-edit-user/{id}', [TicketsController::class, 'editUser'])->name('ticket.edit-user');
+    Route::patch('ticket-update-user/{id}', [TicketsController::class, 'updateUser'])->name('ticket.update-user');
+    Route::get('ticket-list-user', [TicketsController::class, 'listUser'])->name('ticket.list-user');
+    Route::get('ticket-show-user/{id}', [TicketsController::class, 'showUser'])->name('ticket.show-user');
 
     // Para el Admin
-    Route::get('ticket-edit-admin/{id}', 'TicketsController@editAdmin')->name('ticket.edit-admin');
-    Route::patch('ticket-update-admin/{id}', 'TicketsController@updateAdmin')->name('ticket.update-admin');
-    Route::get('ticket-list-admin', 'TicketsController@listAdmin')->name('ticket.list-admin');
-    Route::get('ticket-show-admin/{id}', 'TicketsController@showAdmin')->name('ticket.show-admin');
+    Route::get('ticket-edit-admin/{id}', [TicketsController::class, 'editAdmin'])->name('ticket.edit-admin');
+    Route::patch('ticket-update-admin/{id}', [TicketsController::class, 'updateAdmin'])->name('ticket.update-admin');
+    Route::get('ticket-list-admin', [TicketsController::class, 'listAdmin'])->name('ticket.list-admin');
+    Route::get('ticket-show-admin/{id}',  [TicketsController::class, 'showAdmin'])->name('ticket.show-admin');
 });
 
 

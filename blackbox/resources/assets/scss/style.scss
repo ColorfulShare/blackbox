@@ -9,3 +9,145 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+
+
+/*===============*/
+/* List-User Tickets
+/*===============*/
+
+#boton-ticket {
+    background: #bd3900;
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 23px;
+    color: #fff;
+}
+
+
+#contend {
+    height: 63px;
+    border: 0.5px solid #00c8f4;
+    box-sizing: border-box;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: -0.2px;
+    color: #ffffff;
+}
+#thead {
+    border-radius: 8px 8px 0px 0px;
+}
+
+/*===============*/
+/* Create-Tickets
+/*===============*/
+#form-label {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: -0.2px;
+    color: #ffffff;
+}
+
+#names,
+#emails,
+#issues {
+    background: rgba(196, 196, 196, 0.08);
+    border: 2px solid rgba(0, 246, 225, 0.77);
+    box-sizing: border-box;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 13px;
+}
+
+#send {
+    background: #04c1b1;
+    border: 2px solid rgba(0, 246, 225, 0.77);
+    border-radius: 4px;
+    font-size: 15px;
+    letter-spacing: -0.2px;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+
+#sends {
+    background: #19b4db;
+    border: 2px solid rgba(0, 246, 225, 0.77);
+    border-radius: 4px;
+    font-size: 15px;
+    letter-spacing: -0.2px;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+#up{
+    background: #275c69;
+    border: 2px solid rgba(17, 184, 209, 0.77);
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-size: 15px;
+}
+
+#limite{
+    color:#973131;
+    font-weight:bold;
+    font-size: 15px;
+    
+}
+
+#form-labels{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: -0.2px;
+    color: #ffffff;
+}
+#names{
+    font-size: 17px;
+}
+
+#DataTables_Table_0_info{
+    display:none !important;
+    font-size: 1px;
+}
+
+#DataTables_Table_0_paginate{
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+
+#id {
+    background: rgba(196, 196, 196, 0.08);
+    border: 2px solid rgba(0, 246, 225, 0.77);
+    box-sizing: border-box;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+}
+
+hr.hr-1 {
+    border: 0;
+    height: 4px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+
+
+#IDref {
+    background: #00B2A2;
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 23px;
+    color: #FFFFFF !important;
+
+}
