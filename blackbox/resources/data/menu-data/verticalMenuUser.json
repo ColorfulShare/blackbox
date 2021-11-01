@@ -29,6 +29,32 @@
     },
 
     {
+      "name": "Red",
+      "icon": "sidebar",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Matriz",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Referidos",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Usuarios",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+    
+    {
       "url": "/tickets/ticket-list-user",
       "name": "Tickets",
       "icon": "alert-circle",
