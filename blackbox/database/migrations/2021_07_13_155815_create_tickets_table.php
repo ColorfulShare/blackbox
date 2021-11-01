@@ -16,8 +16,8 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->bigInteger('iduser')->unsigned();
-            $table->string('username');
-            $table->string('email');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
             $table->boolean('status', [0, 1])->default(0)->comment('0 - Abierto, 1 - Cerrado');
             $table->longtext('issue');
             $table->timestamps();
