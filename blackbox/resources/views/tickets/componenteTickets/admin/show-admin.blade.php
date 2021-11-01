@@ -58,7 +58,7 @@
                                                         <div class="chat">
                                                             <div class="chat-avatar">
                                                                 <span class="avatar ">
-                                                                    <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" height="40" width="40" style="background-color: white;">
+                                                                <img src="{{asset('images/avatars/2-small.png')}}" alt="avatar" class="img-circle" height="60" width="60">
 
 
                                                                 </span>
@@ -81,9 +81,9 @@
                                                             <div class="chat-avatar">
                                                                 <span class="avatar">
                                                                     @if (Auth::user()->photoDB != NULL)
-                                                                    <img src="{{asset('storage/'.Auth::user()->photoDB)}}"  alt="avatar" height="40" width="40">
+                                                                    <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" height="40" width="40">
                                                                     @else
-                                                                    <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" height="40" width="40" style="background-color: white;">
+                                                                    <img src="{{asset('images/avatars/1-small.png')}}" alt="avatar" class="img-circle" height="60" width="60">
                                                                     @endif
                                                                 </span>
                                                             </div>

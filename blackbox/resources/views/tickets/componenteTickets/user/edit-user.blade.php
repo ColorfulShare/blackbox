@@ -44,7 +44,7 @@
                                                                 @if (Auth::user()->photoDB != NULL)
                                                                 <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" class="img-circle">
                                                                 @else
-                                                                <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" class="img-circle">
+                                                                <img src="{{asset('images/avatars/1-small.png')}}" alt="avatar" class="img-circle" height="60" width="60">
                                                                 @endif
                                                             </span>
                                                             <div class="chat-body clearfix">
@@ -64,7 +64,7 @@
                                                                 @if (Auth::user()->photoDB != NULL)
                                                                 <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" class="img-circle">
                                                                 @else
-                                                                <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" class="img-circle">
+                                                                <img src="{{asset('images/avatars/2-small.png')}}" alt="avatar" class="img-circle" height="60" width="60">
                                                                 @endif
                                                             </span>
                                                             <div class="chat-body clearfix">
@@ -89,7 +89,7 @@
 
 
                                 <span class="text-dark">Respuesta</span>
-                                <textarea class="text-tex form-control" type="text" name="message"  rows="3"></textarea>
+                                <textarea class="text-tex form-control" type="text" name="message" rows="3"></textarea>
                             </div>
 
                             <div class="col-12">
