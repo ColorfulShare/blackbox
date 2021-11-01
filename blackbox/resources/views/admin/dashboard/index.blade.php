@@ -15,13 +15,46 @@
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('css/base/pages/app-invoice-list.css')) }}">
-@endsection
+  @endsection
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+<script>
+     const linkReferido = @json($linkReferido);
+     const linkAdminRed = @json($linkAdminRed);
+
+    function link(){
+       let aux = document.createElement('input');
+       aux.setAttribute('value',linkReferido);
+       document.body.appendChild(aux);
+       aux.select();
+       document.execCommand('copy');
+       document.body.removeChild(aux);
+       Swal.fire({
+            title: "Link Copiado",
+            icon: 'success',
+            text: "Ya puedes pegarlo en su navegador",
+            type: "success",
+            confirmButtonClass: 'btn btn-outline-primary',
+        })
+}
+
+function linkAdmin(){
+       let aux = document.createElement('input');
+       aux.setAttribute('value',linkAdminRed);
+       document.body.appendChild(aux);
+       aux.select();
+       document.execCommand('copy');
+       document.body.removeChild(aux);
+       Swal.fire({
+            title: "Link Administrador de Red Copiado",
+            icon: 'success',
+            text: "Ya puedes pegarlo en su navegador",
+            type: "success",
+            confirmButtonClass: 'btn btn-outline-primary',
+        })
+}
+
+</script>
 @section('content')
-
-@include('components.tranding-view')
-
 <!-- Dashboard Analytics Start -->
 <section id="dashboard-analytics">
   <div class="row match-height">
@@ -100,33 +133,161 @@
               <i data-feather="package" class="font-medium-5"></i>
             </div>
           </div>
-          <h2 class="fw-bolder mt-1">Wallet</h2>
-          <p class="card-text"> {{$user->saldoDisponibleFormat()}}</p>
+          <h2 class="fw-bolder mt-1">blackbox</h2>
+          <p class="card-text">Orders Received</p>
+
+
         </div>
     </div>
     </div>
+    <!-- Orders Chart Card ends -->
   </div>
 
   <div class="row match-height">
     <!-- Avg Sessions Chart Card starts -->
-    <div class="col-lg-3 col-sm-6 col-12">
+    <div class="col-lg-6 col-12">
       <div class="card">
         <div class="card-body">
-          <h2 class="fw-bolder mt-1">{{$user->estado()}}</h2>
-          @if($user->status == '1')
-            <h2 class="fw-bolder mt-1"> por <span class="text-primary">{{$user->contadorExpiredStatus()}}</span> dias</h2>
-          @endif
+          <div class="row pb-50">
+            <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
+              <div class="mb-1 mb-sm-0">
+                <h2 class="fw-bolder mb-25">2.7K</h2>
+                <p class="card-text fw-bold mb-2">Avg Sessions</p>
+                <div class="font-medium-2">
+                  <span class="text-success me-25">+5.2%</span>
+                  <span>vs last 7 days</span>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary">View Details</button>
+            </div>
+            <div class="col-sm-6 col-12 d-flex justify-content-between flex-column text-end order-sm-2 order-1">
+              <div class="dropdown chart-dropdown">
+                <button
+                  class="btn btn-sm border-0 dropdown-toggle p-50"
+                  type="button"
+                  id="dropdownItem5"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Last 7 Days
+                </button>
+                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem5">
+                  <a class="dropdown-item" href="#">Last 28 Days</a>
+                  <a class="dropdown-item" href="#">Last Month</a>
+                  <a class="dropdown-item" href="#">Last Year</a>
+                </div>
+              </div>
+              <div id="avg-sessions-chart"></div>
+            </div>
+          </div>
+          <hr />
+          <div class="row avg-sessions pt-50">
+            <div class="col-6 mb-2">
+              <p class="mb-50">Goal: $100000</p>
+              <div class="progress progress-bar-primary" style="height: 6px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-valuenow="50"
+                  aria-valuemin="50"
+                  aria-valuemax="100"
+                  style="width: 50%"
+                ></div>
+              </div>
+            </div>
+            <div class="col-6 mb-2">
+              <p class="mb-50">Users: 100K</p>
+              <div class="progress progress-bar-warning" style="height: 6px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-valuenow="60"
+                  aria-valuemin="60"
+                  aria-valuemax="100"
+                  style="width: 60%"
+                ></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <p class="mb-50">Retention: 90%</p>
+              <div class="progress progress-bar-danger" style="height: 6px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-valuenow="70"
+                  aria-valuemin="70"
+                  aria-valuemax="100"
+                  style="width: 70%"
+                ></div>
+              </div>
+            </div>
+            <div class="col-6">
+              <p class="mb-50">Duration: 1yr</p>
+              <div class="progress progress-bar-success" style="height: 6px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-valuenow="90"
+                  aria-valuemin="90"
+                  aria-valuemax="100"
+                  style="width: 90%"
+                ></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
- 
+    <!-- Avg Sessions Chart Card ends -->
 
     <!-- Support Tracker Chart Card starts -->
     <div class="col-lg-6 col-12">
       <div class="card">
+        <div class="card-header d-flex justify-content-between pb-0">
+          <h4 class="card-title">Support Tracker</h4>
+          <div class="dropdown chart-dropdown">
+            <button
+              class="btn btn-sm border-0 dropdown-toggle p-50"
+              type="button"
+              id="dropdownItem4"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Last 7 Days
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem4">
+              <a class="dropdown-item" href="#">Last 28 Days</a>
+              <a class="dropdown-item" href="#">Last Month</a>
+              <a class="dropdown-item" href="#">Last Year</a>
+            </div>
+          </div>
+        </div>
         <div class="card-body">
-          <h6 class="mt-1 mb-0 text-white font-weight-bold">Ganancias:</h6>
-          <div id="chart"></div>
+          <div class="row">
+            <div class="col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
+              <h1 class="font-large-2 fw-bolder mt-2 mb-0">163</h1>
+              <p class="card-text">Tickets</p>
+            </div>
+            <div class="col-sm-10 col-12 d-flex justify-content-center">
+              <div id="support-trackers-chart"></div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-1">
+            <div class="text-center">
+              <p class="card-text mb-50">New Tickets</p>
+              <span class="font-large-1 fw-bold">29</span>
+            </div>
+            <div class="text-center">
+              <p class="card-text mb-50">Open Tickets</p>
+              <span class="font-large-1 fw-bold">63</span>
+            </div>
+            <div class="text-center">
+              <p class="card-text mb-50">Response Time</p>
+              <span class="font-large-1 fw-bold">1d</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -135,7 +296,7 @@
 
   <div class="row match-height">
     <!-- Timeline Card -->
-    <div class="col-lg-6 col-12">
+    <div class="col-lg-4 col-12">
       <div class="card card-user-timeline">
         <div class="card-header">
           <div class="d-flex align-items-center">
@@ -270,84 +431,120 @@
     <!--/ Timeline Card -->
 
     <!-- Sales Stats Chart Card starts -->
-    <div class="col-lg-6 col-md-6 col-12">
+    <div class="col-lg-4 col-md-6 col-12">
       <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-start pb-1">
+          <div>
+            <h4 class="card-title mb-25">Sales</h4>
+            <p class="card-text">Last 6 months</p>
+          </div>
+          <div class="dropdown chart-dropdown">
+            <i data-feather="more-vertical" class="font-medium-3 cursor-pointer" data-bs-toggle="dropdown"></i>
+            <div class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" href="#">Last 28 Days</a>
+              <a class="dropdown-item" href="#">Last Month</a>
+              <a class="dropdown-item" href="#">Last Year</a>
+            </div>
+          </div>
+        </div>
         <div class="card-body">
-          <h1>Empresa</h1>
+          <div class="d-inline-block me-1">
+            <div class="d-flex align-items-center">
+              <i data-feather="circle" class="font-small-3 text-primary me-50"></i>
+              <h6 class="mb-0">Sales</h6>
+            </div>
+          </div>
+          <div class="d-inline-block">
+            <div class="d-flex align-items-center">
+              <i data-feather="circle" class="font-small-3 text-info me-50"></i>
+              <h6 class="mb-0">Visits</h6>
+            </div>
+          </div>
+          <div id="sales-visit-chart" class="mt-50"></div>
         </div>
       </div>
     </div>
     <!-- Sales Stats Chart Card ends -->
+
+    <!-- App Design Card -->
+    <div class="col-lg-4 col-md-6 col-12">
+      <div class="card card-app-design">
+        <div class="card-body">
+          <span class="badge badge-light-primary">03 Sep, 20</span>
+          <h4 class="card-title mt-1 mb-75 pt-25">App design</h4>
+          <p class="card-text font-small-2 mb-2">
+            You can Find Only Post and Quotes Related to IOS like ipad app design, iphone app design
+          </p>
+          <div class="design-group mb-2 pt-50">
+            <h6 class="section-label">Team</h6>
+            <span class="badge badge-light-warning me-1">Figma</span>
+            <span class="badge badge-light-primary">Wireframe</span>
+          </div>
+          <div class="design-group pt-25">
+            <h6 class="section-label">Members</h6>
+            <div class="avatar">
+              <img src="{{asset('images/portrait/small/avatar-s-9.jpg')}}" width="34" height="34" alt="Avatar" />
+            </div>
+            <div class="avatar bg-light-danger">
+              <div class="avatar-content">PI</div>
+            </div>
+            <div class="avatar">
+              <img
+                src="{{asset('images/portrait/small/avatar-s-14.jpg')}}"
+                width="34"
+                height="34"
+                alt="Avatar"
+              />
+            </div>
+            <div class="avatar">
+              <img src="{{asset('images/portrait/small/avatar-s-7.jpg')}}" width="34" height="34" alt="Avatar" />
+            </div>
+            <div class="avatar bg-light-secondary">
+              <div class="avatar-content">AL</div>
+            </div>
+          </div>
+          <div class="design-planning-wrapper mb-2 py-75">
+            <div class="design-planning">
+              <p class="card-text mb-25">Due Date</p>
+              <h6 class="mb-0">12 Apr, 21</h6>
+            </div>
+            <div class="design-planning">
+              <p class="card-text mb-25">Budget</p>
+              <h6 class="mb-0">$49251.91</h6>
+            </div>
+            <div class="design-planning">
+              <p class="card-text mb-25">Cost</p>
+              <h6 class="mb-0">$840.99</h6>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary w-100">Join Team</button>
+        </div>
+      </div>
+    </div>
+    <!--/ App Design Card -->
   </div>
 
-  <!--  -->
+  <!-- List DataTable -->
   <div class="row">
-    <div class="col-lg-4 col-12">
-      <div class="card ">
-        <div class="card-header d-flex align-items-center text-right">
-            <h3 class=""><b>Conviertete en :</b></h3>
+    <div class="col-12">
+      <div class="card invoice-list-wrapper">
+        <div class="card-datatable table-responsive">
+          <table class="invoice-list-table table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>#</th>
+                <th><i data-feather="trending-up"></i></th>
+                <th>Client</th>
+                <th>Total</th>
+                <th class="text-truncate">Issued Date</th>
+                <th>Balance</th>
+                <th>Invoice Status</th>
+                <th class="cell-fit">Actions</th>
+              </tr>
+            </thead>
+          </table>
         </div>
-        <div class="row g-0 card-header align-items-center h-100">
-
-          <div class="col">
-            <div class="d-grid gap-2">
-              <a class="btn btn-primary">
-                  Agente red
-              </a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="d-grid gap-2">
-              <a class="btn btn-danger">
-                Profesional
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Agente de red-->
-  <div class="modal fade" id="modalRed" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Agente de red</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="">
-        <div class="modal-body">
-          <input type="hidden" name="type" value="red">
-          <input type="number" name="monto" required >
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal profesional-->
-  <div class="modal fade" id="modalProfesional" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Profesional</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="">
-        <div class="modal-body">
-          <input type="hidden" name="type" value="profesional">
-          <input type="number" name="monto" required >
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-        </form>
       </div>
     </div>
   </div>
@@ -448,118 +645,6 @@
 @endsection
 @section('page-script')
   <!-- Page js files -->
-  {{--
   <script src="{{ asset(mix('js/scripts/pages/dashboard-analytics.js')) }}"></script>
   <script src="{{ asset(mix('js/scripts/pages/app-invoice-list.js')) }}"></script>
-    --}}
-  <script>
-    const linkReferido = @json($linkReferido);
-    const linkAdminRed = @json($linkAdminRed);
-
-   function link(){
-      let aux = document.createElement('input');
-      aux.setAttribute('value',linkReferido);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand('copy');
-      document.body.removeChild(aux);
-      Swal.fire({
-           title: "Link Copiado",
-           icon: 'success',
-           text: "Ya puedes pegarlo en su navegador",
-           type: "success",
-           confirmButtonClass: 'btn btn-outline-primary',
-       })
-}
-
-function linkAdmin(){
-      let aux = document.createElement('input');
-      aux.setAttribute('value',linkAdminRed);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand('copy');
-      document.body.removeChild(aux);
-      Swal.fire({
-           title: "Link Administrador de Red Copiado",
-           icon: 'success',
-           text: "Ya puedes pegarlo en su navegador",
-           type: "success",
-           confirmButtonClass: 'btn btn-outline-primary',
-       })
-}
-
-fetch('/user/dataGrafica').then( function(response){
- return response.json();
-}).then(function(response){
- console.log(response);
- 
- var options = {
-     //colors: ['#fff'],
-     series: [{
-       name: "Numero de ventas",
-       data: response.valores
-   }],
-     chart: {
-     height: 350,
-     type: 'line',
-     zoom: {
-       enabled: false
-     },
-   },
-   dataLabels: {
-     enabled: true,
-   },
-   
-   //colors: ['#fff'],
-
-   stroke: {
-     curve: 'smooth'
-   },
-   title: {
-     text: '',
-     align: 'left',
-     style:{
-       //color: '#fff'
-     }
-   },
-   grid: {
-   row: {
-     colors: [], // takes an array which will be repeated on columns
-     opacity: 0.5
-   },
- },
- xaxis: {
-   categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-   labels: {
-     style: {
-         //colors: ['#fff', '#fff', '#fff', '#fff', '#fff', '#fff' ,'#fff', '#fff', '#fff', '#fff', '#fff', '#fff']
-     },               
-   }
- },
- yaxis: {
-     type:'category',
-     axisTicks: {
-       show: true,
-       width: 1,
-     },
-     labels: {
-       style: {
-           //colors: ['#fff', '#fff', '#fff', '#fff', '#fff', '#fff' ,'#fff', '#fff', '#fff']
-       },               
-     }
- },
- tooltip: {
-   enabled: true,
-   style:{
-     colors: ['#fff']
-   }
- }
- };
-
- var chart = new ApexCharts(document.querySelector("#chart"), options);
- chart.render();
- 
-}).catch(e => console.log(e))
-
-</script>
 @endsection

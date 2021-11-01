@@ -1,25 +1,11 @@
 {
   "menu": [
     {
-      "name": "Dashboards",
-      "badge": "2",
-      "badgeClass": "badge badge-light-warning rounded-pill ms-auto me-1",
+      "url": "/",
+      "name": "Dashboard",
+      "badgeClass": "badge badge-light-warning badge-pill ml-auto mr-1",
       "icon": "home",
-      "slug": "",
-      "submenu": [
-        {
-          "url": "dashboard/analytics",
-          "name": "Analytics",
-          "icon": "circle",
-          "slug": "dashboard-analytics"
-        },
-        {
-          "url": "/",
-          "name": "eCommerce",
-          "icon": "circle",
-          "slug": "dashboard-ecommerce"
-        }
-      ]
+      "slug": "dashboard"
     },
     {
       "url": "/shop",

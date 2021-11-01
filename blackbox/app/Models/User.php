@@ -44,7 +44,8 @@ class User extends Authenticatable
         'referral_admin_red_code',
         'referred_red_by',
         'code_email',
-        'code_email_date'
+        'code_email_date',
+        'status'
     ];
 
     /**
@@ -75,6 +76,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Inversion', 'user_id');
     }
 
+    public function wallets()
+    {
+        return $this->hasMany('App\Models\Wallet', 'user_id');
+    }
+
     public static function getUniqueReferralCode()
     {
         do{
@@ -90,4 +96,34 @@ class User extends Authenticatable
         return $codeAdminRed;
     }
 
+    public function contadorExpiredStatus()
+    {
+        $fechaAntigua  = \Carbon\Carbon::now();
+        $fechaReciente = $this->expired_status;
+
+        $cantidadDias = $fechaAntigua->diffInDays($fechaReciente);
+
+        return $cantidadDias;
+    }
+
+    public function saldoDisponible()
+    {
+        return $this->wallets()->where('status', 0)->sum('amount');
+    }
+
+    public function saldoDisponibleFormat()
+    {
+        return '$ '.number_format($this->saldoDisponible(), 2);
+    }
+
+    public function estado()
+    {
+        if($this->status == '0'){
+            return "Inactivo";
+        }elseif($this->status == '1'){
+            return "Activo";
+        }elseif($this->status == '2'){
+            return "Eliminado";
+        }
+    }
  }

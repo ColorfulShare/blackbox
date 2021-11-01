@@ -15,8 +15,8 @@ class CreateWalletsTable extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->nullable()->unsigned();
-            $table->foreignId('inversion_id')->nullable()->constrained('inversions');
+            $table->bigInteger('user_id')->nullable()->unsigned()->comment('usuario al que le pertenece la wallet');
+            $table->foreignId('inversion_id')->nullable()->constrained('inversions')->comment('inversion la cual produce esta wallet');
             //$table->foreignId('liquidation_id')->nullable()->constrained('liquidations');   
             $table->double('amount');
             $table->double('percentage')->nullable();

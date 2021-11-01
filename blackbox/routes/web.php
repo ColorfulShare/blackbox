@@ -92,6 +92,7 @@ Route::middleware('auth')->group(function(){
     //User
     Route::prefix('user')->group(function(){
         Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
+        Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
     });
 
     // 2fact
@@ -100,7 +101,7 @@ Route::middleware('auth')->group(function(){
 
     //DASHBOARD
 
-    Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard')->middleware('check.email');
+    //Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard')->middleware('check.email');
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('check.email');
 
     Route::group(['prefix' => 'dashboard'], function () {
