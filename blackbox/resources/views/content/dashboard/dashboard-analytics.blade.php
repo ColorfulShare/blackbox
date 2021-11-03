@@ -291,14 +291,14 @@
 
           <div class="col">
             <div class="d-grid gap-2">
-              <a class="btn btn-primary">
+              <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRed">
                   Agente red
               </a>
             </div>
           </div>
           <div class="col">
             <div class="d-grid gap-2">
-              <a class="btn btn-danger">
+              <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalProfesional">
                 Profesional
               </a>
             </div>
@@ -316,10 +316,12 @@
           <h5 class="modal-title" id="exampleModalLabel">Agente de red</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="">
+        <form action="{{route('dashboard.convertir')}}" method="POST">
+        @csrf
         <div class="modal-body">
           <input type="hidden" name="type" value="red">
-          <input type="number" name="monto" required >
+          <label for="monto">Monto a invertir:</label>
+          <input type="number" id="monto" name="monto" class="form-control" required >
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -338,10 +340,12 @@
           <h5 class="modal-title" id="exampleModalLabel">Profesional</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="">
+        <form action="{{route('dashboard.convertir')}}" method="POST">
+        @csrf
         <div class="modal-body">
           <input type="hidden" name="type" value="profesional">
-          <input type="number" name="monto" required >
+          <label for="monto2">Monto a invertir:</label>
+          <input type="number" id="monto2" class="form-control" name="monto" required >
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

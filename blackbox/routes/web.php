@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
+        Route::post('convertir', [DashboardController::class, 'convertir'])->name('dashboard.convertir');
     });
 
     //TIENDA

@@ -39,6 +39,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
+            $table->enum('type', ['red', 'profesional'])->nullable();
+
             $table->bigInteger('referred_id')->default(1)->comment('ID del usuario patrocinador');
             $table->bigInteger('binary_id')->default(1)->comment('ID del usuario binario');
             $table->enum('binary_side', ['I', 'D'])->nullable()->comment('Permite saber si esta en la derecha o izquierda en el binario');

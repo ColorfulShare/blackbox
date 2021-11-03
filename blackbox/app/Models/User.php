@@ -45,7 +45,8 @@ class User extends Authenticatable
         'referred_red_by',
         'code_email',
         'code_email_date',
-        'status'
+        'status',
+        'type'
     ];
 
     /**

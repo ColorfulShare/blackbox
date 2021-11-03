@@ -154,7 +154,7 @@ class UserController extends Controller
                 'amount' => $package->price,
                 'fee' => 0,
                 'package_id' => $package->id,
-                'status' => 2
+                'status' => '2'
             ]);
 
             $user->status = '1';

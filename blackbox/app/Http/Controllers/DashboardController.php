@@ -9,9 +9,19 @@ use App\Models\User;
 use App\Models\Wallet;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\InversionController;
+use App\Notifications\userActivacionExitosa;
+use App\Models\OrdenPurchase;
 
 class DashboardController extends Controller
 {
+
+  public function __construct()
+    {
+        $this->inversionController = new InversionController();
+    }
+    
   public function index()
   {
     $linkReferido = route('referral.link', ['referralCode' => auth()->user()->referral_code]);
@@ -96,5 +106,34 @@ class DashboardController extends Controller
         }
      
         return response()->json(['valores' => $data]);
+    }
+
+    public function convertir(Request $request)
+    {
+    
+      try {
+        DB::beginTransaction();
+
+        $user = Auth::User();
+
+        $orden = OrdenPurchase::create([
+            'user_id' => $user->id,
+            'amount' => $request->monto,
+            'fee' => 0,
+            'package_id' => null,
+            'status' => '2'
+        ]);
+
+        
+        DB::commit();
+
+        return view('shop.transaction', compact('user', 'orden'));
+      } catch (\Throwable $th) {
+
+          DB::rollback();
+
+          Log::error('DashboardController - convertir -> Error: '.$th);
+          abort(500, "Ocurrio un error, contacte con el administrador");
+      }
     }
 }

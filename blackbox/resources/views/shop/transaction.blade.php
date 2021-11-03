@@ -46,7 +46,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{$orden->package->name}}</td>
+                                        <td>{{$orden->package != null ? $orden->package->name : ''}}</td>
                                         <td>{{$orden->amount}}</td>
                                     </tr>
                                 </tbody>
