@@ -72,14 +72,19 @@ class User extends Authenticatable
         'expired_status'
     ];
     
+    public function getWallet()
+    {
+        return $this->hasMany('App\Models\Wallet', 'iduser');
+    }
+    
     public function inversiones()
     {
-        return $this->hasMany('App\Models\Inversion', 'user_id');
+        return $this->hasMany('App\Models\Inversion', 'iduser');
     }
 
     public function wallets()
     {
-        return $this->hasMany('App\Models\Wallet', 'user_id');
+        return $this->hasMany('App\Models\Wallet', 'iduser');
     }
 
     public static function getUniqueReferralCode()
