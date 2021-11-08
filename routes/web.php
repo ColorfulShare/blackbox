@@ -294,7 +294,10 @@ Route::group(['prefix' => 'wallet'], function () {
 
     Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
 
-    
+    Route::post('/process', [LiquidactionController::class, 'procesarLiquidacion'])->name('settlement.process');
+    Route::post('/process-retirement', [LiquidactionController::class, 'procesarSocilitud'])->name('settlement.retirement');
+
+    Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
 });
 
 

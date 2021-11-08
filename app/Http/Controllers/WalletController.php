@@ -18,10 +18,9 @@ class WalletController extends Controller
     public function indexWallet()
     {
 
-            $wallets = Auth::user()->getWallet->where('tipo_transaction', 0)->sortByDesc('id');
-            
-            $saldoDisponible = $wallets->where('status', 0)->sum('monto');
-            return view('wallet.IndexWallet', compact('wallets', 'saldoDisponible'));
-     
-}
+        $wallets = Auth::user()->getWallet->where('tipo_transaction', 0)->sortByDesc('id');
+
+        $saldoDisponible = $wallets->where('status', 0)->sum('monto');
+        return view('wallet.IndexWallet', compact('wallets', 'saldoDisponible'));
+    }
 }

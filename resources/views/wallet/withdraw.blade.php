@@ -1,15 +1,9 @@
 @extends('layouts/contentLayoutMaster')
 
 
-@push('page_vendor_js')
-<script src="{{asset('assets/app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
-<script src="{{asset('assets/app-assets/vendors/js/extensions/polyfill.min.js')}}"></script>
-@endpush
-
 {{-- permite llamar las librerias montadas --}}
 @push('page_js')
 <script src="{{asset('assets/js/librerias/vue.js')}}"></script>
-<script src="{{asset('assets/js/librerias/axios.min.js')}}"></script>
 @endpush
 
 @push('custom_js')
@@ -21,42 +15,42 @@
     <div class=" col-8 offset-md-2">
         <div class="card bg-lp">
             <div class="card-header">
-                <h2 class="card-title text-white">Retirar Ganancias</h2>
+                <h2 class="card-title">Retirar Ganancias</h2>
             </div>
             <div class="card-content">
                 <div class="card-body card-dashboard">
                     <div class="row">
                         <div class="col-12 mb-1">
-                            <h5 class="text-white">Moneda</h5>
-                            <p class="text-white1"> <img src="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Tether-USDT-icon.png" alt="" height="24"> USDT <span>TetherUS</span></p>
+                            <h5 class="">Moneda</h5>
+                            <p class=""> <img src="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Tether-USDT-icon.png" alt="" height="24"> USDT <span>TetherUS</span></p>
                         </div>
                         <div class="col-12 col-md-12 mb-1">
-                            <h5 class="text-white">Dirección</h5>
+                            <h5 class="">Dirección</h5>
                             <input type="text" id="to" placeholder="Introduce aquí la dirección" name="wallet" v-model="wallet" class="form-control">
                         </div>
                         <div class="col-12 col-md-12 mb-1">
-                            <h5 class="text-white">Red</h5>
-                            <p class="text-white1"> TRX <span>Tron (TRC20)</span></p>
+                            <h5 class="">Red</h5>
+                            <p class=""> TRX <span>Tron (TRC20)</span></p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
-                            <h5 class="text-white">Saldo en USDT</h5>
-                            <p class="text-white1"> {{Auth::user()->saldoDisponible()}}</p>
+                            <h5 class="">Saldo en USDT</h5>
+                            <p class=""> {{Auth::user()->saldoDisponible()}}</p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
-                            <h5 class="text-white">Retiro Minimo</h5>
-                            <p class="text-white1"> 25 USDT</p>
+                            <h5 class="">Retiro Minimo</h5>
+                            <p class=""> 25 USDT</p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
-                            <h5 class="text-white">% Fee de Retiro</h5>
-                            <p class="text-white1">% {{ number_format(Auth::user()->feeRetiro(), 2) }}</p>
+                            <h5 class="">Fee de Retiro</h5>
+                            <p class="">% {{ number_format(Auth::user()->feeRetiro(), 2) }}</p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
-                            <h5 class="text-white">Monto comision</h5>
-                            <p class="text-white1">{{ number_format(Auth::user()->getFeeWithdraw(), 2) }}</p>
+                            <h5 class="">Monto comision</h5>
+                            <p class="">{{ number_format(Auth::user()->getFeeWithdraw(), 2) }}</p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
-                            <h5 class="text-white">Importe que se recibirá</h5>
-                            <p class="text-white5">{{ number_format(Auth::user()->totalARetirar(),2) }} USDT</p>
+                            <h5 class="">Importe que se recibirá</h5>
+                            <p class="">{{ number_format(Auth::user()->totalARetirar(),2) }} USDT</p>
 
                         </div>
                         <div class="col-6 col-md-6 mb-1">
@@ -67,7 +61,7 @@
             </div>
         </div>
     </div>
-    @include('settlement.componentes.modalAprobar')
-    @include('settlement.componentes.modalInfo')
+    @include('wallet.componentes.modalAprobar')
+    @include('wallet.componentes.modalInfo')
 </div>
 @endsection

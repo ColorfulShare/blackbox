@@ -101,7 +101,7 @@
             </div>
           </div>
           <h2 class="fw-bolder mt-1">Wallet</h2>
-          <p class="card-text"> {{$user->saldoDisponibleFormat()}}</p>
+          <p class="card-text"> {{Auth::user()->saldoDisponible()}}</p>
         </div>
     </div>
     </div>
