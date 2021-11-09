@@ -1,6 +1,5 @@
 @extends('layouts/contentLayoutMaster')
 
-
 @section('content')
 <div id="withdraw">
     <div class=" col-8 offset-md-2">
@@ -17,7 +16,7 @@
                         </div>
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Dirección</h5>
-                            <input type="text" id="domTextElement" onkeyup="press()" placeholder="Introduce aquí la dirección" name="wallet" class="form-control">
+                            <input type="text" id="to" placeholder="Introduce aquí la dirección" name="wallet" v-model="wallet" class="form-control">
                         </div>
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Red</h5>
@@ -45,7 +44,7 @@
 
                         </div>
                         <div class="col-6 col-md-6 mb-1">
-                            <button class="btn btn-block btn-primary " id="show" data-bs-toggle="modal" data-bs-target="#openModalDetails" onclick="getValueInput()">Retirar</button>
+                            <button class="btn btn-block btn-primary d" v-show='wallet != ""' v-on:click='openModalDetails'>Retirar</button>
                         </div>
                     </div>
                 </div>
@@ -55,24 +54,4 @@
     @include('wallet.componentes.modalAprobar')
     @include('wallet.componentes.modalInfo')
 </div>
-
-<script>
-    // Funcion para desaparecer el boton mientras no haya nada en el input
-    document.getElementById('show').style.visibility = "hidden";
-
-    function press() {
-        document.getElementById('show').style.visibility = "visible";
-    }
-
-    //Pasamos el valor del input al modal ModalInfo
-    let getValueInput = () => {
-        let inputValue = document.getElementById("domTextElement").value;
-        document.getElementById("valueInput").innerHTML = inputValue;
-    }
-
-
-
-</script>
-
-
 @endsection
