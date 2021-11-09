@@ -71,29 +71,30 @@ class User extends Authenticatable
     protected $dates = [
         'expired_status'
     ];
-    
+
     public function inversiones()
     {
-        return $this->hasMany('App\Models\Inversion', 'user_id');
+        return $this->hasMany('App\Models\Inversion', 'iduser');
     }
 
     public function wallets()
     {
-        return $this->hasMany('App\Models\Wallet', 'user_id');
+        return $this->hasMany('App\Models\Wallet', 'iduser');
     }
 
     public static function getUniqueReferralCode()
     {
-        do{
+        do {
             $code = Str::random(7);
-        }while (User::where('referral_code',$code)->exists());
+        } while (User::where('referral_code', $code)->exists());
         return $code;
     }
 
-    public static function getUniqueAdminRedReferralCode(){
-        do{
+    public static function getUniqueAdminRedReferralCode()
+    {
+        do {
             $codeAdminRed = Str::random(7);
-        }while(User::where('referral_admin_red_code',$codeAdminRed)->exists());
+        } while (User::where('referral_admin_red_code', $codeAdminRed)->exists());
         return $codeAdminRed;
     }
 
@@ -107,23 +108,20 @@ class User extends Authenticatable
         return $cantidadDias;
     }
 
-    public function saldoDisponible()
-    {
-        return $this->wallets()->where('status', 0)->sum('amount');
-    }
+
 
     public function saldoDisponibleFormat()
     {
-        return '$ '.number_format($this->saldoDisponible(), 2);
+        return '$ ' . number_format($this->saldoDisponible(), 2);
     }
 
     public function estado()
     {
-        if($this->status == '0'){
+        if ($this->status == '0') {
             return "Inactivo";
-        }elseif($this->status == '1'){
+        } elseif ($this->status == '1') {
             return "Activo";
-        }elseif($this->status == '2'){
+        } elseif ($this->status == '2') {
             return "Eliminado";
         }
     }
@@ -137,10 +135,148 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\User', 'referred_by');
     }
+    /**
+     * Permite obtener todas la liquidaciones que tengo
+     *
+     * @return void
+     */
+    public function getLiquidate()
+    {
+        return $this->hasMany('App\Models\Liquidaction', 'iduser');
+    }
+
+    /**
+     * Permite obtener las ordenes de servicio asociada a una categoria
+     *
+     * @return void 
+     */
+   
+
+    public function sendPasswordResetNotification($token)
+    {
+        // Your your own implementation.
+        $this->notify(new ResetPasswordNotification($this, $token));
+    }
 
     public function inversionMasAlta()
     {
         return $this->inversiones->where('status', 1)->sortByDesc('id')->first();
         //->sortByDesc('invertido')
     }
- }
+
+    public function montoInvertido()
+    {
+        $monto = 0;
+        foreach ($this->inversiones as $inversion) {
+            if ($inversion->status == 1) {
+                $monto += $inversion->invertido;
+            }
+        }
+        return number_format($monto, 2);
+    }
+
+
+    public function saldoDisponible()
+    {
+        return number_format($this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('monto'), 2);
+    }
+
+    /**
+     * muestra el saldo disponible en numeros
+     *
+     * @return float
+     */
+    public function saldoDisponibleNumber(): float
+    {
+        return $this->wallets->where('status', 0)->where('tipo_transaction', 0)->sum('monto');
+    }
+
+    public function gananciaActual()
+    {
+        if (isset($this->inversionMasAlta()->gain) && $this->inversionMasAlta()->gain != null) {
+            return number_format($this->inversionMasAlta()->gain, 2);
+        } else {
+            return number_format(0, 2);
+        }
+    }
+
+
+    public function fechaActivo()
+    {
+        if ($this->inversionMasAlta() != null) {
+            return $this->inversionMasAlta()->created_at->format('Y-m-d');
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Permite obtener de forma bonita el status de un usuario
+     *
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        $estado = 'Inactivo';
+        if ($this->status == '1') {
+            $estado = 'Activo';
+        } elseif ($this->status == '1') {
+            $estado = 'Eliminado';
+        }
+        return $estado;
+    }
+
+    /**
+     * Permite obtener el fee de los retiros
+     *
+     * @return float
+     */
+    public function getFeeWithdraw(): float
+    {
+        $result = 0;
+        $disponible = $this->saldoDisponibleNumber();
+        if ($disponible > 0) {
+            if ($disponible <> 100) {
+                $result = ($disponible * 0.05);
+            } 
+        }
+        return floatval($result);
+    }
+
+    /**
+     * Obtiene el total a retirar de cada usuario
+     *
+     * @return float
+     */
+    public function totalARetirar(): float
+    {
+        $result = 0;
+        $disponible = $this->saldoDisponibleNumber();
+        if ($disponible > 0) {
+            $result = ($disponible - $this->getFeeWithdraw());
+        }
+        return floatval($result);
+    }
+
+    /**
+     * Permite obtener todo el historial de rangos obtenidos
+     *
+     * @return void
+     */
+    public function getRanksRecords()
+    {
+        return $this->hasMany('App\Models\RankRecords', 'iduser');
+    }
+
+    public function feeRetiro()
+    {
+        $result = 0;
+        $disponible = $this->saldoDisponibleNumber();
+        if ($disponible > 0) {
+            if ($disponible <> 100) {
+                $result = 0.05;
+            }
+        }
+        return floatval($result * 100);
+    }
+}

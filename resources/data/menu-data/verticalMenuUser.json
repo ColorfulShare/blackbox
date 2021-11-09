@@ -45,8 +45,8 @@
           "slug": ""
         },
         {
-          "url": "/",
-          "name": "Usuarios",
+          "url": "/wallet/IndexWallet",
+          "name": "Wallet",
           "icon": "circle",
           "slug": ""
         }

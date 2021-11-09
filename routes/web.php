@@ -25,8 +25,10 @@ use App\Http\Controllers\OrdenPurchasesController;
 use App\Http\Controllers\DoubleAutenticationController;
 use App\Http\Controllers\InversionController;
 use App\Http\Controllers\ImpersonateController;
+use App\Http\Controllers\LiquidationController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\RendimientoController;
+use App\Http\Controllers\WalletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,20 +71,20 @@ Route::get('/storage-link', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::group(['prefix' => 'dashboard'], function(){
-         //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
+    Route::group(['prefix' => 'dashboard'], function () {
+        //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
         Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
         Route::patch('/verifyAccount/{user}', [UserController::class, 'verifyAccount'])->name('verify-account');
-     });
+    });
 
-     //RUTAS ADMIN
-    Route::middleware('admin')->group(function(){
+    //RUTAS ADMIN
+    Route::middleware('admin')->group(function () {
 
         Route::put('/cambiar-porcentaje', [UserController::class, 'cambiarPorcentaje'])->name('cambiarPorcentaje');
         Route::post('/pagar-red', [InversionController::class, 'pagarRed'])->name('pagarRed');
 
         //USER
-        Route::prefix('user')->group(function(){
+        Route::prefix('user')->group(function () {
             Route::get('user-list', [UserController::class, 'listUser'])->name('users.list-user');
             Route::post('/impersonate/{user}/start', [ImpersonateController::class, 'start'])->name('impersonate.start');
             Route::get('/activacion', [UserController::class, 'activacion'])->name('user.activacion');
@@ -99,7 +101,7 @@ Route::middleware('auth')->group(function () {
     //
 
     //User
-    Route::prefix('user')->group(function(){
+    Route::prefix('user')->group(function () {
         Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
         Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
     });
@@ -293,6 +295,21 @@ Route::group(['prefix' => 'table'], function () {
     Route::get('datatable/basic', [TableController::class, 'datatable_basic'])->name('datatable-basic');
     Route::get('datatable/advance', [TableController::class, 'datatable_advance'])->name('datatable-advance');
 });
+
+
+/* Wallets */
+Route::group(['prefix' => 'wallet'], function () {
+    Route::get('IndexWallet', [WalletController::class, 'indexWallet'])->name('wallet.IndexWallet');
+
+    Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
+
+    Route::post('/process', [LiquidactionController::class, 'procesarLiquidacion'])->name('settlement.process');
+    Route::post('/process-retirement', [LiquidactionController::class, 'procesarSocilitud'])->name('settlement.retirement');
+
+    Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
+});
+
+
 /* Route Tables */
 
 /* Route Pages */
