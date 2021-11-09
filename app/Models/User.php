@@ -72,108 +72,12 @@ class User extends Authenticatable
         'expired_status'
     ];
 
-    public function inversiones()
-    {
-        return $this->hasMany('App\Models\Inversion', 'iduser');
-    }
-
-    public function wallets()
-    {
-        return $this->hasMany('App\Models\Wallet', 'iduser');
-    }
-
-    public static function getUniqueReferralCode()
-    {
-        do {
-            $code = Str::random(7);
-        } while (User::where('referral_code', $code)->exists());
-        return $code;
-    }
-
-    public static function getUniqueAdminRedReferralCode()
-    {
-        do {
-            $codeAdminRed = Str::random(7);
-        } while (User::where('referral_admin_red_code', $codeAdminRed)->exists());
-        return $codeAdminRed;
-    }
-
-    public function contadorExpiredStatus()
-    {
-        $fechaAntigua  = \Carbon\Carbon::now();
-        $fechaReciente = $this->expired_status;
-
-        $cantidadDias = $fechaAntigua->diffInDays($fechaReciente);
-
-        return $cantidadDias;
-    }
-
-
 
     public function saldoDisponibleFormat()
     {
         return '$ ' . number_format($this->saldoDisponible(), 2);
     }
 
-    public function estado()
-    {
-        if ($this->status == '0') {
-            return "Inactivo";
-        } elseif ($this->status == '1') {
-            return "Activo";
-        } elseif ($this->status == '2') {
-            return "Eliminado";
-        }
-    }
-
-    public function referidos()
-    {
-        return $this->hasMany('App\Models\User', 'referred_by');
-    }
-
-    public function refirio()
-    {
-        return $this->belongsTo('App\Models\User', 'referred_by');
-    }
-    /**
-     * Permite obtener todas la liquidaciones que tengo
-     *
-     * @return void
-     */
-    public function getLiquidate()
-    {
-        return $this->hasMany('App\Models\Liquidaction', 'iduser');
-    }
-
-    /**
-     * Permite obtener las ordenes de servicio asociada a una categoria
-     *
-     * @return void 
-     */
-   
-
-    public function sendPasswordResetNotification($token)
-    {
-        // Your your own implementation.
-        $this->notify(new ResetPasswordNotification($this, $token));
-    }
-
-    public function inversionMasAlta()
-    {
-        return $this->inversiones->where('status', 1)->sortByDesc('id')->first();
-        //->sortByDesc('invertido')
-    }
-
-    public function montoInvertido()
-    {
-        $monto = 0;
-        foreach ($this->inversiones as $inversion) {
-            if ($inversion->status == 1) {
-                $monto += $inversion->invertido;
-            }
-        }
-        return number_format($monto, 2);
-    }
 
 
     public function saldoDisponible()
@@ -201,31 +105,6 @@ class User extends Authenticatable
     }
 
 
-    public function fechaActivo()
-    {
-        if ($this->inversionMasAlta() != null) {
-            return $this->inversionMasAlta()->created_at->format('Y-m-d');
-        } else {
-            return "";
-        }
-    }
-
-    /**
-     * Permite obtener de forma bonita el status de un usuario
-     *
-     * @return string
-     */
-    public function getStatus(): string
-    {
-        $estado = 'Inactivo';
-        if ($this->status == '1') {
-            $estado = 'Activo';
-        } elseif ($this->status == '1') {
-            $estado = 'Eliminado';
-        }
-        return $estado;
-    }
-
     /**
      * Permite obtener el fee de los retiros
      *
@@ -238,7 +117,7 @@ class User extends Authenticatable
         if ($disponible > 0) {
             if ($disponible <> 100) {
                 $result = ($disponible * 0.05);
-            } 
+            }
         }
         return floatval($result);
     }
@@ -256,16 +135,6 @@ class User extends Authenticatable
             $result = ($disponible - $this->getFeeWithdraw());
         }
         return floatval($result);
-    }
-
-    /**
-     * Permite obtener todo el historial de rangos obtenidos
-     *
-     * @return void
-     */
-    public function getRanksRecords()
-    {
-        return $this->hasMany('App\Models\RankRecords', 'iduser');
     }
 
     public function feeRetiro()
