@@ -113,9 +113,11 @@ class DashboardController extends Controller
     
       try {
         DB::beginTransaction();
-
+        
         $user = Auth::User();
-
+        $user->type = $request->type;
+        $user->save();
+        
         $orden = OrdenPurchase::create([
             'user_id' => $user->id,
             'amount' => $request->monto,

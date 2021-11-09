@@ -31,6 +31,6 @@ class CreateMessageTicketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('message_tickets');
+        Schema::dropIfExists('message_ticket');
     }
 }

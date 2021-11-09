@@ -13,6 +13,7 @@ use App\Models\Wallet;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Porcentaje;
+use Carbon\Carbon;
 
 class InversionController extends Controller
 {
@@ -63,16 +64,25 @@ class InversionController extends Controller
             $inversion = Inversion::create([
                 'user_id'=> $ordenpurchase->user_id,
                 //'package_id'=>$ordenpurchase->package_id,
-                'orden_purchases_id'=>$ordenpurchase->id,
-                'invested'=>$ordenpurchase->amount + $ordenpurchase->fee,
-                'capital'=>$ordenpurchase->amount + $ordenpurchase->fee,
+                //'orden_purchases_id'=>$ordenpurchase->id,
+                'invested'=>$ordenpurchase->amount,
+                'capital'=>$ordenpurchase->amount,
                 'gain'=>0,
                 'status'=>1
             ]);
 
+            $ordenpurchase->inversion_id = $inversion->id;
+            $ordenpurchase->save();
+
             if($comision == true){
                 $users = $this->getDataFather($user, 6);
                 $this->bonoUnilevel($users, $user, $inversion->id);
+            }
+
+            //BONO DIRECTO
+            
+            if(isset($user->refirio) && $user->refirio->type == 'red'){
+                $this->bonoDirecto($inversion, $user);
             }
             
             DB::commit();
@@ -84,58 +94,6 @@ class InversionController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-     /**
-     * Paga el bono unilevel hasta el nivel 6
-     *
-     * @param  Collection  $users lista de usuarios a pagar el bono
-     * @param  User  $usuario usuario el cual produce el bono
-     * @param  integer  $idInversion
-     * @return \Illuminate\Http\Response
-     */
     public function bonoUnilevel(Collection $users, $usuario , $idInversion=null)
     {
         foreach($users as $user){
@@ -158,7 +116,7 @@ class InversionController extends Controller
                 'amount' => $monto,
                 'descripcion' => 'Bono unilevel nivel '.$user->nivel. ' del usuario '.$usuario->email,
                 'status' => 0,
-                //'inversion_id' => $idInversion
+                'inversion_id' => $idInversion
             ]);
         }
 
@@ -190,6 +148,70 @@ class InversionController extends Controller
             DB::rollback();
 
             Log::error('InversionController - pagarRed -> Error: '.$th);
+            abort(500, "Ocurrio un error, contacte con el administrador");
+        }
+    }
+
+    public function bonoContruccion()
+    {
+        try {
+            DB::beginTransaction();
+
+            $users = User::whereHas('refirio', function($user){
+                $user->where('type', 'profesional');
+            })->get();
+        
+            $inicioDelMes = Carbon::now()->subMonth(1)->startOfMonth();
+            $finalDelMes = Carbon::now()->subMonth(1)->endOfMonth();
+            
+            foreach($users as $user){
+                //wallets
+                $wallets = $user->wallets->whereBetween('created_at', [$inicioDelMes, $finalDelMes]);
+                
+                foreach($wallets as $wallet){
+
+                    Wallet::create([
+                        'user_id' => $user->refirio->id,
+                        'amount' => $wallet->amount * 0.10,
+                        'descripcion' => 'Bono Construnccion del usuario '.$user->email,
+                        'status' => 0,
+                        'percentage' => 0.10,
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return 'listo';
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+
+            Log::error('InversionController - bonoContruccion -> Error: '.$th);
+            abort(500, "Ocurrio un error, contacte con el administrador");
+        }
+    }
+
+    public function bonoDirecto(Inversion $inversion, User $user)
+    {
+        try {
+            DB::beginTransaction();
+
+            Wallet::create([
+                'user_id' => $user->refirio->id,
+                'amount' => $inversion->invested * 0.03,
+                'descripcion' => 'Bono Directo del usuario '.$user->email,
+                'inversion_id' => $inversion->id,
+                'percentage' => 0.03,
+                'status' => 0
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+
+            Log::error('InversionController - bonoDirecto -> Error: '.$th);
             abort(500, "Ocurrio un error, contacte con el administrador");
         }
     }

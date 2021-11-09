@@ -141,6 +141,12 @@
       ]
     },
     {
+      "url": "rendimientos",
+      "name": "Rendimientos",
+      "icon": "alert-circle",
+      "slug": "rendimiento.index"
+    },
+    {
       "url": "/tickets/ticket-list-admin",
       "name": "Tickets",
       "icon": "alert-circle",

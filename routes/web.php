@@ -26,6 +26,7 @@ use App\Http\Controllers\DoubleAutenticationController;
 use App\Http\Controllers\InversionController;
 use App\Http\Controllers\ImpersonateController;
 use App\Http\Controllers\TicketsController;
+use App\Http\Controllers\RendimientoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/activacion', [UserController::class, 'activacion'])->name('user.activacion');
             Route::post('/activar', [UserController::class, 'activar'])->name('user.activar');
         });
+
+        //RENDIMIENTOS
+        Route::prefix('rendimientos')->group(function ()
+        {
+            Route::get('/', [RendimientoController::class, 'index'])->name('rendimiento.index');
+            Route::post('/pagarrendimiento', [RendimientoController::class, 'savePorcentage'])->name('rendimiento.save.porcentage');
+        });
     });
     //
 
@@ -127,7 +135,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [InversionController::class, 'index'])->name('inversiones.index');
     });
 });
-
+    //BONOSS
+    Route::get('/bonoContruccion', [InversionController::class, 'bonoContruccion'])->name('bonoContruccion');
 
 Auth::routes(['verify' => true]);
 

@@ -127,4 +127,20 @@ class User extends Authenticatable
             return "Eliminado";
         }
     }
+
+    public function referidos()
+    {
+        return $this->hasMany('App\Models\User', 'referred_by');
+    }
+
+    public function refirio()
+    {
+        return $this->belongsTo('App\Models\User', 'referred_by');
+    }
+
+    public function inversionMasAlta()
+    {
+        return $this->inversiones->where('status', 1)->sortByDesc('id')->first();
+        //->sortByDesc('invertido')
+    }
  }

@@ -4,6 +4,7 @@ return [
     "Anualidad" => "Anualidad",
     "Tienda" => "Tienda",
     "Inversiones" => "Inversiones",
+    "Rendimientos" => "Rendimientos",
 
     "Apps & Pages" => "Apps & Pages",
     "User Interface" => "User Interface",
