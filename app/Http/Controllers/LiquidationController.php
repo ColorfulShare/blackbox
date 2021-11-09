@@ -57,19 +57,6 @@ class LiquidationController extends Controller
 
         ]);
 
-        // $concepto = 'Liquidacion Reservada - Motivo: '.$comentario;
-        // $arrayWallet =[
-        //     'iduser' => $liquidacion->iduser,
-        //     'orden_purchases_id' => null,
-        //     'referred_id' => $liquidacion->iduser,
-        //     'monto' => $liquidacion->monto_bruto,
-        //     'descripcion' => $concepto,
-        //     'status' => 3,
-        //     'tipo_transaction' => 0,
-        // ];
-
-        // $this->walletController->saveWallet($arrayWallet);
-
         $liquidacion->status = 2;
         $liquidacion->save();
     }
@@ -100,11 +87,11 @@ class LiquidationController extends Controller
 
             $bruto = $comisiones->sum('monto');
 
-            if ($bruto < 25) {
+            if ($bruto < 100) {
                 return 0;
             }
 
-            $feed = ($bruto * 0.06);
+            $feed = ($bruto * 0.05);
             $total = ($bruto - $feed);
 
             $arrayLiquidation = [
@@ -247,8 +234,6 @@ class LiquidationController extends Controller
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
-
-
 
 
 

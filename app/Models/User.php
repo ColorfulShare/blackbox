@@ -162,10 +162,7 @@ class User extends Authenticatable
      *
      * @return void 
      */
-    public function getUserOrden()
-    {
-        return $this->belongsTo('App\Models\OrdenPurchases', 'id', 'iduser');
-    }
+   
 
     public function sendPasswordResetNotification($token)
     {
@@ -220,21 +217,6 @@ class User extends Authenticatable
         }
     }
 
-    public function progreso()
-    {
-        if (isset($this->inversionMasAlta()->max_ganancia) && isset($this->inversionMasAlta()->restante)) {
-            $total = $this->inversionMasAlta()->max_ganancia - $this->inversionMasAlta()->restante;
-
-            if ($this->inversionMasAlta()->max_ganancia != null && $this->inversionMasAlta()->max_ganancia != 0) {
-                $operacion = ($total * 100) / $this->inversionMasAlta()->max_ganancia;
-            } else {
-                $operacion = 0;
-            }
-        } else {
-            $operacion = 0;
-        }
-        return $operacion;
-    }
 
     public function fechaActivo()
     {
@@ -271,11 +253,9 @@ class User extends Authenticatable
         $result = 0;
         $disponible = $this->saldoDisponibleNumber();
         if ($disponible > 0) {
-            if ($disponible < 250) {
-                $result = ($disponible * 0.085);
-            } else {
-                $result = ($disponible * 0.045);
-            }
+            if ($disponible <> 250) {
+                $result = ($disponible * 0.05);
+            } 
         }
         return floatval($result);
     }
@@ -310,10 +290,8 @@ class User extends Authenticatable
         $result = 0;
         $disponible = $this->saldoDisponibleNumber();
         if ($disponible > 0) {
-            if ($disponible < 250) {
-                $result = 0.085;
-            } else {
-                $result = 0.045;
+            if ($disponible <> 250) {
+                $result = 0.05;
             }
         }
         return floatval($result * 100);
