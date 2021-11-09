@@ -72,17 +72,64 @@ class User extends Authenticatable
         'expired_status'
     ];
 
+    public function inversiones()
+    {
+        return $this->hasMany('App\Models\Inversion', 'iduser');
+    }
+
+    public function wallets()
+    {
+        return $this->hasMany('App\Models\Wallet', 'iduser');
+    }
+
+ 
+    public function contadorExpiredStatus()
+    {
+        $fechaAntigua  = \Carbon\Carbon::now();
+        $fechaReciente = $this->expired_status;
+
+        $cantidadDias = $fechaAntigua->diffInDays($fechaReciente);
+
+        return $cantidadDias;
+    }
+
+
 
     public function saldoDisponibleFormat()
     {
         return '$ ' . number_format($this->saldoDisponible(), 2);
     }
 
-
-
-    public function saldoDisponible()
+    public function estado()
     {
-        return number_format($this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('monto'), 2);
+        if ($this->status == '0') {
+            return "Inactivo";
+        } elseif ($this->status == '1') {
+            return "Activo";
+        } elseif ($this->status == '2') {
+            return "Eliminado";
+        }
+    }
+
+
+    /**
+     * Permite obtener todas las ordenes de compra de saldo realizadas
+     *
+     * @return void
+     */
+    public function getWallet()
+    {
+        return $this->hasMany('App\Models\Wallet', 'iduser');
+    }
+
+    /**
+     * Permite obtener todas la liquidaciones que tengo
+     *
+     * @return void
+     */
+    public function getLiquidate()
+    {
+        return $this->hasMany('App\Models\Liquidaction', 'iduser');
     }
 
     /**
@@ -92,18 +139,15 @@ class User extends Authenticatable
      */
     public function saldoDisponibleNumber(): float
     {
-        return $this->wallets->where('status', 0)->where('tipo_transaction', 0)->sum('monto');
+        return $this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('monto');
     }
 
-    public function gananciaActual()
+
+ 
+    public function saldoDisponible()
     {
-        if (isset($this->inversionMasAlta()->gain) && $this->inversionMasAlta()->gain != null) {
-            return number_format($this->inversionMasAlta()->gain, 2);
-        } else {
-            return number_format(0, 2);
-        }
+        return number_format($this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('monto'), 2);
     }
-
 
     /**
      * Permite obtener el fee de los retiros
@@ -117,7 +161,7 @@ class User extends Authenticatable
         if ($disponible > 0) {
             if ($disponible <> 100) {
                 $result = ($disponible * 0.05);
-            }
+            } 
         }
         return floatval($result);
     }
@@ -136,6 +180,8 @@ class User extends Authenticatable
         }
         return floatval($result);
     }
+
+  
 
     public function feeRetiro()
     {
