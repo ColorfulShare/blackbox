@@ -253,7 +253,7 @@ class User extends Authenticatable
         $result = 0;
         $disponible = $this->saldoDisponibleNumber();
         if ($disponible > 0) {
-            if ($disponible <> 250) {
+            if ($disponible <> 100) {
                 $result = ($disponible * 0.05);
             } 
         }
@@ -290,7 +290,7 @@ class User extends Authenticatable
         $result = 0;
         $disponible = $this->saldoDisponibleNumber();
         if ($disponible > 0) {
-            if ($disponible <> 250) {
+            if ($disponible <> 100) {
                 $result = 0.05;
             }
         }
