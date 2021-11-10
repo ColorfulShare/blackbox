@@ -67,13 +67,15 @@
     @include('wallet.componentes.modalInfo')
 
     <script>
-        let vm_withdraw = new Object({
-            wallet: '',
-            idliquidacion: 0
+        const object1 = {
+            a: 'somestring',
+            b: 42,
+            c: false
+        };
 
-        })
+        console.log(Object.values(object1));
+        // expected output: Array ["somestring", 42, false]
 
-        console.log(vm_withdraw.wallet);
 
         // Funcion para desaparecer el boton mientras no haya nada en el input
         document.getElementById("show").style.visibility = "hidden";
@@ -86,8 +88,27 @@
         let getValueInput = () => {
             let wallet = document.getElementById("to").value;
             document.getElementById("wallet").innerHTML = wallet;
-
         };
+
+        let sendCodeEmail = () => {
+            let url = "{{route('send-code-email', wallet)}}";
+            axios.get(url, []).then((response) => {
+                if (response.data > 0) {
+                    this.idliquidacion = response.data
+                    toastr.success("Codigo Enviado, Revise su correo", '¡Genial!', {
+                        "progressBar": true
+                    });
+                } else {
+                    toastr.error("El monto solicitado es menor al minimo permitido 50$", '¡Error!', {
+                        "progressBar": true
+                    });
+                }
+            }).catch(function(_error) {
+                toastr.error("Ocurrio un problema con la solicitud", '¡Error!', {
+                    "progressBar": true
+                });
+            })
+        }
     </script>
 
 </div>
