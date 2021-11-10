@@ -31,24 +31,24 @@ class DoubleAutenticationController extends Controller
     /**
      * Permite verificar si un usuario ya tiene su 2Fact
      *
-     * @param integer $iduser
+     * @param integer $user_id
      * @return string
      */
-    public function verificar2fact($iduser): string
+    public function verificar2fact($user_id): string
     {
         $check2Fact = User::where([
-            ['id', '=', $iduser],
+            ['id', '=', $user_id],
             ['token_google', '!=', null],
             ['activar_2fact', '=', '1'],
         ])->first();
         
         $result = '';
         if ($check2Fact == null) {
-            User::where('id', '=', $iduser)->update([
+            User::where('id', '=', $user_id)->update([
                 'token_google' => (new Google2FA)->generateSecretKey(),
                 //'activar_2fact' => "1"
             ]);
-            $user = User::find($iduser);
+            $user = User::find($user_id);
             $result = $this->createUserUrlQR($user);
         }
         return $result;
@@ -106,13 +106,13 @@ class DoubleAutenticationController extends Controller
     /**
      * Permite verificar si el codigo Es correcto
      *
-     * @param integer $iduser
+     * @param integer $user_id
      * @param integer $code
      * @return boolean
      */
-    public function checkCode($iduser, $code): bool
+    public function checkCode($user_id, $code): bool
     {
-        $user = User::find($iduser);
+        $user = User::find($user_id);
         $result = false;
         if ((new Google2FA())->verifyKey($user->token_google, $code)) {
             $result = true;

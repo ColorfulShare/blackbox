@@ -16,8 +16,8 @@ class CreateLogWalletsTable extends Migration
 
         Schema::create('log_wallets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('iduser')->unsigned();
-            $table->foreign('iduser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('referred_id')->unsigned()->nullable();
             $table->foreign('referred_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('orden_purchases_id')->unsigned()->nullable();

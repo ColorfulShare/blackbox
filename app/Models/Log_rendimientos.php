@@ -20,7 +20,7 @@ class Log_rendimientos extends Model
      */
     public function getInversionesUser()
     {
-        return $this->belongsTo('App\Models\User', 'iduser', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 }
 

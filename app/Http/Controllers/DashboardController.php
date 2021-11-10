@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\InversionController;
 use App\Notifications\userActivacionExitosa;
 use App\Models\OrdenPurchase;
+use App\Models\Inversion;
 
 class DashboardController extends Controller
 {
@@ -27,15 +28,21 @@ class DashboardController extends Controller
     $linkReferido = route('referral.link', ['referralCode' => auth()->user()->referral_code]);
     $linkAdminRed = route('referral.Admin.Red.link', ['referral_admin_red_code' => auth()->user()->referral_admin_red_code]);
 
-    $porcentaje = Porcentaje::orderBy('id', 'desc')->first();
-    $users = null;
-    if($porcentaje == null){
-      $porcentaje = 0.00;
-    }else{
-      $porcentaje = $porcentaje->porcentaje;
+    if(Auth::user()->admin == '1'){
 
-      if($porcentaje >= 0.20){
-        $users = User::orderBy('id', 'desc')->where('status', '1')->get();
+      $users = User::orderBy('id', 'desc')->where('status', '1')->whereHas('inversiones', function($inversion){
+        $inversion->where('progress', '>=', 0.20);
+      })->get();
+
+      $porcentaje = 0;
+      
+    }else{
+      $inversion = Auth::user()->inversionMasAlta();
+      $users = null;
+      if($inversion == null){
+        $porcentaje = 0.00;
+      }else{
+        $porcentaje = $inversion->progress;
       }
     }
 
@@ -81,7 +88,7 @@ class DashboardController extends Controller
                     
         /*
         if( (Auth::user()->admin != 1) ){
-            $ordenes = $ordenes->whereIn('iduser', $usuarios);
+            $ordenes = $ordenes->whereIn('user_id', $usuarios);
         }
         */
         $ordenes = $ordenes->whereBetween('created_at', [$fecha_ini, $fecha_fin])

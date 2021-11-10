@@ -38,12 +38,12 @@ class TicketsController extends Controller
     {
 
         Ticket::create([
-            'iduser' => Auth::id(),
+            'user_id' => Auth::id(),
             'issue' => request('issue'),
           
         ]);
 
-        $ticket_create = Ticket::where('iduser', Auth::id())->orderby('created_at', 'DESC')->take(1)->get();
+        $ticket_create = Ticket::where('user_id', Auth::id())->orderby('created_at', 'DESC')->take(1)->get();
         $id_ticket = $ticket_create[0]->id;
 
         MessageTicket::create([
@@ -96,7 +96,7 @@ class TicketsController extends Controller
     public function listUser(Request $request)
     {
         //Aqui llamo todos los tickets de un usuario
-        $ticket = Ticket::where('iduser', Auth::id())->get();
+        $ticket = Ticket::where('user_id', Auth::id())->get();
         //recorro dicho tickets
         foreach ($ticket as $ticke) {
             //Verifico el ultimos mensaje obtenido de un ticket en especifico
@@ -165,7 +165,7 @@ class TicketsController extends Controller
         $ticket->save();
 
         MessageTicket::create([
-            'id_user' => $ticket->iduser,
+            'id_user' => $ticket->user_id,
             'id_admin' => Auth::id(),
             'id_ticket' => $ticket->id,
             'type' => '1',
@@ -226,14 +226,14 @@ class TicketsController extends Controller
     /**
      * Permite obtener la cantidad de Tickets que tiene un usuario
      *
-     * @param integer $iduser
+     * @param integer $user_id
      * @return integer
      */
-    public function getTotalTickets($iduser): int
+    public function getTotalTickets($user_id): int
     {
         try {
-            $Tickets = Ticket::where('iduser', $iduser)->get()->count('id');
-            if ($iduser == 1) {
+            $Tickets = Ticket::where('user_id', $user_id)->get()->count('id');
+            if ($user_id == 1) {
                 $Tickets = Ticket::all()->count('id');
             }
             return $Tickets;
@@ -245,10 +245,10 @@ class TicketsController extends Controller
     /**
      * Permite obtener el total de Tickets por meses
      *
-     * @param integer $iduser
+     * @param integer $user_id
      * @return array
      */
-    public function getDataGraphiTickets($iduser): array
+    public function getDataGraphiTickets($user_id): array
     {
         try {
             $totalTickets = [];
@@ -265,7 +265,7 @@ class TicketsController extends Controller
             } else {
                 $Tickets = Ticket::select(DB::raw('COUNT(id) as Tickets'))
                     ->where([
-                        ['iduser', '=',  $iduser],
+                        ['user_id', '=',  $user_id],
                         ['status', '>=', 0]
                     ])
                     ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))

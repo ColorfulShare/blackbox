@@ -13,7 +13,7 @@
                 <form action="{{route('liquidation.store')}}" method="post">
                     @csrf
                     <input type="hidden" name="tipo" value="detallada">
-                    <input type="hidden" name="iduser" :value="ComisionesDetalles.iduser">
+                    <input type="hidden" name="user_id" :value="ComisionesDetalles.user_id">
                     <table class="table nowrap scroll-horizontal-vertical table-striped" style="width: 100%">
                         <thead>
                             <tr class="text-center">

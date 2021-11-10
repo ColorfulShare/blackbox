@@ -3,7 +3,7 @@
 
 {{-- contenido --}}
 @section('content')
-@if(Request::post('iduser'))
+@if(Request::post('user_id'))
 <div class="card-header d-flex align-items-center">
     <a href="{{ url()->previous() }}" class="btn btn-dark rounded" style="border: 1px solid #fff;"><b>Regresar</b></a>
 </div>
@@ -19,7 +19,7 @@
             </div>
 
 
-            @if(!Request::post('iduser'))
+            @if(!Request::post('user_id'))
 
             <div class="d-grid gap-2 mt-2 col-12 mx-auto">
                 <a class="btn btn-primary" href="{{route('wallet.withdraw')}}"><span style="font-weight:bold;">RETIRAR</span></a>

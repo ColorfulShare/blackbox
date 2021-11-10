@@ -10,7 +10,7 @@ trait TwoFactor{
     /**
      * Permite verificar si el codigo Es correcto
      *
-     * @param integer $iduser
+     * @param integer $user_id
      * @param integer $code
      * @return boolean
      */

@@ -26,7 +26,7 @@ class LiquidationController extends Controller
     public function reversarRetiro30Min(): bool
     {
         $liquidation = Liquidation::where([
-            ['iduser', '=', Auth::id()],
+            ['user_id', '=', Auth::id()],
             ['status', '=', 0]
         ])->first();
         $result = false;
@@ -69,7 +69,7 @@ class LiquidationController extends Controller
                 session(['intentos_fallidos' => 1]);
             }
             $liquidation = Liquidation::where([
-                ['iduser', '=', Auth::id()],
+                ['user_id', '=', Auth::id()],
                 ['status', '=', 0],
             ])->first();
             if ($liquidation != null) {
@@ -79,7 +79,7 @@ class LiquidationController extends Controller
             $user = Auth::user();
 
             $comisiones = Wallet::where([
-                ['iduser', '=', $user->id],
+                ['user_id', '=', $user->id],
                 ['status', '=', 0],
                 ['liquidado', '=', 0],
                 ['tipo_transaction', '=', 0],
@@ -95,7 +95,7 @@ class LiquidationController extends Controller
             $total = ($bruto - $feed);
 
             $arrayLiquidation = [
-                'iduser' => $user->id,
+                'user_id' => $user->id,
                 'total' => $total,
                 'monto_bruto' => $bruto,
                 'feed' => $feed,
@@ -171,13 +171,13 @@ class LiquidationController extends Controller
 
                 //Verifica si los codigo esta bien
 
-                if (!$this->doubleAuthController->checkCode($liquidation->iduser, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
+                if (!$this->doubleAuthController->checkCode($liquidation->user_id, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
                     session(['intentos_fallidos' => (session('intentos_fallidos') + 1)]);
                     return redirect()->back()->with('msj-danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
                 }
 
                 $accion = 'No Procesada';
-                if (!isset($request->fullname) && !isset($request->iduser) && !isset($request->total)) {
+                if (!isset($request->fullname) && !isset($request->user_id) && !isset($request->total)) {
                     $this->aprovarLiquidacion($idliquidation, '', '');
 
                     $accion = 'Aprobada';
@@ -185,15 +185,15 @@ class LiquidationController extends Controller
 
                     $fullname = auth()->user()->fullname;
 
-                    $iduser = auth()->user()->id;
+                    $user_id = auth()->user()->id;
                     $total = $liquidation->total;
                 } else {
                     $fullname = $request->fullname;
-                    $iduser = $request->iduser;
+                    $user_id = $request->user_id;
                     $total = str_replace(',', '.', str_replace('.', '', $request->total));
                     $total = round($total, 2);
                     // dd($total);
-                    // dd("ID Liquidacion " . $idliquidation, "Fulll Name " . $fullname, "ID Usuario " . $iduser, "Total " . $total);
+                    // dd("ID Liquidacion " . $idliquidation, "Fulll Name " . $fullname, "ID Usuario " . $user_id, "Total " . $total);
 
                     if ($request->action == 'reverse') {
                         $accion = 'Reversada';
@@ -215,9 +215,9 @@ class LiquidationController extends Controller
                 }
 
                 $concepto = 'Liquidacion del usuario ' . $fullname . ' por un monto de ' . $total;
-                $referred_id = User::find($iduser)->referred_id;
+                $referred_id = User::find($user_id)->referred_id;
                 $arrayWallet = [
-                    'iduser' => $iduser,
+                    'user_id' => $user_id,
                     'referred_id' => $referred_id,
                     'monto' =>  $total,
                     'descripcion' => $concepto,
@@ -247,11 +247,11 @@ class LiquidationController extends Controller
 
             $fullname = auth()->user()->fullname;
 
-            $iduser = auth()->user()->id;
+            $user_id = auth()->user()->id;
             $total = $liquidation->total;
 
             $fullname = $request->fullname;
-            $iduser = $request->iduser;
+            $user_id = $request->user_id;
             $total = str_replace(',', '.', str_replace('.', '', $request->total));
             $total = round($total, 2);
 
@@ -266,9 +266,9 @@ class LiquidationController extends Controller
 
 
             $concepto = 'Liquidacion del usuario ' . $fullname . ' por un monto de ' . $total;
-            $referred_id = User::find($iduser)->referred_id;
+            $referred_id = User::find($user_id)->referred_id;
             $arrayWallet = [
-                'iduser' => $iduser,
+                'user_id' => $user_id,
                 'referred_id' => $referred_id,
                 'monto' =>  $total,
                 'descripcion' => $concepto,
