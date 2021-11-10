@@ -74,12 +74,12 @@ class User extends Authenticatable
 
     public function inversiones()
     {
-        return $this->hasMany('App\Models\Inversion', 'iduser');
+        return $this->hasMany('App\Models\Inversion', 'user_id');
     }
 
     public function wallets()
     {
-        return $this->hasMany('App\Models\Wallet', 'iduser');
+        return $this->hasMany('App\Models\Wallet', 'user_id');
     }
 
     public static function getUniqueReferralCode()
@@ -142,7 +142,7 @@ class User extends Authenticatable
      */
     public function getLiquidate()
     {
-        return $this->hasMany('App\Models\Liquidaction', 'iduser');
+        return $this->hasMany('App\Models\Liquidaction', 'user_id');
     }
 
     /**
@@ -178,7 +178,7 @@ class User extends Authenticatable
 
     public function saldoDisponible()
     {
-        return number_format($this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('monto'), 2);
+        return number_format($this->wallets->where('status', 0)->sum('amount'), 2);
     }
 
     /**
@@ -188,7 +188,7 @@ class User extends Authenticatable
      */
     public function saldoDisponibleNumber(): float
     {
-        return $this->wallets->where('status', 0)->where('tipo_transaction', 0)->sum('monto');
+        return $this->wallets->where('status', 0)->sum('amount');
     }
 
     public function gananciaActual()
@@ -265,7 +265,7 @@ class User extends Authenticatable
      */
     public function getRanksRecords()
     {
-        return $this->hasMany('App\Models\RankRecords', 'iduser');
+        return $this->hasMany('App\Models\RankRecords', 'user_id');
     }
 
     public function feeRetiro()

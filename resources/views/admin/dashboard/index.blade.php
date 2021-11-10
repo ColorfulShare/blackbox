@@ -66,35 +66,15 @@ function linkAdmin(){
             <h2 class="mt-1 mb-0"><b>Ganacia Actual</b></h2>
               @if(auth()->user()->admin == 1)
                 <div class="">
+                  {{--
                     @if(($porcentaje * 100) < 20)
                       <button class="btn btn-primary bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalPorcentajeGanancia">Cambiar %</button>
                     @else
+                  --}}
                       <button class="btn btn-success bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalUsuariosActivos">Usuarios activos</button>
-                    @endif
+                    {{--@endif--}}
                 </div>
               @endif
-          </div>
-
-          <div class="card-sub d-flex align-items-center ">
-              <h1 class="gold text-bold-700 mb-0"><b>$ </b></h1>
-          </div>
-
-          <div class="d-flex align-items-center">
-
-              <div class="progress ml-2 mt-5" style="height: 25px;width: 100%;">
-                  <div id="bar" class="progress-bar active" role="progressbar" aria-valuenow="0"
-                      aria-valuemin="0" aria-valuemax="100" style="width: {{($porcentaje * 10000) / 20}}%">
-                  </div>
-              </div>
-
-              <div class="card-sub d-flex align-items-center mt-5">
-                  <p class="text-bold-700 mb-0">{{$porcentaje * 100}}% </p>
-              </div>
-
-          </div>
-
-          <div class="card-sub align-items-center mt-0 ">
-              <h6 class="text-bold-700 mb-0"><b>Activo </b></h6>
           </div>
         </div>
       </div>
@@ -553,7 +533,9 @@ function linkAdmin(){
 <!-- Dashboard Analytics end -->
 
 <!-- MODAL PARA ACTUALIZAR PORCENTAJE DE GANANCIA -->
+
 @if(auth()->user()->admin == 1)
+    {{--
     <div class="modal fade" id="modalPorcentajeGanancia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content bg-lp" >
@@ -576,7 +558,7 @@ function linkAdmin(){
         </div>
         </div>
     </div>
-
+    --}}
     <!-- MODAL PARA LA LISTA DE USUARIOS -->
 
     <div class="modal fade" id="modalUsuariosActivos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

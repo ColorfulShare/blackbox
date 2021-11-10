@@ -31,15 +31,7 @@
         <div class="card-body text-center">
           <div class="card-header d-flex align-items-center text-right pb-0 pt-0 white">
             <h2 class="mt-1 mb-0"><b>Ganacia Actual</b></h2>
-              @if(auth()->user()->admin == 1)
-                <div class="">
-                    @if(($porcentaje * 100) < 20)
-                      <button class="btn btn-primary bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalPorcentajeGanancia">Cambiar %</button>
-                    @else
-                      <button class="btn btn-success bg-white mt-1 waves-effect waves-light text-white ml-auto" data-bs-toggle="modal" data-bs-target="#modalUsuariosActivos">Usuarios activos</button>
-                    @endif
-                </div>
-              @endif
+        
           </div>
 
           <div class="card-sub d-flex align-items-center ">
@@ -359,84 +351,6 @@
 </section>
 <!-- Dashboard Analytics end -->
 
-<!-- MODAL PARA ACTUALIZAR PORCENTAJE DE GANANCIA -->
-@if(auth()->user()->admin == 1)
-    <div class="modal fade" id="modalPorcentajeGanancia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content bg-lp" >
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Porcentaje</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{route('cambiarPorcentaje')}}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body bg-lp" >
-                    <label for="porcentaje" class="text-white">Ingrese el nuevo porcentaje de ganancia</label>
-                    <input type="number" step="any" name="porcentaje" class="form-control" required>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary text-white">Guardar</button>
-                </div>
-            </form>
-        </div>
-        </div>
-    </div>
-
-    <!-- MODAL PARA LA LISTA DE USUARIOS -->
-
-    <div class="modal fade" id="modalUsuariosActivos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Lista de usuarios activos</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <form action="{{route('pagarRed')}}" method="POST">
-          @csrf
-          <div class="modal-body">
-            <table class="table">
-              <thead>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Número de cuenta</th>
-                <th>Pagar red</th>
-              </thead>
-              <tbody>
-                @if($users != null)
-                  @forelse($users as $user)
-                  <tr>
-                    <td>{{$user->firstname}} {{$user->lastname}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->wallet}}</td>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" name="user{{$user->id}}" type="checkbox" value="{{$user->id}}" id="checkPagarRed{{$user->id}}" checked>
-                      </div>
-                    </td>
-                  </tr>
-                  @empty
-                  <tr>
-                    <td colspan="4" class="text-center">No hay usuarios activos</td>
-                  </tr>
-                  @endforelse
-                @else
-                  <td colspan="4" class="text-center">No hay usuarios activos</td>
-                @endif
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary">Pagar</button>
-          </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-@endif
 @endsection
 
 @section('vendor-script')

@@ -13,7 +13,7 @@
                 <form action="{{route('settlement.retirement')}}" method="post">
                     @csrf
                     <input type="hidden" name="idliquidation" :value="ComisionesDetalles.idliquidaction">
-                    <input type="hidden" name="iduser" :value="ComisionesDetalles.iduser">
+                    <input type="hidden" name="user_id" :value="ComisionesDetalles.user_id">
                     <input type="hidden" name="fullname" :value="ComisionesDetalles.fullname">
                     <input type="hidden" name="total" :value="ComisionesDetalles.total">
 

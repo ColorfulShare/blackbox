@@ -75,8 +75,12 @@ class RendimientoController extends Controller
             if($actual->invested > $inversion->invested){
                 $actual->invested = $actual->invested + $inversion->invested;
             }
+            if(($inversion->progress + $rangoporcentage) >= 0.20){
+                $inversion->progress = 0.20; 
+            }else{
+                $inversion->progress+= $rangoporcentage;
+            }
             
-            $inversion->progress+= $rangoporcentage;
             $inversion->gain = $inversion->invested * $rangoporcentage ;
             $inversion->gain =  $inversion->gain +  $actual->gain ;
     
@@ -107,7 +111,7 @@ class RendimientoController extends Controller
             'percentage' => $porcentaje
         ];
  
-         //$wallet = Wallet::where('user_id',$data['iduser'])->first();
+         //$wallet = Wallet::where('user_id',$data['user_id'])->first();
          return $this->saveWallet($data);
      }
  
@@ -123,7 +127,7 @@ class RendimientoController extends Controller
          /*
          if($wallet == null){
              $new_wallet = new Wallet();
-             $new_wallet->iduser = $data['iduser'];
+             $new_wallet->user_id = $data['user_id'];
              $new_wallet->monto = $data['monto'];
              $new_wallet->descripcion = $data['descripcion'];
              $new_wallet->tipo_comision = $data['tipo_comision'];
