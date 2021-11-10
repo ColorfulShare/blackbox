@@ -16,6 +16,15 @@ use Illuminate\Support\Facades\Mail;
 
 class LiquidationController extends Controller
 {
+
+    public $walletController;
+
+    function __construct()
+    {
+        $this->walletController = new WalletController();
+    }
+
+
     public function withdraw()
     {
         $this->reversarRetiro30Min();
@@ -23,44 +32,11 @@ class LiquidationController extends Controller
     }
 
 
-    public function reversarRetiro30Min(): bool
-    {
-        $liquidation = Liquidation::where([
-            ['iduser', '=', Auth::id()],
-            ['status', '=', 0]
-        ])->first();
-        $result = false;
-        if ($liquidation != null) {
-            $fechaActual = Carbon::now();
-            $fechaCodeCorreo = new Carbon($liquidation->fecha_code);
-            if ($fechaCodeCorreo->diffInMinutes($fechaActual) >= 30) {
-                $this->reversarLiquidacion($liquidation->id, 'Tiempo limite de codigo sobrepasado');
-                $result = true;
-            }
-        }
-        return $result;
-    }
-
-    public function reversarLiquidacion($idliquidation, $comentario)
-    {
-        $liquidacion = Liquidation::find($idliquidation);
-
-        Wallet::where('liquidation_id', $idliquidation)->update([
-            'status' => 0,
-            'liquidation_id' => null,
-        ]);
-
-        LogLiquidation::create([
-            'idliquidation' => $idliquidation,
-            'comentario' => $comentario,
-            'accion' => 'Reservada',
-
-        ]);
-
-        $liquidacion->status = 2;
-        $liquidacion->save();
-    }
-
+    
+    /**
+     * Permite Enviar el codigo
+    
+     */
     public function sendCodeEmail($wallet): int
     {
         try {
@@ -133,171 +109,31 @@ class LiquidationController extends Controller
         }
     }
 
-    public function procesarLiquidacion(Request $request)
+
+
+
+
+
+    /**
+     * Permite reversar los retiros que tienen mas de 30 min activos
+     *
+     * @return bool
+     */
+    public function reversarRetiro30Min(): bool
     {
-        if ($request->action == 'aproved') {
-            $validate = $request->validate([
-                'google_code' => ['required', 'numeric'],
-                'correo_code' => ['required'],
-                'wallet' => ['required']
-            ]);
-        } else {
-            $validate = $request->validate([
-                'comentario' => ['required'],
-                'google_code' => ['required', 'numeric'],
-                'correo_code' => ['required'],
-            ]);
-        }
-        try {
-            if ($validate) {
-
-                $idliquidation = $request->idliquidation;
-                $liquidation = Liquidation::find($idliquidation);
-                $accion = 'No Procesada';
-
-                if ($this->reversarRetiro30Min()) {
-                    return redirect()->back()->with('msj-danger', 'El tiempo limite fue excedido');
-                }
-
-                if (session()->has('intentos_fallidos')) {
-
-                    if (session('intentos_fallidos') >= 3) {
-                        session()->forget('intentos_fallidos');
-                        $request->comentario = 'Demasiados Intento Fallido con los codigo';
-                        $accion = 'Reversada';
-                        $this->reversarLiquidacion($idliquidation, $request->comentario);
-                    }
-                }
-
-                //Verifica si los codigo esta bien
-
-                if (!$this->doubleAuthController->checkCode($liquidation->iduser, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
-                    session(['intentos_fallidos' => (session('intentos_fallidos') + 1)]);
-                    return redirect()->back()->with('msj-danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
-                }
-
-                $accion = 'No Procesada';
-                if (!isset($request->fullname) && !isset($request->iduser) && !isset($request->total)) {
-                    $this->aprovarLiquidacion($idliquidation, '', '');
-
-                    $accion = 'Aprobada';
-                    $request->comentario = '';
-
-                    $fullname = auth()->user()->fullname;
-
-                    $iduser = auth()->user()->id;
-                    $total = $liquidation->total;
-                } else {
-                    $fullname = $request->fullname;
-                    $iduser = $request->iduser;
-                    $total = str_replace(',', '.', str_replace('.', '', $request->total));
-                    $total = round($total, 2);
-                    // dd($total);
-                    // dd("ID Liquidacion " . $idliquidation, "Fulll Name " . $fullname, "ID Usuario " . $iduser, "Total " . $total);
-
-                    if ($request->action == 'reverse') {
-                        $accion = 'Reversada';
-                        $this->reversarLiquidacion($idliquidation, $request->comentario);
-                    } elseif ($request->action == 'aproved') {
-                        $accion = 'Aprobada';
-                        $this->aprovarLiquidacion($idliquidation, $request->hash, $request->comentario);
-                    }
-                }
-
-
-                if ($accion != 'No Procesada') {
-                    $arrayLog = [
-                        'idliquidation' => $idliquidation,
-                        'comentario' => $request->comentario,
-                        'accion' => $accion
-                    ];
-                    DB::table('log_liquidations')->insert($arrayLog);
-                }
-
-                $concepto = 'Liquidacion del usuario ' . $fullname . ' por un monto de ' . $total;
-                $referred_id = User::find($iduser)->referred_id;
-                $arrayWallet = [
-                    'iduser' => $iduser,
-                    'referred_id' => $referred_id,
-                    'monto' =>  $total,
-                    'descripcion' => $concepto,
-                    'status' => 0,
-                    'tipo_transaction' => 1,
-                ];
-                // dd($arrayWallet);
-                $this->walletController->saveWallet($arrayWallet);
-
-                return redirect()->back()->with('msj-success', 'La Liquidacion fue ' . $accion . ' con exito');
+        $liquidation = Liquidation::where([
+            ['iduser', '=', Auth::id()],
+            ['status', '=', 0]
+        ])->first();
+        $result = false;
+        if ($liquidation != null) {
+            $fechaActual = Carbon::now();
+            $fechaCodeCorreo = new Carbon($liquidation->fecha_code);
+            if ($fechaCodeCorreo->diffInMinutes($fechaActual) >= 30) {
+                $this->reversarLiquidacion($liquidation->id, 'Tiempo limite de codigo sobrepasado');
+                $result = true;
             }
-        } catch (\Throwable $th) {
-            Log::error('Liquidaction - saveLiquidation -> Error: ' . $th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
         }
-    }
-
-
-
-
-    public function procesarSocilitud(Request $request)
-    {
-        try {
-
-            $idliquidation = $request->idliquidation;
-            $liquidation = Liquidation::find($idliquidation);
-
-            $fullname = auth()->user()->fullname;
-
-            $iduser = auth()->user()->id;
-            $total = $liquidation->total;
-
-            $fullname = $request->fullname;
-            $iduser = $request->iduser;
-            $total = str_replace(',', '.', str_replace('.', '', $request->total));
-            $total = round($total, 2);
-
-            if ($request->action == 'reverse') {
-                $accion = 'Reversada';
-                $this->reversarLiquidacion($idliquidation, $request->comentario);
-            } elseif ($request->action == 'aproved') {
-                $accion = 'Aprobada';
-                $this->aprovarLiquidacion($idliquidation, $request->hash, $request->comentario);
-            }
-
-
-
-            $concepto = 'Liquidacion del usuario ' . $fullname . ' por un monto de ' . $total;
-            $referred_id = User::find($iduser)->referred_id;
-            $arrayWallet = [
-                'iduser' => $iduser,
-                'referred_id' => $referred_id,
-                'monto' =>  $total,
-                'descripcion' => $concepto,
-                'status' => 0,
-                'tipo_transaction' => 1,
-            ];
-
-            $this->walletController->saveWallet($arrayWallet);
-
-            return redirect()->back()->with('msj-success', 'La Liquidacion fue ' . $accion . ' con exito');
-        } catch (\Throwable $th) {
-            Log::error('Liquidaction - procesarSocilitud -> Error: ' . $th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
-        }
-    }
-
-    public function aprovarLiquidacion($idliquidation, $hash, $comentario)
-    {
-        Liquidation::where('id', $idliquidation)->update([
-            'status' => 1,
-            'hash' => $hash
-        ]);
-
-        LogLiquidation::create([
-            'idliquidation' => $idliquidation,
-            'comentario' => $comentario,
-            'accion' => 'Aprovada',
-        ]);
-
-        Wallet::where('liquidation_id', $idliquidation)->update(['liquidado' => 1]);
+        return $result;
     }
 }

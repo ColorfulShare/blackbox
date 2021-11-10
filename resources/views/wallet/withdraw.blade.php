@@ -1,6 +1,11 @@
 @extends('layouts/contentLayoutMaster')
 
 @section('content')
+
+
+
+
+
 <div id="withdraw">
     <div class=" col-8 offset-md-2">
         <div class="card bg-lp">
@@ -16,7 +21,12 @@
                         </div>
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Dirección</h5>
-                            <input type="text" id="to" placeholder="Introduce aquí la dirección" name="wallet" v-model="wallet" class="form-control">
+
+
+
+                            <input type="text" id="to" placeholder="Introduce aquí la dirección" name="wallet" onkeyup="press()" class="form-control ">
+
+
                         </div>
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Red</h5>
@@ -28,7 +38,7 @@
                         </div>
                         <div class="col-6 col-md-6 mb-1">
                             <h5 class="">Retiro Minimo</h5>
-                            <p class=""> 25 USDT</p>
+                            <p class=""> 100 USDT</p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
                             <h5 class="">Fee de Retiro</h5>
@@ -44,7 +54,9 @@
 
                         </div>
                         <div class="col-6 col-md-6 mb-1">
-                            <button class="btn btn-block btn-primary d" v-show='wallet != ""' v-on:click='openModalDetails'>Retirar</button>
+                            <button class="btn btn-block btn-primary" id="show" data-bs-toggle="modal" data-bs-target="#modalInfo" onclick="getValueInput()">
+                                Retirar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -53,5 +65,30 @@
     </div>
     @include('wallet.componentes.modalAprobar')
     @include('wallet.componentes.modalInfo')
+
+    <script>
+        let vm_withdraw = new Object({
+            wallet: '',
+            idliquidacion: 0
+
+        })
+
+        console.log(vm_withdraw.wallet);
+
+        // Funcion para desaparecer el boton mientras no haya nada en el input
+        document.getElementById("show").style.visibility = "hidden";
+
+        function press() {
+            document.getElementById("show").style.visibility = "visible";
+        }
+
+        //Pasamos el valor del input al modal ModalInfo
+        let getValueInput = () => {
+            let wallet = document.getElementById("to").value;
+            document.getElementById("wallet").innerHTML = wallet;
+
+        };
+    </script>
+
 </div>
 @endsection
