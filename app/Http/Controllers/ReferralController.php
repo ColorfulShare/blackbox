@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReferralController extends Controller
 {
@@ -30,6 +32,9 @@ public function linkAdminRed(Request $request, $referral_admin_red_code)
 
 
     public function referidos(){
-        return view('referidos.index');
+        $id = Auth::user()->id;
+        $referido = User::where('referred_by',$id)->get();
+
+        return view('referidos.index' , compact('referido'));
     }
 }
