@@ -8,16 +8,16 @@
       "slug": "dashboard"
     },
     {
-      "url": "/shop",
-      "name": "Tienda",
-      "icon": "shopping-cart",
-      "slug": "shop"
-    },
-    {
-      "name": "Inversiones",
+      "name": "Anualidad",
       "icon": "file-text",
       "slug": "/",
       "submenu": [
+        {
+          "url": "/shop",
+          "name": "Tienda",
+          "icon": "shopping-cart",
+          "slug": "shop"
+        },
         {
           "url": "/inversiones",
           "name": "Lista",
@@ -33,16 +33,16 @@
       "slug": "/",
       "submenu": [
         {
-          "url": "/",
+          "url": "/genealogy",
           "name": "Matriz",
           "icon": "circle",
-          "slug": ""
+          "slug": "genealogy_type"
         },
         {
-          "url": "/",
+          "url": "user/list/referidos",
           "name": "Referidos",
           "icon": "circle",
-          "slug": ""
+          "slug": "list.referidos"
         },
         {
           "url": "/wallet/IndexWallet",

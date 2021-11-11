@@ -25,6 +25,24 @@
 <!-- Dashboard Analytics Start -->
 <section id="dashboard-analytics">
   <div class="row match-height">
+    <!-- RETIROS -->
+    <div class="col-sm-6 col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-header d-flex align-items-center text-right pb-0 pt-0">
+              <h2 class="mt-1 mb-0 font-weight-light"><b>Saldo disponible</b></h2>
+          </div>
+          
+          <div class="card-sub d-flex align-items-center">
+              <h1 class="mb-0"><b >$ {{Auth::user()->saldoDisponible()}}</b></h1>
+          </div>
+
+          <div class="card-header d-flex align-items-center mt-3">
+              <a class="btn btn-primary" href=""><b>RETIRAR</b></a>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Greetings Card starts -->
     <div class="col-lg-6 col-md-12 col-sm-12">
       <div class="card ">
