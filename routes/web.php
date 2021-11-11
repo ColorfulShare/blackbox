@@ -390,3 +390,5 @@ Route::get('rAdminRed/{referral_admin_red_code}', [ReferralController::class, 'l
 Route::get('/cookie', function () {
     return Cookie::get('referral');
 });
+
+Route::get('/referidos', [ReferralController::class, 'referidos'])->name('referidos.index');

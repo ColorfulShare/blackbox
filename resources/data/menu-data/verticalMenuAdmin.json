@@ -64,10 +64,10 @@
           "slug": ""
         },
         {
-          "url": "/",
+          "url": "/referidos",
           "name": "Referidos",
           "icon": "circle",
-          "slug": ""
+          "slug": "referidos.index"
         },
         {
           "url": "/",
