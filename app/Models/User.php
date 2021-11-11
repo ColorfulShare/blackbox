@@ -72,6 +72,11 @@ class User extends Authenticatable
         'expired_status'
     ];
 
+    // public function fullName()
+    // {
+    //     return $this->firstname . ' '. $this->lastname;
+    // }
+
     public function inversiones()
     {
         return $this->hasMany('App\Models\Inversion', 'user_id');

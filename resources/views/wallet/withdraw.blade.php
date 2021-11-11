@@ -73,9 +73,8 @@
             document.getElementById("wallet").innerHTML = wallet;
         };
 
-
         let sendCodeEmail = () => {
-            url = "/wallet/"+document.getElementById("to").value+"/sendcodeemail"
+            url = "/wallet/" + document.getElementById("to").value + "/sendcodeemail"
             fetch(url, []).then((response) => {
                 if (response.data > 0) {
                     idliquidacion = response.data

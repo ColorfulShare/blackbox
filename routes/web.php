@@ -29,6 +29,7 @@ use App\Http\Controllers\LiquidationController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\TreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,11 +102,27 @@ Route::middleware('auth')->group(function () {
         });
     });
     //
+    // Red de usuario
+    Route::prefix('genealogy')->group(function ()
+    {
+        // Ruta para ver la lista de usuarios
+        //Route::get('users/{network}', [TreController::class, 'indexNewtwork'])->name('genealogy_list_network');
+        // Ruta para visualizar el arbol o la matriz
+        Route::get('/', [TreController::class, 'index'])->name('genealogy_type');
+        // Ruta para visualizar el arbol o la matriz de un usuario en especifico
+        
+        Route::get('/{id}', [TreController::class, 'moretree'])->name('genealogy_type_id');
+        /*
+        Route::post('{type}', 'TreeController@moretreeEmail')->name('genealogy_type_email');
+        */
+    });
 
     //User
     Route::prefix('user')->group(function () {
         Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
         Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
+
+        Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
     });
 
     // 2fact
@@ -376,3 +393,5 @@ Route::get('rAdminRed/{referral_admin_red_code}', [ReferralController::class, 'l
 Route::get('/cookie', function () {
     return Cookie::get('referral');
 });
+
+Route::get('/referidos', [ReferralController::class, 'referidos'])->name('referidos.index');

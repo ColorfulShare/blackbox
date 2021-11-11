@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 trait Tree{
 
@@ -26,6 +27,22 @@ trait Tree{
                     $user->nivel = $i + 1;
                     $usuarios->push($user);
                 }   
+            }
+        }
+
+        return $usuarios;
+    }
+
+    public function getChildrens(User $user, Collection $usuarios , $nivel = 1)
+    {       
+        if(count($user->referidos) > 0){
+            foreach($user->referidos as $referido){
+                
+                $referido->nivel = $nivel;
+                
+                $usuarios->push($referido);
+
+                $this->getChildrens($referido, $usuarios, $nivel + 1);
             }
         }
 

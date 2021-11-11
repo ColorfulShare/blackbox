@@ -22,6 +22,7 @@ class LiquidationController extends Controller
     function __construct()
     {
         $this->walletController = new WalletController();
+        $this->DoubleAutenticationController = new DoubleAutenticationController();
     }
 
 
@@ -151,7 +152,7 @@ class LiquidationController extends Controller
 
                 /*Verifica si los codigo esta bien*/
 
-                if (!$this->doubleAuthController->checkCode($liquidation->user_id, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
+                if (!$this->DoubleAutenticationController->checkCode($liquidation->user_id, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
                     session(['intentos_fallidos' => (session('intentos_fallidos') + 1)]);
                     return redirect()->back()->with('msj-danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
                 }
