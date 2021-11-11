@@ -1,16 +1,7 @@
 @extends('layouts/contentLayoutMaster')
 
-
-{{-- permite llamar las librerias montadas --}}
-@push('page_js')
-<script src="{{asset('assets/js/librerias/vue.js')}}"></script>
-@endpush
-
-@push('custom_js')
-<script src="{{asset('assets/js/withdraw.js')}}"></script>
-@endpush
-
 @section('content')
+
 <div id="withdraw">
     <div class=" col-8 offset-md-2">
         <div class="card bg-lp">
@@ -26,7 +17,9 @@
                         </div>
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Dirección</h5>
-                            <input type="text" id="to" placeholder="Introduce aquí la dirección" name="wallet" v-model="wallet" class="form-control">
+
+                            <input type="text" id="to" placeholder="Introduce aquí la dirección" name="wallet" onkeyup="press()" class="form-control ">
+
                         </div>
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Red</h5>
@@ -38,7 +31,7 @@
                         </div>
                         <div class="col-6 col-md-6 mb-1">
                             <h5 class="">Retiro Minimo</h5>
-                            <p class=""> 25 USDT</p>
+                            <p class=""> 100 USDT</p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
                             <h5 class="">Fee de Retiro</h5>
@@ -54,7 +47,9 @@
 
                         </div>
                         <div class="col-6 col-md-6 mb-1">
-                            <button class="btn btn-block btn-primary d" v-show='wallet != ""' v-on:click='openModalDetails'>Retirar</button>
+                            <button class="btn btn-block btn-primary" id="show" data-bs-toggle="modal" data-bs-target="#modalInfo" onclick="getValueInput()">
+                                Retirar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -63,5 +58,42 @@
     </div>
     @include('wallet.componentes.modalAprobar')
     @include('wallet.componentes.modalInfo')
+
+    <script>
+        // Funcion para desaparecer el boton mientras no haya nada en el input
+        document.getElementById("show").style.visibility = "hidden";
+
+        function press() {
+            document.getElementById("show").style.visibility = "visible";
+        }
+
+        //Pasamos el valor del input al modal ModalInfo
+        let getValueInput = () => {
+            let wallet = document.getElementById("to").value;
+            document.getElementById("wallet").innerHTML = wallet;
+        };
+
+
+        // let sendCodeEmail = () => {
+        //     let url = "{{route('send-code-email', wallet)}}";
+        //     axios.get(url, []).then((response) => {
+        //         if (response.data > 0) {
+        //             this.idliquidacion = response.data
+        //             toastr.success("Codigo Enviado, Revise su correo", '¡Genial!', {
+        //                 "progressBar": true
+        //             });
+        //         } else {
+        //             toastr.error("El monto solicitado es menor al minimo permitido 50$", '¡Error!', {
+        //                 "progressBar": true
+        //             });
+        //         }
+        //     }).catch(function(_error) {
+        //         toastr.error("Ocurrio un problema con la solicitud", '¡Error!', {
+        //             "progressBar": true
+        //         });
+        //     })
+        // }
+    </script>
+
 </div>
 @endsection
