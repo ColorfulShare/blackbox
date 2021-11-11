@@ -27,6 +27,31 @@
       ]
     },
     {
+      "url": "/",
+      "name": "Educación",
+      "icon": "shopping-cart",
+      "slug": ""
+    },
+    {
+      "name": "Noticias",
+      "icon": "sidebar",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/news/list",
+          "name": "Lista",
+          "icon": "circle",
+          "slug": ""
+        },
+        {
+          "url": "/",
+          "name": "Realizados",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+    {
       "name": "Inversiones",
       "icon": "dollar-sign",
       "slug": "/",

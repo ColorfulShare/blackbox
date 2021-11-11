@@ -4,6 +4,7 @@ use App\Models\OrdenPurchase;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AppsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardsController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\InversionController;
 use App\Http\Controllers\ImpersonateController;
 use App\Http\Controllers\LiquidationController;
 use App\Http\Controllers\TicketsController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
 
@@ -288,6 +290,15 @@ Route::group(['prefix' => 'tickets'], function () {
     Route::get('ticket-show-admin/{id}',  [TicketsController::class, 'showAdmin'])->name('ticket.show-admin');
 });
 
+//Ruta de las noticias
+Route::group(['prefix' => 'news'], function () {
+    Route::get('list', [NewsController::class, 'list'])->name('news.list');
+    Route::get('create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('store', [NewsController::class, 'store'])->name('news.store');
+    Route::get('edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
+    Route::delete('destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+    Route::patch('update/{id}', [NewsController::class, 'update'])->name('news.update');
+});
 
 /* Route Tables */
 Route::group(['prefix' => 'table'], function () {

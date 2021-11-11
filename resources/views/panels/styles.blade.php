@@ -30,6 +30,8 @@
 
 <!-- BEGIN: Custom CSS-->
 
+{{-- quill --}}
+
 @if($configData['direction'] === 'rtl' && isset($configData['direction']))
 <link rel="stylesheet" href="{{ asset(mix('css-rtl/custom-rtl.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('css-rtl/style-rtl.css')) }}" />
