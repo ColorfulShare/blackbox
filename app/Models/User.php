@@ -74,15 +74,15 @@ class User extends Authenticatable
 
     public function inversiones()
     {
-        return $this->hasMany('App\Models\Inversion', 'iduser');
+        return $this->hasMany('App\Models\Inversion', 'user_id');
     }
 
     public function wallets()
     {
-        return $this->hasMany('App\Models\Wallet', 'iduser');
+        return $this->hasMany('App\Models\Wallet', 'user_id');
     }
 
- 
+
     public function contadorExpiredStatus()
     {
         $fechaAntigua  = \Carbon\Carbon::now();
@@ -100,6 +100,11 @@ class User extends Authenticatable
         return '$ ' . number_format($this->saldoDisponible(), 2);
     }
 
+    public function referidos()
+    {
+        return $this->hasMany('App\Models\User', 'referred_by');
+    }
+
     public function estado()
     {
         if ($this->status == '0') {
@@ -111,6 +116,29 @@ class User extends Authenticatable
         }
     }
 
+    public function refirio()
+    {
+        return $this->belongsTo('App\Models\User', 'referred_by');
+    }
+
+    public static function getUniqueReferralCode()
+    {
+        do {
+            $code = Str::random(7);
+        } while (User::where('referral_code', $code)->exists());
+        return $code;
+    }
+
+    public static function getUniqueAdminRedReferralCode()
+    {
+        do {
+            $codeAdminRed = Str::random(7);
+        } while (User::where('referral_admin_red_code', $codeAdminRed)->exists());
+        return $codeAdminRed;
+    }
+
+
+
 
     /**
      * Permite obtener todas las ordenes de compra de saldo realizadas
@@ -119,7 +147,7 @@ class User extends Authenticatable
      */
     public function getWallet()
     {
-        return $this->hasMany('App\Models\Wallet', 'iduser');
+        return $this->hasMany('App\Models\Wallet', 'user_id');
     }
 
     /**
@@ -129,7 +157,7 @@ class User extends Authenticatable
      */
     public function getLiquidate()
     {
-        return $this->hasMany('App\Models\Liquidaction', 'iduser');
+        return $this->hasMany('App\Models\Liquidaction', 'user_id');
     }
 
     /**
@@ -139,14 +167,18 @@ class User extends Authenticatable
      */
     public function saldoDisponibleNumber(): float
     {
-        return $this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('monto');
+        return $this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('amount');
     }
 
+    public function inversionMasAlta()
+    {
+        return $this->inversiones->where('status', 1)->sortByDesc('id')->first();
+       
+    }
 
- 
     public function saldoDisponible()
     {
-        return number_format($this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('monto'), 2);
+        return number_format($this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('amount'), 2);
     }
 
     /**
@@ -161,7 +193,7 @@ class User extends Authenticatable
         if ($disponible > 0) {
             if ($disponible <> 100) {
                 $result = ($disponible * 0.05);
-            } 
+            }
         }
         return floatval($result);
     }
@@ -181,7 +213,27 @@ class User extends Authenticatable
         return floatval($result);
     }
 
-  
+    public function getStatus(): string
+    {
+        $estado = 'Inactivo';
+        if ($this->status == '1') {
+            $estado = 'Activo';
+        } elseif ($this->status == '1') {
+            $estado = 'Eliminado';
+        }
+        return $estado;
+    }
+
+
+    public function fechaActivo()
+    {
+        if ($this->inversionMasAlta() != null) {
+            return $this->inversionMasAlta()->created_at->format('Y-m-d');
+        } else {
+            return "";
+        }
+    }
+
 
     public function feeRetiro()
     {

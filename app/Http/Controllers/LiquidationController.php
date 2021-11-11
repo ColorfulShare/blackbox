@@ -32,7 +32,7 @@ class LiquidationController extends Controller
     }
 
 
-    
+
     /**
      * Permite Enviar el codigo
     
@@ -45,7 +45,7 @@ class LiquidationController extends Controller
                 session(['intentos_fallidos' => 1]);
             }
             $liquidation = Liquidation::where([
-                ['iduser', '=', Auth::id()],
+                ['user_id', '=', Auth::id()],
                 ['status', '=', 0],
             ])->first();
             if ($liquidation != null) {
@@ -55,13 +55,13 @@ class LiquidationController extends Controller
             $user = Auth::user();
 
             $comisiones = Wallet::where([
-                ['iduser', '=', $user->id],
+                ['user_id', '=', $user->id],
                 ['status', '=', 0],
                 ['liquidado', '=', 0],
                 ['tipo_transaction', '=', 0],
             ])->get();
 
-            $bruto = $comisiones->sum('monto');
+            $bruto = $comisiones->sum('amount');
 
             if ($bruto < 100) {
                 return 0;
@@ -71,7 +71,7 @@ class LiquidationController extends Controller
             $total = ($bruto - $feed);
 
             $arrayLiquidation = [
-                'iduser' => $user->id,
+                'user_id' => $user->id,
                 'total' => $total,
                 'monto_bruto' => $bruto,
                 'feed' => $feed,
@@ -109,11 +109,6 @@ class LiquidationController extends Controller
         }
     }
 
-
-
-
-
-
     /**
      * Permite reversar los retiros que tienen mas de 30 min activos
      *
@@ -122,7 +117,7 @@ class LiquidationController extends Controller
     public function reversarRetiro30Min(): bool
     {
         $liquidation = Liquidation::where([
-            ['iduser', '=', Auth::id()],
+            ['user_id', '=', Auth::id()],
             ['status', '=', 0]
         ])->first();
         $result = false;

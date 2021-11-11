@@ -9,39 +9,36 @@
                 </button>
             </div>
             <div class="modal-body text-justify">
-                {{-- <div class="alert alert-primary" role="alert">
-                    Intentos Fallidos {{session('intentos_fallidos')}}/3
-            </div> --}}
-            <form action="{{route('settlement.process')}}" method="post">
-                @csrf
-                <input type="hidden" name="idliquidation" value="idliquidacion">
-                <input type="hidden" name="action" value="aproved">
-                <input type="hidden" name="wallet" value="wallet">
+                <form action="{{route('settlement.process')}}" method="post">
+                    @csrf
+                    <input type="hidden" name="idliquidation" value="idliquidacion">
+                    <input type="hidden" name="action" value="aproved">
+                    <input type="hidden" name="wallet" value="wallet">
 
-                <div class="form-group">
-                    <label for="">Codigo Correo</label>
-                    <input type="text" name="correo_code" class="form-control" required>
-                    <div class="col-12 text-center mt-1">
-                        <button type="button" class="btn btn-primary" v-on:click='sendCodeEmail' onclick="sendCodeEmail()" v-if='idliquidacion == 0'>Enviar Codigo</button>
-                        <br><br>
-                        <span class='' v-else>Codigo Enviado, tienes 30 min sino se cancelara el retiro automaticamente</span>
+                    <div class="form-group">
+                        <label for="">Codigo Correo</label>
+                        <input type="text" name="correo_code" class="form-control" required>
+                        <div class="col-12 text-center mt-1">
+                            <button type="button" class="btn btn-primary" v-on:click='sendCodeEmail' onclick="sendCodeEmail()" v-if='idliquidacion == 0'>Enviar Codigo</button>
+                            <br><br>
+                            <span class='' v-else>Codigo Enviado, tienes 30 min sino se cancelara el retiro automaticamente</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="">Codigo Google</label>
-                    <input type="text" name="google_code" class="form-control" required>
-                </div>
+                    <div class="form-group">
+                        <label for="">Codigo Google</label>
+                        <input type="text" name="google_code" class="form-control" required>
+                    </div>
 
-                <div class="form-group text-center">
-                    <button class="btn btn-primary mt-2">Aprobar</button>
-                </div>
-            </form>
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary mt-2">Aprobar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cerrar</button>
-        </div>
+
     </div>
-
-</div>
 </div>

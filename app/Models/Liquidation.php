@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Liquidation extends Model
 {
     protected $fillable = [
-        'iduser', 'total', 'monto_bruto', 'feed', 'hash',
+        'user_id', 'total', 'monto_bruto', 'feed', 'hash',
         'wallet_used', 'status'
     ];
 
     public function getUserLiquidation()
     {
-        return $this->belongsTo('App\Models\User', 'iduser', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     /**

@@ -14,17 +14,19 @@ class CreateWalletsTable extends Migration
     public function up()
     {
         Schema::create('wallets', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('iduser')->unsigned();
-            $table->foreign('iduser')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->id();
+            $table->bigInteger('user_id')->nullable()->unsigned()->comment('usuario al que le pertenece la wallet');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('referred_id')->unsigned()->nullable();
-            $table->foreign('referred_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->bigInteger('orden_purchases_id')->unsigned()->nullable();
+            $table->foreign('referred_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreignId('inversion_id')->nullable()->constrained('inversions')->comment('inversion la cual produce esta wallet');
+            $table->double('amount');
+            $table->double('percentage')->nullable();
             $table->bigInteger('liquidation_id')->unsigned()->nullable();
-            $table->decimal('monto')->default(0)->comment('entrada de cash');
             $table->string('descripcion');
-            $table->tinyInteger('status')->default(0)->comment('0 - En espera, 1 - Pagado (liquidado), 2 - Cancelado');
             $table->tinyInteger('tipo_transaction')->default(0)->comment('0 - comision, 1 - retiro');
+            $table->tinyInteger('status')->default(0)->comment('0 - En espera, 1 - Pagado (liquidado), 2 - Cancelado');
             $table->tinyInteger('liquidado')->default(0)->comment('0 - sin liquidar, 1 - liquidado');
             $table->timestamps();
         });

@@ -3,11 +3,7 @@
 
 {{-- contenido --}}
 @section('content')
-@if(Request::post('iduser'))
-<div class="card-header d-flex align-items-center">
-    <a href="{{ url()->previous() }}" class="btn btn-dark rounded" style="border: 1px solid #fff;"><b>Regresar</b></a>
-</div>
-@endif
+
 <div class="row">
     <div class="col-sm-4 col-12 mt-1">
         <div class="card  p-2 ">
@@ -18,13 +14,11 @@
                 <h1 class="px-2"><b>$ {{$saldoDisponible}}</b></h1>
             </div>
 
-
-            @if(!Request::post('iduser'))
+            @if(!Request::post('user_id'))
 
             <div class="d-grid gap-2 mt-2 col-12 mx-auto">
                 <a class="btn btn-primary" href="{{route('wallet.withdraw')}}"><span style="font-weight:bold;">RETIRAR</span></a>
             </div>
-
             @endif
         </div>
     </div>
@@ -64,7 +58,6 @@
                                                 <br>
                                                 {{$orden->descripcion}}
                                             </p>
-
                                         </div>
                                     </td>
                                     <td>
@@ -74,7 +67,7 @@
                                         -
                                         @endif
                                     </td>
-                                    <td>{{$orden->monto}}</td>
+                                    <td>{{$orden->amount}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

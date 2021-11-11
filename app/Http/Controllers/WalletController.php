@@ -18,7 +18,7 @@ class WalletController extends Controller
     {
         try {
             $wallets = Auth::user()->getWallet->where('tipo_transaction', 0)->sortByDesc('id');
-            $saldoDisponible = $wallets->where('status', 0)->sum('monto');
+            $saldoDisponible = $wallets->where('status', 0)->sum('amount');
             return view('wallet.IndexWallet', compact('wallets', 'saldoDisponible'));
         } catch (\Throwable $th) {
             Log::error('Wallet - Index -> Error: ' . $th);
@@ -29,33 +29,32 @@ class WalletController extends Controller
     public function saveWallet($data)
     {
         try {
-            if ($data['iduser'] != 1) {
+            if ($data['user_id'] != 1) {
                 if ($data['tipo_transaction'] == 1) {
                     $wallet = Wallet::create($data);
-                    $saldoAcumulado = ($wallet->getWalletUser->wallet - $data['monto']);
+                    $saldoAcumulado = ($wallet->getWalletUser->wallet - $data['amount']);
                     $wallet->getWalletUser->update(['wallet' => $saldoAcumulado]);
-                    $wallet->update(['monto' => -$data['monto']]);
+                    $wallet->update(['amount' => -$data['amount']]);
                 } else {
                     if ($data['orden_purchases_id'] != null) {
                         $check = Wallet::where([
-                            ['iduser', '=', $data['iduser']],
+                            ['user_id', '=', $data['user_id']],
                             ['orden_purchases_id', '=', $data['orden_purchases_id']],
                             ['referred_id', '=', $data['referred_id']]
                         ])->first();
                         if ($check == null) {
                             $wallet = Wallet::create($data);
-                            // dd($wallet->getWalletUser);
-                            $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['monto']);
+
+                            $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['amount']);
                             $wallet->getWalletUser->update(['wallet' => $saldoAcumulado]);
-                            $this->aceleracion($data['iduser'], $data['referred_id'], $data['monto'], $data['descripcion']);
+                            $this->aceleracion($data['user_id'], $data['referred_id'], $data['amount'], $data['descripcion']);
                         }
                     } else {
                         $wallet = Wallet::create($data);
-                        $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['monto']);
+                        $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['amount']);
                         $wallet->getWalletUser->update(['wallet' => $saldoAcumulado]);
-                        $this->aceleracion($data['iduser'], $data['referred_id'], $data['monto'], $data['descripcion']);
+                        $this->aceleracion($data['user_id'], $data['referred_id'], $data['amount'], $data['descripcion']);
                     }
-                    // $wallet->update(['balance' => $saldoAcumulado]);
                 }
             }
         } catch (\Throwable $th) {

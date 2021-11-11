@@ -2,10 +2,6 @@
 
 @section('content')
 
-
-
-
-
 <div id="withdraw">
     <div class=" col-8 offset-md-2">
         <div class="card bg-lp">
@@ -22,10 +18,7 @@
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Dirección</h5>
 
-
-
                             <input type="text" id="to" placeholder="Introduce aquí la dirección" name="wallet" onkeyup="press()" class="form-control ">
-
 
                         </div>
                         <div class="col-12 col-md-12 mb-1">
@@ -67,16 +60,6 @@
     @include('wallet.componentes.modalInfo')
 
     <script>
-        const object1 = {
-            a: 'somestring',
-            b: 42,
-            c: false
-        };
-
-        console.log(Object.values(object1));
-        // expected output: Array ["somestring", 42, false]
-
-
         // Funcion para desaparecer el boton mientras no haya nada en el input
         document.getElementById("show").style.visibility = "hidden";
 
@@ -90,25 +73,26 @@
             document.getElementById("wallet").innerHTML = wallet;
         };
 
-        let sendCodeEmail = () => {
-            let url = "{{route('send-code-email', wallet)}}";
-            axios.get(url, []).then((response) => {
-                if (response.data > 0) {
-                    this.idliquidacion = response.data
-                    toastr.success("Codigo Enviado, Revise su correo", '¡Genial!', {
-                        "progressBar": true
-                    });
-                } else {
-                    toastr.error("El monto solicitado es menor al minimo permitido 50$", '¡Error!', {
-                        "progressBar": true
-                    });
-                }
-            }).catch(function(_error) {
-                toastr.error("Ocurrio un problema con la solicitud", '¡Error!', {
-                    "progressBar": true
-                });
-            })
-        }
+
+        // let sendCodeEmail = () => {
+        //     let url = "{{route('send-code-email', wallet)}}";
+        //     axios.get(url, []).then((response) => {
+        //         if (response.data > 0) {
+        //             this.idliquidacion = response.data
+        //             toastr.success("Codigo Enviado, Revise su correo", '¡Genial!', {
+        //                 "progressBar": true
+        //             });
+        //         } else {
+        //             toastr.error("El monto solicitado es menor al minimo permitido 50$", '¡Error!', {
+        //                 "progressBar": true
+        //             });
+        //         }
+        //     }).catch(function(_error) {
+        //         toastr.error("Ocurrio un problema con la solicitud", '¡Error!', {
+        //             "progressBar": true
+        //         });
+        //     })
+        // }
     </script>
 
 </div>
