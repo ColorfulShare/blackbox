@@ -1,7 +1,7 @@
 
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Red | Referidos')
+@section('title', 'Red | Usuarios')
 
 @section('vendor-style')
   <!-- vendor css files -->
@@ -18,14 +18,13 @@
   @endsection
 
 @section('content')
-@section('content')
 <div class="col-12">
     <div class="card bg-lp">
         <div class="card-content">
             <div class="card-body ">
                 <div class="table-responsive">
-                    <h1><strong > Referidos en Red</strong></h1>
-                    <table class="table nowrap scroll-horizontal-vertical myTable table-striped mt-2">
+                    <h1><strong >Lista de usuarios</strong></h1>
+                    <table class="table nowrap scroll-horizontal-vertical myTable2 table-striped mt-2">
                         <thead>
                             <tr class="text-center ">
                                 <th>#</th>
@@ -33,6 +32,7 @@
                                 <th>Correo</th>
                                 <th>telefono</th>
                                 <th>Estado</th>
+                                <th>Nivel</th>
                                 <th>Ingreso</th>
                             </tr>
                         </thead>
@@ -57,6 +57,7 @@
                                 @elseif($item->status == '5')
                                 <td> <a class=" btn btn-danger text-white text-bold-600">Eliminado</a></td>
                                 @endif
+                                <td>{{$item->nivel}}</td>
                                 <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
                             </tr>
                             @endforeach
@@ -68,4 +69,13 @@
     </div>
 </div>
 @endsection
+
+
+@section('vendor-script')
+  <!-- vendor files -->
+  <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
 @endsection
+{{-- CONFIGURACIÓN DE DATATABLE --}}
+@include('panels.datatables-config')
