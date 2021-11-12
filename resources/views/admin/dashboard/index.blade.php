@@ -113,8 +113,8 @@ function linkAdmin(){
               <i data-feather="package" class="font-medium-5"></i>
             </div>
           </div>
-          <h2 class="fw-bolder mt-1">blackbox</h2>
-          <p class="card-text">Orders Received</p>
+          <h2 class="fw-bolder mt-1">Ordenes hoy</h2>
+          <p class="card-text fw-bold fs-2">{{$ordenes}}</p>
 
 
         </div>

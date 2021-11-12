@@ -72,10 +72,10 @@ class User extends Authenticatable
         'expired_status'
     ];
 
-    // public function fullName()
-    // {
-    //     return $this->firstname . ' '. $this->lastname;
-    // }
+    public function fullName()
+    {
+        return $this->firstname . ' '. $this->lastname;
+    }
 
     public function inversiones()
     {
