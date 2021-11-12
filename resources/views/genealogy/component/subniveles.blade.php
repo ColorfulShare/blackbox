@@ -1,5 +1,4 @@
-<a
-     class="a" href="{{ route('genealogy_type_id', [base64_encode($data->id)]) }}">
+<a class="a" onclick="tarjeta({{$data}},'{{ route('genealogy_type_id', [base64_encode($data->id)]) }}', '{{ asset('assets/img/royal_green/logos/logo.svg')}}')">
     <div class="media">
         {{--@if (empty($data->photoDB))
             <img src="{{ asset('assets/img/pandora-logo.png') }}" height="48" width="48"

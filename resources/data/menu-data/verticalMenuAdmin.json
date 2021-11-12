@@ -27,6 +27,31 @@
       ]
     },
     {
+      "name": "Red",
+      "icon": "sidebar",
+      "slug": "/",
+      "submenu": [
+        {
+          "url": "/genealogy/buscar",
+          "name": "Matriz",
+          "icon": "circle",
+          "slug": "genealogy.buscar"
+        },
+        {
+          "url": "/referidos",
+          "name": "Referidos",
+          "icon": "circle",
+          "slug": "referidos.index"
+        },
+        {
+          "url": "/",
+          "name": "Usuarios",
+          "icon": "circle",
+          "slug": ""
+        }
+      ]
+    },
+    {
       "name": "Inversiones",
       "icon": "dollar-sign",
       "slug": "/",
@@ -49,31 +74,6 @@
           "name": "Lista",
           "icon": "circle",
           "slug": "users.list-user"
-        }
-      ]
-    },
-    {
-      "name": "Red",
-      "icon": "sidebar",
-      "slug": "/",
-      "submenu": [
-        {
-          "url": "/",
-          "name": "Matriz",
-          "icon": "circle",
-          "slug": ""
-        },
-        {
-          "url": "/referidos",
-          "name": "Referidos",
-          "icon": "circle",
-          "slug": "referidos.index"
-        },
-        {
-          "url": "/",
-          "name": "Usuarios",
-          "icon": "circle",
-          "slug": ""
         }
       ]
     },

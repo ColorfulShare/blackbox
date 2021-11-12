@@ -165,6 +165,23 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Liquidaction', 'user_id');
     }
 
+    public function montoInvertido()
+    {
+        $monto = 0;
+        foreach ($this->inversiones as $inversion) {
+            if ($inversion->status == 1) {
+                $monto += $inversion->invertido;
+            }
+        }
+        return number_format($monto, 2);
+    }
+
+
+    public function saldoDisponible()
+    {
+        return number_format($this->wallets->where('status', 0)->sum('amount'), 2);
+    }
+
     /**
      * muestra el saldo disponible en numeros
      *
@@ -179,11 +196,6 @@ class User extends Authenticatable
     {
         return $this->inversiones->where('status', 1)->sortByDesc('id')->first();
        
-    }
-
-    public function saldoDisponible()
-    {
-        return number_format($this->getWallet->where('status', 0)->where('tipo_transaction', 0)->sum('amount'), 2);
     }
 
     /**

@@ -98,6 +98,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [RendimientoController::class, 'index'])->name('rendimiento.index');
             Route::post('/pagarrendimiento', [RendimientoController::class, 'savePorcentage'])->name('rendimiento.save.porcentage');
         });
+
+        //ADMIN
+        Route::prefix('genealogy')->group(function ()
+        {
+            Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
+            Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
+        });
     });
     //
     // Red de usuario
@@ -108,8 +115,8 @@ Route::middleware('auth')->group(function () {
         // Ruta para visualizar el arbol o la matriz
         Route::get('/', [TreController::class, 'index'])->name('genealogy_type');
         // Ruta para visualizar el arbol o la matriz de un usuario en especifico
-        
         Route::get('/{id}', [TreController::class, 'moretree'])->name('genealogy_type_id');
+        
         /*
         Route::post('{type}', 'TreeController@moretreeEmail')->name('genealogy_type_email');
         */
