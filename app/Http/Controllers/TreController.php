@@ -41,12 +41,12 @@ class TreController extends Controller
             //$type = ucfirst($type);
             $base = User::find($request->id);
             $base->logoarbol = asset('assets/img/sistema/favicon.png');
-           
+
 
             return view('genealogy.tree', compact('trees', 'base'));
         } catch (\Throwable $th) {
-            Log::error('Tree - moretree -> Error: '.$th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
+
+            return back()->with('danger', 'El ID que ingreso no existe');
         }
     }
 
@@ -59,7 +59,7 @@ class TreController extends Controller
             //$type = ucfirst($type);
             $base = User::find($id);
             $base->logoarbol = asset('assets/img/sistema/favicon.png');
-           
+
             $type_tm = 0;
 
             return view('genealogy.tree', compact('trees', 'base'));
@@ -72,7 +72,7 @@ class TreController extends Controller
     private function getDataEstructura($id)
     {
         try {
-            
+
             $childres = $this->getData($id, 1);
             $trees = $this->getChildren($childres, 2);
             return $trees;
@@ -101,7 +101,7 @@ class TreController extends Controller
     }
 
     /**
-     * Se trare la informacion de los hijos 
+     * Se trare la informacion de los hijos
      *
      * @param integer $id - id a buscar hijos
      * @param integer $nivel - nivel en que los hijos se encuentra

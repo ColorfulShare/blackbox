@@ -8,7 +8,7 @@
                 alt="{{ $data->firstname }}" title="{{ $data->firstname }}">
         {{--@endif--}}
         <div class="media-body">
-                            <h5 class="mt-0 a"> <b>{{ $data->fullName() }}</b></h5>
+                            <h5 class="mt-0 a"> <b>{{ $data->firstname }}</b></h5>
                             <p class="mb-0">{{ $data->getStatus() }} |  {{$data->montoInvertido()}} USD </p>
         </div>
     </div>
