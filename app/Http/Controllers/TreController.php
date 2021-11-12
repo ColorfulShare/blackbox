@@ -28,6 +28,28 @@ class TreController extends Controller
         }
     }
 
+    public function buscar()
+    {
+        return view('genealogy.buscar');
+    }
+
+    public function search(Request $request)
+    {
+        try {
+            // titulo
+            $trees = $this->getDataEstructura($request->id);
+            //$type = ucfirst($type);
+            $base = User::find($request->id);
+            $base->logoarbol = asset('assets/img/sistema/favicon.png');
+           
+
+            return view('genealogy.tree', compact('trees', 'base'));
+        } catch (\Throwable $th) {
+            Log::error('Tree - moretree -> Error: '.$th);
+            abort(403, "Ocurrio un error, contacte con el administrador");
+        }
+    }
+
     public function moretree($id)
     {
         try {

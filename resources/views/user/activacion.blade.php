@@ -33,7 +33,7 @@
                      @foreach ($user as $user)
                     <tr class="text-center">
                         <td>{{$user->id}}</td>
-                        <td>{{$user->fullname}}</td>
+                        <td>{{$user->fullName()}}</td>
                         <td>{{$user->email}}</td>
                         <td>
                             @if($user->status == 0)

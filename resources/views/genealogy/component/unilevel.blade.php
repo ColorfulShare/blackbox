@@ -17,17 +17,18 @@
                     <div class="">
                         <p><b>Estado:</b> <span id="estado"></span></p>
                     </div>
+                    <div class="d-grid">
+                        <a class="btn btn-primary d-none" id="ver_arbol"> Ver
+                            Arbol</a>
+                    </div>
                 </div>
                 </div>
 
 
             </div>
-            @if (Auth::user()->admin == 1)
-            <div class="col-12 d-flex mb-2 justify-content-center text-white">
-                <a class="btn-primary w-50" id="ver_arbol"> Ver
-                    Arbol</a>
-            </div>
-            @endif
+            {{--@if (Auth::user()->admin == 1)--}}
+            
+            {{--@endif--}}
         </div>
 
     </div>
