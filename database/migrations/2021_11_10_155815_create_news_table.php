@@ -16,8 +16,8 @@ class CreateNewsTable extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->longtext('title')->nullable();
-            $table->longtext('content')->nullable();
-            $table->longtext('photo')->nullable();
+            $table->longtext('description')->nullable();
+            $table->longtext('banner')->nullable();
             $table->boolean('status', [0, 1])->default(0)->comment('0 - Inactivo, 1 - Activo');
             $table->timestamps();
         });

@@ -5,6 +5,9 @@
 @section('content')
 
 <div class="card">
+    <div class="card-header d-flex justify-content-end">
+        <a href="{{ route('news.create') }}" class="btn btn-primary">Crear nueva noticia</a>
+    </div>
     <table class="table">
         <thead>
             <tr class="text-center">

@@ -1,63 +1,82 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Creación de ticket')
+@section('title', 'Crear noticia')
 
 @section('content')
 
+<div class="row d-flex justify-content-center">
+    <div class="card col-12">
 
-<div class="col-3"><a href="{{ route('ticket.list-user')}}" class="btn btn-danger  mb-2 waves-effect waves-light">Volver Atrás <i class="fas fa-chevron-left"></i></a>
-</div>
+        <div class="card-header d-flex justify-content-between">
+            @if ($count == null)
+            <h1>Crear Noticia N° 1</h1>
+            @else
+            <h1>Crear Noticia N° {{ $count->id + 1 }}</h1>
+            @endif
+            <a href="{{ route('news.list')}}" class="btn btn-secondary mx-1">Volver a la lista</a>
+        </div>
 
-<section id="basic-vertical-layouts">
-    <div class="row match-height d-flex justify-content-center">
-        <div class="col-md-12 col-12">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-body">
-                        <form action="{{route('ticket.store')}}" method="POST">
-                            @csrf
-                            <div class="form-body">
+        <div class="card-content">
+            <div class="card-body">
+                <form action="{{route('news.store')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="title"><b>Titulo</b></label>
+                                <input type="text" name="title" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="status"><b>Estado de la noticia</b></label>
+                                <select name="status" class="form-control custom-select" required>
+                                    <option value="0">Inactivo</option>
+                                    <option value="1">Activo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-2">
+                            <div class="form-group">
+                                <label class="form-label" for="description"><b>Contenido de la noticia</b></label>
+                                <textarea name="description" id="tiny" class="form-control" cols="30" rows="5"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 mt-2">
+                            <div class="form-group">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12 d-flex justify-content-center my-2">
+                                        <label class="btn btn-primary btn-lg btn-block" for="banner">Selecciona una imagen de portada</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="file" name="banner" id="banner" class="form-control d-none" onchange="previewFile(this, 'photo_preview')" accept="image/*">
+                                    </div>
+                                </div>
+
                                 <div class="row">
-                                    <div class="col-12">
-                                        <label class="form-label mt-2" for="issue"><b>Sujeto</b></label>
-                                        <input class="form-control" required type="text" name="issue" rows="3" />
+                                    <div class="col-12 d-flex justify-content-center p-3">
+                                        <img id="photo_preview" class="img-fluid rounded" width="400px" />
                                     </div>
+                                </div>
 
-                                    <div class="col-12 mt-2 mb-2">
-                                        <label class="form-label  mb-1" for="message"><b>Mensaje</b></label>
+                            </div>
+                        </div>
 
+                        <div class="col-12 mt-3 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary mx-1">Crear noticia</button>
+                        </div>
 
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-12 mx-auto ">
-                                                    <div class="card">
-                                                        <div class="card-body chat-care">
-
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <br>
-                                        <span class=" text-bold-600">Escriba Su Pregunta</span>
-                                        <textarea class="form-control chat-window-message" type="text" id="message" name="message" required rows="3"></textarea>
-                                    </div>
-
-
-                                    <div class="col-12">
-                                        <button type="submit" class="col-12 btn btn-danger  mr-1 mb-1 waves-effect waves-light">Enviar
-                                            Ticket</button>
-                                    </div>
-                        </form>
                     </div>
-                </div>
+
+                </form>
             </div>
         </div>
     </div>
-</section>
-
-
+</div>
 
 @endsection

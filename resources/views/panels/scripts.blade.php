@@ -20,24 +20,53 @@
 <!-- tiny.cloud -->
 <script src="{{ asset(mix('js/scripts/forms/form-tinymce.min.js')) }}"></script>
 <script>
-    // textare
+    // textarea
     tinymce.init({
         selector: 'textarea#tiny',
         height: 200,
         menubar: false,
-        statusbar:false,
+        statusbar: false,
         plugins: [
             'advlist autolink lists link image charmap print preview anchor',
             'searchreplace visualblocks code fullscreen',
             'insertdatetime media table paste code help wordcount'
         ],
         toolbar: 'undo redo | formatselect | ' +
-            'bold italic backcolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'bold italic forecolor backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist | ' +
             'removeformat | help',
         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
     });
+
 </script>
+
+<script>
+    // preview imagen
+    function previewFile(input, preview_id) {
+
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#" + preview_id).attr('src', e.target.result);
+                $("#" + preview_id).css('height', '100%');
+                $("#" + preview_id).parent().parent().removeClass('d-none');
+            }
+            $("label[for='" + $(input).attr('id') + "']").text(input.files[0].name);
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function previewPersistedFile(url, preview_id) {
+        $("#" + preview_id).attr('src', url);
+        $("#" + preview_id).css('height', '100%');
+        $("#" + preview_id).parent().parent().removeClass('d-none');
+    }
+
+</script>
+
+@stack('js')
 
 @if($configData['blankPage'] === false)
 <script src="{{ asset(mix('js/scripts/customizer.js')) }}"></script>

@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; 
+
 use App\Models\News;
 
 class NewsController extends Controller
@@ -36,7 +41,9 @@ class NewsController extends Controller
     {
         try {
 
-            return view('news.create');
+            $count = DB::table('news')->orderby('created_at', 'desc')->first();
+
+            return view('news.create', compact('count'));
 
         } catch (\Throwable $th) {
             Log::error('NewsController - create -> Error: '.$th);
@@ -56,34 +63,38 @@ class NewsController extends Controller
 
             $fields = [
                 "title" => ['required'],
-                "content" => ['required'],
-                "photo" => ['required'],
+                "description" => ['required'],
+                "banner" => ['required'],
                 "status" => ['required'],
             ];
     
             $msj = [
                 'title.required' => 'El titulo es Requerido',
-                'content.required' => 'El contenido es Requerido',
-                'photo.required' => 'La foto es Requerida',
+                'description.required' => 'El contenido es Requerido',
+                'banner.required' => 'La foto es Requerida',
                 'status.required' => 'El estado es Requerido',
             ];
     
             $this->validate($request, $fields, $msj);
-    
-            $news = News::create($request->all());
-
-            //  guarda el photo
-            if($request->hasFile('photo')) {
-              
-              $file = $request->file('photo');
-              $name = $news->id.".".$file->getClientOriginalExtension();
-              $file->move(public_path('storage') . '/news-photo', $name);
-              $news->photo = $name;
-            } 
-    
+                
+            //  guarda el banner
+            if ($request->hasFile('banner')) {
+                $file = $request->banner;
+                $filen = $file->getClientOriginalExtension();
+                $name = $request->title.'.'.$filen;
+                $file->move(public_path('storage') . '/news-banner', $name);
+            // crea el registro
+            $news = News::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'status' => $request->status,
+                'banner' => $name,
+            ]);
             $news->save();
-    
-            return redirect()->route('news.list')->with('success', 'La noticia se creo Exitosamente');
+
+        } 
+            
+        return redirect()->route('news.list')->with('success', 'La noticia se creo Exitosamente');
             
         } catch (\Throwable $th) {
             Log::error('NewsController - store -> Error: '.$th);
@@ -122,7 +133,6 @@ class NewsController extends Controller
         }
     }
 
-
     /**
      * Update the specified resource in storage.
      *
@@ -132,46 +142,53 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
+        // try {
 
+          
             $news = News::find($id);
-    
+
             $fields = [
-                "name" => ['required'],
-                "price" => ['required'],
+                "title" => ['required'],
                 "description" => ['required'],
                 "status" => ['required'],
             ];
     
             $msj = [
-                'name.required' => 'El titulo del curso es Requerido',
-                'price.required' => 'El precio del curso es Requerido',
-                'description.required' => 'La descripcion es Requerida',
+                'title.required' => 'El titulo es Requerido',
+                'description.required' => 'El contenido es Requerido',
                 'status.required' => 'El estado es Requerido',
             ];
     
             $this->validate($request, $fields, $msj);
-    
-            $news->update($request->all());
-    
-            //  guarda el photo
-            if($request->hasFile('photo')) {
-              //  eliminar el photo anterior
-              $news->destroy(public_path('storage') . '/news-photo', $news->name);
-              $file = $request->file('photo');
-              $name = $news->id.".".$file->getClientOriginalExtension();
-              $file->move(public_path('storage') . '/news-photo', $name);
-              $news->photo = $name;
-            } 
+            // borra el anterior
+            if ($request->banner) {
 
-            $news->save();
-    
+                $news->destroy(public_path('storage').'/news-banner', $news->banner);
+
+                $file = $request->banner;
+                $filen = $file->getClientOriginalExtension();
+                $name = 'storage/news-banner/'.$request->title.'.'.$filen;
+                $file->move(public_path('storage') . '/news-banner', $name);
+
+                // crea el registro
+                $news = News::updating([
+                    'title' => $request->title,
+                    'description' => $request->description,
+                    'status' => $request->status,
+                    'banner' => $name,
+                ]);
+
+            }else{
+                // crea el registro
+                $news->update($request->all());
+            }
+
             return redirect()->route('news.list')->with('success', 'Noticia N°'.$id.' Actualizada ');
-    
-        } catch (\Throwable $th) {
-            Log::error('NewsController - update -> Error: '.$th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
-        }
+            
+        // } catch (\Throwable $th) {
+        //     Log::error('NewsController - update -> Error: '.$th);
+        //     abort(403, "Ocurrio un error, contacte con el administrador");
+        // }
     }
 
     /**
@@ -186,10 +203,13 @@ class NewsController extends Controller
 
             $news = News::find($id);
     
+            // eliminar imagen
+            $image_path = public_path()."/storage/news-banner/".$news->banner;
+            File::delete($image_path);
+
             $news->delete();
             
             return redirect()->route('news.list')->with('success', 'Noticia N°'.$id.' Eliminada');
-    
         } catch (\Throwable $th) {
             Log::error('NewsController - destroy -> Error: '.$th);
             abort(403, "Ocurrio un error, contacte con el administrador");
