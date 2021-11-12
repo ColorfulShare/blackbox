@@ -72,6 +72,9 @@ Route::get('/storage-link', function () {
 
 Route::middleware('auth')->group(function () {
 
+
+
+
     Route::group(['prefix' => 'dashboard'], function () {
         //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
         Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
@@ -93,8 +96,7 @@ Route::middleware('auth')->group(function () {
         });
 
         //RENDIMIENTOS
-        Route::prefix('rendimientos')->group(function ()
-        {
+        Route::prefix('rendimientos')->group(function () {
             Route::get('/', [RendimientoController::class, 'index'])->name('rendimiento.index');
             Route::post('/pagarrendimiento', [RendimientoController::class, 'savePorcentage'])->name('rendimiento.save.porcentage');
         });
@@ -161,8 +163,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [InversionController::class, 'index'])->name('inversiones.index');
     });
 });
-    //BONOSS
-    Route::get('/bonoContruccion', [InversionController::class, 'bonoContruccion'])->name('bonoContruccion');
+//BONOSS
+Route::get('/bonoContruccion', [InversionController::class, 'bonoContruccion'])->name('bonoContruccion');
 
 Auth::routes(['verify' => true]);
 
@@ -328,7 +330,7 @@ Route::group(['prefix' => 'wallet'], function () {
     Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
 
     Route::post('/process', [LiquidationController::class, 'procesarLiquidacion'])->name('settlement.process');
-   
+
     Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
 });
 
@@ -369,6 +371,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('lock-screen', [AuthenticationController::class, 'lock_screen'])->name('auth-lock_screen');
 });
 /* Route Authentication Pages */
+
 
 
 

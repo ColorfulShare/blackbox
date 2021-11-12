@@ -8,28 +8,29 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body text-justify">
+            <div class="modal-body ">
                 <form action="{{route('settlement.process')}}" method="post">
                     @csrf
-                    <input type="hidden" name="idliquidation" value="idliquidacion">
+                    <input type="hidden" name="idliquidation" value="idliquidacion" id="idliquidacion">
                     <input type="hidden" name="action" value="aproved">
                     <input type="hidden" name="wallet" value="wallet">
 
                     <div class="form-group">
                         <label for="">Codigo Correo</label>
                         <input type="text" name="correo_code" class="form-control" required>
-                        <div class="col-12 text-center mt-1">
-                            <button type="button" class="btn btn-primary" v-on:click='sendCodeEmail' onclick="sendCodeEmail()" v-if='idliquidacion == 0'>Enviar Codigo</button>
-                            <br><br>
-                            <span class='' v-else>Codigo Enviado, tienes 30 min sino se cancelara el retiro automaticamente</span>
+                        <hr>
+                        <div class=" text-center mt-1 mb-2" style="margin-left: 160px;">
+                            <button type="button" class="btn btn-primary" onclick="sendCodeEmail()" id="enviar">Enviar Codigo</button>
                         </div>
                     </div>
+
+                    <span class="" id="enviado">Codigo Enviado, tienes 30 min sino se cancelara el retiro automaticamente</span>
 
                     <div class="form-group">
                         <label for="">Codigo Google</label>
                         <input type="text" name="google_code" class="form-control" required>
                     </div>
-
+                    <hr>
                     <div class="form-group text-center">
                         <button class="btn btn-primary mt-2">Aprobar</button>
                     </div>
@@ -39,6 +40,23 @@
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
+
+        <script>
+            let idliquidacion = document.getElementById('idliquidacion');
+            let enviar = document.getElementById('enviar');
+            let enviado = document.getElementById('enviado');
+
+            idliquidacion = 0;
+
+            if (idliquidacion !== 0) {
+                enviar.style.display = "none";
+                enviado.style.display = "block";
+            } else {
+                enviar.style.display = "block";
+                enviado.style.display = "none";
+            }
+        </script>
+
 
     </div>
 </div>

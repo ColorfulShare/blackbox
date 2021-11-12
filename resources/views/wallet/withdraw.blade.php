@@ -73,26 +73,26 @@
             document.getElementById("wallet").innerHTML = wallet;
         };
 
+        let sendCodeEmail = () => {
+            url = "/wallet/" + document.getElementById("to").value + "/sendcodeemail"
+            fetch(url, []).then((response) => {
+                if (response.data > 0) {
+                    idliquidacion = response.data
+                    toastr.success("Codigo Enviado, Revise su correo", '¡Genial!', {
+                        "progressBar": true
+                    });
+                } else {
+                    toastr.error("El monto solicitado es menor al minimo permitido 50$", '¡Error!', {
+                        "progressBar": true
+                    });
+                }
+            }).catch(function(_error) {
+                toastr.error("Ocurrio un problema con la solicitud", '¡Error!', {
+                    "progressBar": true
+                });
+            })
 
-        // let sendCodeEmail = () => {
-        //     let url = "{{route('send-code-email', wallet)}}";
-        //     axios.get(url, []).then((response) => {
-        //         if (response.data > 0) {
-        //             this.idliquidacion = response.data
-        //             toastr.success("Codigo Enviado, Revise su correo", '¡Genial!', {
-        //                 "progressBar": true
-        //             });
-        //         } else {
-        //             toastr.error("El monto solicitado es menor al minimo permitido 50$", '¡Error!', {
-        //                 "progressBar": true
-        //             });
-        //         }
-        //     }).catch(function(_error) {
-        //         toastr.error("Ocurrio un problema con la solicitud", '¡Error!', {
-        //             "progressBar": true
-        //         });
-        //     })
-        // }
+        }
     </script>
 
 </div>
