@@ -22,7 +22,7 @@ class LiquidationController extends Controller
     function __construct()
     {
         $this->walletController = new WalletController();
-        $this->DoubleAutenticationController = new DoubleAutenticationController();
+        $this->doubleAuthController = new DoubleAutenticationController();
     }
 
 
@@ -85,7 +85,7 @@ class LiquidationController extends Controller
             $dataEmail = [
                 'billetera' => $wallet,
                 'total' => $total,
-                'user' => $user->fullname,
+                'user' => $user->firstname,
                 'code' => $arrayLiquidation['code_correo']
             ];
 
@@ -103,7 +103,7 @@ class LiquidationController extends Controller
             }
             return $idLiquidation;
         } catch (\Throwable $th) {
-            Log::error('Liquidaction - sendCodeEmail -> Error: ' . $th);
+            Log::error('Liquidation - sendCodeEmail -> Error: ' . $th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
@@ -129,7 +129,7 @@ class LiquidationController extends Controller
                 'correo_code' => ['required'],
             ]);
         }
-        try {
+        // try {
             if ($validate) {
 
                 $idliquidation = $request->idliquidation;
@@ -152,7 +152,7 @@ class LiquidationController extends Controller
 
                 /*Verifica si los codigo esta bien*/
 
-                if (!$this->DoubleAutenticationController->checkCode($liquidation->user_id, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
+                if (!$this->doubleAuthController->checkCode($liquidation->user_id, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
                     session(['intentos_fallidos' => (session('intentos_fallidos') + 1)]);
                     return redirect()->back()->with('msj-danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
                 }
@@ -204,15 +204,15 @@ class LiquidationController extends Controller
                     'status' => 0,
                     'tipo_transaction' => 1,
                 ];
-                // dd($arrayWallet);
+
                 $this->walletController->saveWallet($arrayWallet);
 
                 return redirect()->back()->with('msj-success', 'La Liquidacion fue ' . $accion . ' con exito');
             }
-        } catch (\Throwable $th) {
-            Log::error('Liquidaction - saveLiquidation -> Error: ' . $th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
-        }
+        // } catch (\Throwable $th) {
+        //     Log::error('Liquidation - saveLiquidation -> Error: ' . $th);
+        //     abort(403, "Ocurrio un error, contacte con el administrador");
+        // }
     }
 
     public function aprovarLiquidacion($idliquidation, $hash, $comentario)
@@ -259,6 +259,8 @@ class LiquidationController extends Controller
         $liquidacion->save();
     }
 
+    
+
     /**
      * Permite reversar los retiros que tienen mas de 30 min activos
      *
@@ -274,7 +276,7 @@ class LiquidationController extends Controller
         if ($liquidation != null) {
             $fechaActual = Carbon::now();
             $fechaCodeCorreo = new Carbon($liquidation->fecha_code);
-            if ($fechaCodeCorreo->diffInMinutes($fechaActual) >= 30) {
+            if ($fechaCodeCorreo->diffInMinutes($fechaActual) >= 2) {
                 $this->reversarLiquidacion($liquidation->id, 'Tiempo limite de codigo sobrepasado');
                 $result = true;
             }

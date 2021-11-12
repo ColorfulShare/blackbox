@@ -1,7 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
 @section('content')
-
 <div id="withdraw">
     <div class=" col-8 offset-md-2">
         <div class="card bg-lp">
@@ -23,7 +22,7 @@
                         </div>
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Red</h5>
-                            <p class=""> TRX <span>Tron (TRC20)</span></p>
+                            <p class="">TRX<span>Tron (TRC20)</span></p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
                             <h5 class="">Saldo en USDT</h5>
@@ -73,6 +72,7 @@
             document.getElementById("wallet").innerHTML = wallet;
         };
 
+        //Funcion para mandar el codigo al correo al solicitar un retiro
         let sendCodeEmail = () => {
             url = "/wallet/" + document.getElementById("to").value + "/sendcodeemail"
             fetch(url, []).then((response) => {
@@ -82,7 +82,7 @@
                         "progressBar": true
                     });
                 } else {
-                    toastr.error("El monto solicitado es menor al minimo permitido 50$", '¡Error!', {
+                    toastr.error("El monto solicitado es menor al minimo permitido 100$", '¡Error!', {
                         "progressBar": true
                     });
                 }

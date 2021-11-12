@@ -10,7 +10,7 @@ use App\Models\Inversion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
-use App\Models\Liquidaction;
+use App\Models\Liquidation;
 use App\Models\Wallet;
 
 class WalletController extends Controller

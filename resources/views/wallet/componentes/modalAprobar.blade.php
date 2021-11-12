@@ -46,17 +46,15 @@
             let enviar = document.getElementById('enviar');
             let enviado = document.getElementById('enviado');
 
-            idliquidacion = 0;
+            idliquidacion = 0 ;
 
-            if (idliquidacion !== 0) {
-                enviar.style.display = "none";
-                enviado.style.display = "block";
-            } else {
+            if (idliquidacion === 0) {
                 enviar.style.display = "block";
                 enviado.style.display = "none";
+            } else {
+                enviar.style.display = "none";
+                enviado.style.display = "block";
             }
         </script>
-
-
     </div>
 </div>

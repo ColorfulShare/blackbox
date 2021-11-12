@@ -162,7 +162,7 @@ class User extends Authenticatable
      */
     public function getLiquidate()
     {
-        return $this->hasMany('App\Models\Liquidaction', 'user_id');
+        return $this->hasMany('App\Models\Liquidation', 'user_id');
     }
 
     /**
@@ -178,7 +178,6 @@ class User extends Authenticatable
     public function inversionMasAlta()
     {
         return $this->inversiones->where('status', 1)->sortByDesc('id')->first();
-       
     }
 
     public function saldoDisponible()
