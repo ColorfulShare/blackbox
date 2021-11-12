@@ -44,7 +44,7 @@
         <h2 class="brand-text text-primary ms-1 text-center">Registrar</h2>
         <form class="auth-register-form mt-2" method="POST" action="{{ route('register') }}">
           @csrf
-
+      
           {{-- Campo de Referido --}}
           @if ( request()->referred_id != null )
             <input type="hidden" name="referred_id" value="{{request()->referred_id}}">

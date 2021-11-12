@@ -27,7 +27,7 @@
                 @if ($item->status == '0')
                 <td> <a class=" btn text-bold-600 text-white" style="background: rgba(0, 246, 225, 0.77);border-radius: 8px;">Abierto</a></td>
                 @elseif($item->status == '1')
-                <td> <a class=" btn  text-bold-600 text-white" style="background: rgba(246, 74, 0, 0.77);border-radius: 8px;">Cerrado</a></td>
+                <td> <a class=" btn  text-bold-600 text-white" style="background: rgb(255, 0, 0);border-radius: 8px;">Cerrado</a></td>
                 @endif
 
                 <td>{{$item->send}}</td>
