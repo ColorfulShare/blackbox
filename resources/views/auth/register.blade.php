@@ -21,7 +21,7 @@
 
 @section('content')
 
-<div class="card-header form-group">
+<div class="card-header">
 
   @if (!empty($referred))
     <h6 class="text-center col-12">Registro Referido por {{$referred->firstname}} {{$referred->lastname}}</h6>
@@ -30,7 +30,7 @@
 <div class="auth-wrapper auth-v1 px-2">
   <div class="auth-inner py-2">
     <!-- Register v1 -->
-    <div class="card mb-0" >
+    <div class="card mb-0">
       <div class="card-body">
         <a href="#" class="brand-logo">
           <svg
