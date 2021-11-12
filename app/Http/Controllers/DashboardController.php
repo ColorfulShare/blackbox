@@ -35,6 +35,10 @@ class DashboardController extends Controller
       })->get();
 
       $porcentaje = 0;
+
+      //ORDENES HOY 
+      $hoy = Carbon::now();
+      $ordenes = OrdenPurchase::whereDate('created_at', $hoy)->count();
       
     }else{
       $inversion = Auth::user()->inversionMasAlta();
@@ -52,7 +56,7 @@ class DashboardController extends Controller
       return view('/content/dashboard/dashboard-analytics', compact('porcentaje','linkReferido','linkAdminRed', 'user'));
     }else{
       // El dashboard del admin
-      return view('/admin/dashboard/index', compact('porcentaje', 'users','linkReferido','linkAdminRed', 'user'));
+      return view('/admin/dashboard/index', compact('porcentaje', 'users','linkReferido','linkAdminRed', 'user', 'ordenes'));
     }
   }
 

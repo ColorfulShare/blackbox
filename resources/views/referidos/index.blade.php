@@ -1,6 +1,7 @@
+
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Usuarios | Lista')
+@section('title', 'Red | Usuarios')
 
 @section('vendor-style')
   <!-- vendor css files -->
@@ -33,11 +34,10 @@
                                 <th>Estado</th>
                                 <th>Nivel</th>
                                 <th>Ingreso</th>
-                                <th>Accion</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($user as $item)
+                            @foreach ($referido as $item)
                             <tr class="text-center">
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->firstname}}</td>
@@ -59,15 +59,6 @@
                                 @endif
                                 <td>{{$item->nivel}}</td>
                                 <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
-                                <td>
-                                    <form action="{{route('impersonate.start', $item)}}" method="POST" class="btn">
-                                        @csrf
-                                        <button type="submit" class="btn btn-outline-primary text-bold-600">
-                                            <i data-feather='eye'></i>
-                                        </button>
-
-                                    </form>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>

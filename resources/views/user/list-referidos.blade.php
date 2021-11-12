@@ -1,6 +1,7 @@
+
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Usuarios | Lista')
+@section('title', 'Red | Referidos')
 
 @section('vendor-style')
   <!-- vendor css files -->
@@ -22,7 +23,7 @@
         <div class="card-content">
             <div class="card-body ">
                 <div class="table-responsive">
-                    <h1><strong >Lista de usuarios</strong></h1>
+                    <h1><strong > Referidos en Red</strong></h1>
                     <table class="table nowrap scroll-horizontal-vertical myTable2 table-striped mt-2">
                         <thead>
                             <tr class="text-center ">
@@ -33,11 +34,10 @@
                                 <th>Estado</th>
                                 <th>Nivel</th>
                                 <th>Ingreso</th>
-                                <th>Accion</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($user as $item)
+                            @foreach ($referidos as $item)
                             <tr class="text-center">
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->firstname}}</td>
@@ -59,15 +59,6 @@
                                 @endif
                                 <td>{{$item->nivel}}</td>
                                 <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
-                                <td>
-                                    <form action="{{route('impersonate.start', $item)}}" method="POST" class="btn">
-                                        @csrf
-                                        <button type="submit" class="btn btn-outline-primary text-bold-600">
-                                            <i data-feather='eye'></i>
-                                        </button>
-
-                                    </form>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>

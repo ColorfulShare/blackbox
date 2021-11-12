@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Notifications\userActivacionExitosa;
 use App\Models\OrdenPurchase;
+use App\Http\Traits\Tree;
+use Illuminate\Database\Eloquent\Collection;
 
 class UserController extends Controller
 {
+    use Tree;
+    
     public function __construct()
     {
         $this->inversionController = new InversionController();
@@ -176,6 +180,19 @@ class UserController extends Controller
             DB::rollback();
 
             Log::error('UserController - activar -> Error: '.$th);
+            abort(500, "Ocurrio un error, contacte con el administrador");
+        }
+    }
+
+    public function referidos(Request $request)
+    {
+        try {
+            $referidos = $this->getChildrens(Auth::user(), new Collection);
+
+            return view('user.list-referidos', compact('referidos'));
+        } catch (\Throwable $th) {
+
+            Log::error('UserController - referidos -> Error: '.$th);
             abort(500, "Ocurrio un error, contacte con el administrador");
         }
     }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReferralController extends Controller
 {
@@ -18,7 +20,7 @@ class ReferralController extends Controller
 }
 
 public function linkAdminRed(Request $request, $referral_admin_red_code)
-{
+    {
     if (!$request->hasCookie('referralAdminRed')) {
         $cookie = cookie('referralAdminRed', $referral_admin_red_code, 60 * 24 * 7);
 
@@ -26,5 +28,13 @@ public function linkAdminRed(Request $request, $referral_admin_red_code)
     }
 
     return redirect('/register');
-}
+    }
+
+
+    public function referidos(){
+        $id = Auth::user()->id;
+        $referido = User::all()->take(10);
+
+        return view('referidos.index' , compact('referido'));
+    }
 }

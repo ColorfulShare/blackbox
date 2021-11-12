@@ -31,6 +31,7 @@ use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\TreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,9 @@ Route::get('/storage-link', function () {
 
 Route::middleware('auth')->group(function () {
 
+
+
+
     Route::group(['prefix' => 'dashboard'], function () {
         //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
         Route::get('/verification', [UserController::class, 'verificationEmail'])->name('user.verification.email');
@@ -94,18 +98,40 @@ Route::middleware('auth')->group(function () {
         });
 
         //RENDIMIENTOS
-        Route::prefix('rendimientos')->group(function ()
-        {
+        Route::prefix('rendimientos')->group(function () {
             Route::get('/', [RendimientoController::class, 'index'])->name('rendimiento.index');
             Route::post('/pagarrendimiento', [RendimientoController::class, 'savePorcentage'])->name('rendimiento.save.porcentage');
         });
+
+        //ADMIN
+        Route::prefix('genealogy')->group(function ()
+        {
+            Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
+            Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
+        });
     });
     //
+    // Red de usuario
+    Route::prefix('genealogy')->group(function ()
+    {
+        // Ruta para ver la lista de usuarios
+        //Route::get('users/{network}', [TreController::class, 'indexNewtwork'])->name('genealogy_list_network');
+        // Ruta para visualizar el arbol o la matriz
+        Route::get('/', [TreController::class, 'index'])->name('genealogy_type');
+        // Ruta para visualizar el arbol o la matriz de un usuario en especifico
+        Route::get('/{id}', [TreController::class, 'moretree'])->name('genealogy_type_id');
+        
+        /*
+        Route::post('{type}', 'TreeController@moretreeEmail')->name('genealogy_type_email');
+        */
+    });
 
     //User
     Route::prefix('user')->group(function () {
         Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
         Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
+
+        Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
     });
 
     // 2fact
@@ -139,8 +165,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [InversionController::class, 'index'])->name('inversiones.index');
     });
 });
-    //BONOSS
-    Route::get('/bonoContruccion', [InversionController::class, 'bonoContruccion'])->name('bonoContruccion');
+//BONOSS
+Route::get('/bonoContruccion', [InversionController::class, 'bonoContruccion'])->name('bonoContruccion');
 
 Auth::routes(['verify' => true]);
 
@@ -314,8 +340,7 @@ Route::group(['prefix' => 'wallet'], function () {
 
     Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
 
-    Route::post('/process', [LiquidactionController::class, 'procesarLiquidacion'])->name('settlement.process');
-    Route::post('/process-retirement', [LiquidactionController::class, 'procesarSocilitud'])->name('settlement.retirement');
+    Route::post('/process', [LiquidationController::class, 'procesarLiquidacion'])->name('settlement.process');
 
     Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
 });
@@ -361,6 +386,7 @@ Route::group(['prefix' => 'auth'], function () {
 
 
 
+
 /* Route Charts */
 Route::group(['prefix' => 'chart'], function () {
     Route::get('apex', [ChartsController::class, 'apex'])->name('chart-apex');
@@ -385,3 +411,5 @@ Route::get('rAdminRed/{referral_admin_red_code}', [ReferralController::class, 'l
 Route::get('/cookie', function () {
     return Cookie::get('referral');
 });
+
+Route::get('/referidos', [ReferralController::class, 'referidos'])->name('referidos.index');
