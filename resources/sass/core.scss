@@ -7,3 +7,7 @@
 @import './base/themes/dark-layout';
 @import './base/themes/bordered-layout';
 @import './base/themes/semi-dark-layout';
+
+// Custom
+@import './base/plugins/jquery-confirm/jquery-confirm';
+@import './custom';
