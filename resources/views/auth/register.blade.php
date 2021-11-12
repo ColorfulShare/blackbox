@@ -21,7 +21,7 @@
 
 @section('content')
 
-<div class="card-header">
+<div class="card-header form-group">
 
   @if (!empty($referred))
     <h6 class="text-center col-12">Registro Referido por {{$referred->firstname}} {{$referred->lastname}}</h6>
@@ -30,7 +30,7 @@
 <div class="auth-wrapper auth-v1 px-2">
   <div class="auth-inner py-2">
     <!-- Register v1 -->
-    <div class="card mb-0">
+    <div class="card mb-0" >
       <div class="card-body">
         <a href="#" class="brand-logo">
           <svg
@@ -94,14 +94,13 @@
 
         <form class="auth-register-form mt-2" method="POST" action="{{ route('register') }}">
           @csrf
-
+      
           {{-- Campo de Referido --}}
           @if ( request()->referred_id != null )
             <input type="hidden" name="referred_id" value="{{request()->referred_id}}">
           @else
             <input type="hidden" name="referred_id" value="1">
           @endif
-
           <div class="mb-1">
             <label for="firstname" class="form-label">Nombre</label>
             <input
@@ -122,7 +121,7 @@
               </span>
               @enderror
             </div>
-            <div class="mb-1">
+               <div class="mb-1">
               <label for="lastname" class="form-label">Apellido</label>
             <input
               type="text"
@@ -227,7 +226,7 @@
               <label for="countrie_id" class="form-label">País</label>
               <select
                 name="countrie_id"
-                id="	countrie_id"
+                id="  countrie_id"
                 class="form-control @error('countrie_id') is-invalid @enderror"
                 required
                 data-toggle="select"

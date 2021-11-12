@@ -6,6 +6,7 @@
     "/css/base/plugins/extensions/ext-component-media-player.css": "/css/base/plugins/extensions/ext-component-media-player.css",
     "/css/base/plugins/extensions/ext-component-drag-drop.css": "/css/base/plugins/extensions/ext-component-drag-drop.css",
     "/css/base/plugins/extensions/ext-component-context-menu.css": "/css/base/plugins/extensions/ext-component-context-menu.css",
+    "/css/style.css": "/css/style.css",
     "/css-rtl/style-rtl.css": "/css-rtl/style-rtl.css",
     "/css-rtl/custom-rtl.css": "/css-rtl/custom-rtl.css",
     "/css/base/plugins/charts/chart-apex.css": "/css/base/plugins/charts/chart-apex.css",
@@ -557,6 +558,5 @@
     "/data/kanban.json": "/data/kanban.json",
     "/data/search.json": "/data/search.json",
     "/data/table-datatable.json": "/data/table-datatable.json",
-    "/data/user-list.json": "/data/user-list.json",
-    "/css/style.css": "/css/style.css"
+    "/data/user-list.json": "/data/user-list.json"
 }

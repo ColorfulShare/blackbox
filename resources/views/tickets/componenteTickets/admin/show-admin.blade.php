@@ -21,8 +21,7 @@
                                 <div class="row">
 
                                     <div class="col-12">
-                                        <label class="form-label  mb-1" for="issue"><b>Asunto del
-                                                ticket</b></label>
+                                        <label class="form-label  mb-1" for="issue"><b>Asunto <del></del> ticket</b></label>
                                         <input class="form-control border  rounded-0" type="text" readonly id="issue" name="issue" value="{{ $ticket->issue }}" rows="3" />
 
                                     </div>
