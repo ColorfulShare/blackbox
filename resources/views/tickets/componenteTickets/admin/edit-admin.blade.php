@@ -5,7 +5,7 @@
 @section('content')
  <div class="row breadcrumbs-top">
     <div class="col-8">
-        <div class="content-header-title " style="padding: 0.5rem 0 0.5rem 1rem ">DETALLES DEL USUARIO # {{$ticket->getUser->id}}</div>
+        <div class="content-header " style="padding: 0.5rem 0 0.5rem 1rem ">DETALLES DEL USUARIO # {{$ticket->getUser->id}}</div>
     </div>
     <div class="col-4  pr-2" style="padding-left: 17%">
         <a href="{{ route('ticket.list-admin')}}" class="btn btn-danger  mb-2 waves-effect waves-light">Volver Atrás</a>
@@ -90,7 +90,7 @@
                                                                         <div class="header clearfix">
                                                                             <strong class="primary-font">{{ $item->getUser->firstname}} {{$item->getUser->lastname}}</strong>
                                                                         </div>
-                                                                        <p>
+                                                                        <p class="primary-font">
                                                                             {{ $item->message }}
                                                                         </p>
                                                                     </div>

@@ -32,6 +32,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\TreController;
+use App\Http\Controllers\EducationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,11 @@ Route::middleware('auth')->group(function () {
         Route::prefix('rendimientos')->group(function () {
             Route::get('/', [RendimientoController::class, 'index'])->name('rendimiento.index');
             Route::post('/pagarrendimiento', [RendimientoController::class, 'savePorcentage'])->name('rendimiento.save.porcentage');
+        });
+
+        //EDUCACION
+        Route::prefix('education')->group(function () {
+            Route::get('/list', [EducationsController::class, 'index'])->name('education.index');
         });
 
         //ADMIN
