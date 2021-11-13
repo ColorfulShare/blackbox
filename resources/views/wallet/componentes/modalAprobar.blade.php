@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="openModalAprobar" tabindex="-1" role="dialog" aria-labelledby="modalModalAprobarTitle" aria-hidden="true">
+<div class="modal fade" id="openModalAprobar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  role="dialog" aria-labelledby="modalModalAprobarTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">

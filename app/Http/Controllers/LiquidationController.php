@@ -305,7 +305,7 @@ class LiquidationController extends Controller
             $dataEmail = [
                 'billetera' => $wallet,
                 'total' => $total,
-                'user' => $user->fullname,
+                'user' => $user->firstname,
                 'code' => $arrayLiquidation['code_correo']
             ];
 
