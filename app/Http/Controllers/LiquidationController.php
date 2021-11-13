@@ -350,4 +350,26 @@ class LiquidationController extends Controller
         }
         return $result;
     }
+
+    /**
+     * LLeva a la vistas de las liquidaciones reservadas o aprobadas
+     *
+     * @param string $status
+     * @return void
+     */
+    public function historyWithdraw()
+    {
+        try {
+
+            $liquidaciones = Liquidation::all();
+            foreach ($liquidaciones as $liqui) {
+                $liqui->fullname = $liqui->getUserLiquidation->username;
+            }
+
+            return view('withdraw.retiros', compact('liquidaciones'));
+        } catch (\Throwable $th) {
+            Log::error('Liquidaction - indexHistory -> Error: ' . $th);
+            abort(403, "Ocurrio un error, contacte con el administrador");
+        }
+    }
 }

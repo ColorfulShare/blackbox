@@ -49,6 +49,12 @@
           "name": "Wallet",
           "icon": "circle",
           "slug": ""
+        },
+        {
+          "url": "/withdraw/retiros",
+          "name": "Retiros",
+          "icon": "circle",
+          "slug": ""
         }
       ]
     },
