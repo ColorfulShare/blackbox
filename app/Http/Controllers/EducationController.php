@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Education;
 use Illuminate\Http\Request;
+use App\Models\Education;
+use Illuminate\Support\Facades\DB;
 
-class EducationsController extends Controller
+
+class EducationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,7 @@ class EducationsController extends Controller
      */
     public function index()
     {
-        $education = Education::orderBy('id','desc')->get();
+        $education = Education::all();
 
         return view('education.index', compact('education'));
     }
@@ -26,7 +28,7 @@ class EducationsController extends Controller
      */
     public function create()
     {
-        //
+       return view('education.create');
     }
 
     /**
@@ -37,16 +39,29 @@ class EducationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+           'description' => 'required',
+           'link' => 'required',
+           'image' => 'required',
+       ]);
+
+        DB::table('education')->insert([
+            'description'=> $data['description'],
+            'link'=> $data['link'],
+            'image' => $data['image'],
+        ]);
+
+
+       return redirect(route('education.index'))->with('msj-success', 'La Educacion fue creada con exito');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Education  $education
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Education $education)
+    public function show($id)
     {
         //
     }
@@ -54,10 +69,10 @@ class EducationsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Education  $education
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Education $education)
+    public function edit($id)
     {
         //
     }
@@ -66,10 +81,10 @@ class EducationsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Education  $education
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Education $education)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -77,10 +92,10 @@ class EducationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Education  $education
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Education $education)
+    public function destroy($id)
     {
         //
     }

@@ -109,7 +109,7 @@
       ]
     },
     {
-      "url": "education/list",
+      "url": "education/",
       "name": "Educación",
       "icon": "shopping-cart",
       "slug": "education.index"

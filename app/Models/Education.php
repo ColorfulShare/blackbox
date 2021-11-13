@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Education extends Model
 {
-    protected $fillable = [
-      'image','description','link'
-    
+    use HasFactory;
+
+	protected $fillable = [
+	    'image','description','link'
+	    
     ];
+    
 }
+
+

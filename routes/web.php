@@ -32,7 +32,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\TreController;
-use App\Http\Controllers\EducationsController;
+use App\Http\Controllers\EducationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +106,9 @@ Route::middleware('auth')->group(function () {
 
         //EDUCACION
         Route::prefix('education')->group(function () {
-            Route::get('/list', [EducationsController::class, 'index'])->name('education.index');
+         Route::get('/', [EducationController::class, 'index'])->name('education.index');
+         Route::get('/create', [EducationController::class, 'create'])->name('education.create');
+         Route::post('/', [EducationController::class, 'store'])->name('education.store');
         });
 
         //ADMIN
