@@ -19,12 +19,15 @@
                         <label for="">Codigo Correo</label>
                         <input type="text" name="correo_code" class="form-control" required>
                         <hr>
-                        <div class=" text-center mt-1 mb-2" style="margin-left: 160px;">
-                            <button type="button" class="btn btn-primary" onclick="sendCodeEmail()" id="enviar">Enviar Codigo</button>
+
+
+                        <div class=" text-center">
+                            <div class="card-body">
+                                <a href="#" onclick="sendCodeEmail()" id="Codigo-s" class="btn btn-primary">Enviar Codigo</a>
+                                <p class="card-text"><span class="text-center" id="Codigo-e">Codigo Enviado, tienes 30 min sino se cancelara el retiro automaticamente</span></p>
+                            </div>
                         </div>
                     </div>
-
-                    <span class="" id="enviado">Codigo Enviado, tienes 30 min sino se cancelara el retiro automaticamente</span>
 
                     <div class="form-group">
                         <label for="">Codigo Google</label>
@@ -32,7 +35,7 @@
                     </div>
                     <hr>
                     <div class="form-group text-center">
-                        <button class="btn btn-primary mt-2">Aprobar</button>
+                        <button class="btn btn-primary ">Aprobar</button>
                     </div>
                 </form>
             </div>
@@ -41,20 +44,6 @@
             </div>
         </div>
 
-        <script>
-            let idliquidacion = document.getElementById('idliquidacion');
-            let enviar = document.getElementById('enviar');
-            let enviado = document.getElementById('enviado');
 
-            idliquidacion = 0 ;
-
-            if (idliquidacion === 0) {
-                enviar.style.display = "block";
-                enviado.style.display = "none";
-            } else {
-                enviar.style.display = "none";
-                enviado.style.display = "block";
-            }
-        </script>
     </div>
 </div>
