@@ -5,8 +5,8 @@
 @section('content')
 
 
-<div class="col-6 col-md-4" style="padding-left: 89%">
-    <a href="{{ route('ticket.list-user')}}" class="btn btn-danger mb-2 waves-effect waves-light">Volver Atrás</a>
+<div class="col-6 col-md-4">
+    <a href="{{ route('ticket.list-user')}}" class="btn btn-danger mb-2 waves-effect waves-light">Volver Atrás <i class="fas fa-chevron-left"></i></a>
 </div>
 
 <section>
@@ -34,15 +34,22 @@
                                         <div class="col-12 mx-auto ">
                                             <div class="card">
 
-                                                <div class="card-body chat-care rounded" style=" background: rgb(240, 230, 140) ">
+                                                <div class="card-body chat-care">
                                                     <ul class="chat">
                                                         @foreach ( $message as $item )
                                                         {{-- user --}}
                                                         @if ($item->type == 0)
                                                         <li class="agent clearfix">
+                                                            <span class="chat-img left clearfix mx-2">
+                                                                @if (Auth::user()->photoDB != NULL)
+                                                                <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" class="img-circle">
+                                                                @else
+                                                                <img src="{{asset('images/avatars/1-small.png')}}" alt="avatar" class="img-circle" height="60" width="60">
+                                                                @endif
+                                                            </span>
                                                             <div class="chat-body clearfix">
                                                                 <div class="header clearfix">
-                                                                    <strong class="primary-font">{{ $item->getUser->firstname}} {{ $item->getUser->lastname}}</strong>
+                                                                    <strong class="primary-font">{{ $item->getUser->email}}</strong>
                                                                 </div>
                                                                 <p>
                                                                     {{ $item->message }}
@@ -53,10 +60,17 @@
                                                         {{-- admin --}}
                                                         @elseif ($item->type == 1)
                                                         <li class="admin clearfix">
+                                                            <span class="chat-img right clearfix  mx-2">
+                                                                @if (Auth::user()->photoDB != NULL)
+                                                                <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" class="img-circle">
+                                                                @else
+                                                                <img src="{{asset('images/avatars/2-small.png')}}" alt="avatar" class="img-circle" height="60" width="60">
+                                                                @endif
+                                                            </span>
                                                             <div class="chat-body clearfix">
                                                                 <div class="header clearfix">
 
-                                                                    <strong class="right primary-font">{{ $item->getAdmin->firstname }} {{ $item->getAdmin->lastname}}</strong>
+                                                                    <strong class="right primary-font">{{ $item->getAdmin->email}}</strong>
                                                                 </div>
                                                                 <p>
                                                                     {{ $item->message }}
