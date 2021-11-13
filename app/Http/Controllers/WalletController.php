@@ -63,4 +63,18 @@ class WalletController extends Controller
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
+
+    /**
+     * Lleva a la vista de pagos
+     *
+     * @return void
+     */
+    public function payments()
+    {
+        $payments = Liquidation::where([['user_id', '=', Auth::user()->id], ['status', '=', '1']])->get();
+        foreach ($payments as $item) {
+            $item->fullname = $item->getUserLiquidation->username;
+        }
+        return view('withdraw.retiros', compact('payments'));
+    }
 }

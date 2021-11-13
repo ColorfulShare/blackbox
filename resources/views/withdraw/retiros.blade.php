@@ -2,54 +2,54 @@
 
 
 @section('content')
-<div id="settlement">
+<div id="logs-list">
   <div class="col-12">
-    <div class="card bg-lp">
+    <div class="card">
       <div class="card-content">
         <div class="card-body card-dashboard">
           <div class="table-responsive">
-            <h1 class="mb-2">Retiros</h1>
-            <table class="table nowrap scroll-horizontal-vertical myTable table-striped">
+            <h1 class="">Retiros</h1>
+            <table class="table w-100 nowrap scroll-horizontal-vertical myTable table-striped w-100 text-white ">
               <thead class="">
-                <tr class="text-center  bg-purple-alt2">
+
+                <tr class="text-center  text-dark">
                   <th>ID</th>
-                  <th>Nombre</th>
+                  <th>Usuario</th>
                   <th>Monto</th>
-                  {{--<th>Feed</th>--}}
-                  {{--<th>Total</th>--}}
+                  <th>Estado</th>
                   <th>Hash</th>
-                  {{--<th>Billetera</th>--}}
-                  {{--<th>Estado</th>--}}
                   <th>Fecha</th>
                 </tr>
-              </thead>
-              <tbody>
-                @foreach ($liquidaciones as $liqui)
-                <tr class="text-center ">
-                  <td>{{$liqui->id}}</td>
-                  <td>{{$liqui->fullname}}</td>
-                  <td>{{$liqui->monto_bruto}}</td>
-                  {{--<td>{{$liqui->feed}}</td>--}}
-                  {{--<td>{{$liqui->total}}</td>--}}
 
-                  @if($liqui->hash === NULL)
+              </thead>
+
+              <tbody>
+
+                @foreach ($payments as $item)
+                <tr class="text-center">
+                  <td>{{$item->id}}</td>
+                  <td>{{ $item->fullname}}</td>
+                  <td>{{$item->monto_bruto}}</td>
+                  @if ($item->status == '0')
+                  <td>En espera</td>
+                  @elseif($item->status == '1')
+                  <td>Pagado</td>
+                  @elseif($item->status == '2')
+                  <td>Cancelado</td>
+                  @endif
+                  @if($item->hash === NULL)
                   <td> - </td>
                   @else
-                  <td>{{$liqui->hash}}</td>
+                  {{$item->hash}}
                   @endif
-                  {{--<td>{{$liqui->wallet_used}}</td>--}}
-                  {{--<td>
-                    @if($liqui->status == 0)
-                    En Espera
-                    @elseif($liqui->status == 1)
-                    Liquidado
-                    @else
-                    Reversado
-                    @endif
-                  </td>--}}
-                  <td>{{date('Y-m-d', strtotime($liqui->created_at))}}</td>
+
+
+
+
+                  <td>{{$item->created_at}}</td>
                 </tr>
                 @endforeach
+
               </tbody>
             </table>
           </div>
@@ -57,8 +57,8 @@
       </div>
     </div>
   </div>
-
 </div>
+
 
 
 @endsection

@@ -351,24 +351,22 @@ class LiquidationController extends Controller
         return $result;
     }
 
+
     /**
-     * LLeva a la vistas de las liquidaciones reservadas o aprobadas
+     * Display a listing of the resource.
      *
-     * @param string $status
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function historyWithdraw()
+    public function indexPendientes()
     {
         try {
-
-            $liquidaciones = Liquidation::all();
+            $liquidaciones = Liquidation::where('status', 0)->get();
             foreach ($liquidaciones as $liqui) {
                 $liqui->fullname = $liqui->getUserLiquidation->username;
             }
-
-            return view('withdraw.retiros', compact('liquidaciones'));
+            return view('withdraw.pending', compact('liquidaciones'));
         } catch (\Throwable $th) {
-            Log::error('Liquidaction - indexHistory -> Error: ' . $th);
+            Log::error('Liquidaction - indexPendientes -> Error: ' . $th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
