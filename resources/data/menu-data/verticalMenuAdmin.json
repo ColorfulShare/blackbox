@@ -78,6 +78,12 @@
       ]
     },
     {
+      "url": "news/list",
+      "name": "Noticias",
+      "icon": "trello",
+      "slug": "news"
+    },
+    {
       "name": "De Interés",
       "icon": "sidebar",
       "slug": "/",
