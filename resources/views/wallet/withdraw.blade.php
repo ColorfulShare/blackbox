@@ -1,7 +1,6 @@
 @extends('layouts/contentLayoutMaster')
 
 @section('content')
-
 <div id="withdraw">
     <div class=" col-8 offset-md-2">
         <div class="card bg-lp">
@@ -23,7 +22,7 @@
                         </div>
                         <div class="col-12 col-md-12 mb-1">
                             <h5 class="">Red</h5>
-                            <p class=""> TRX <span>Tron (TRC20)</span></p>
+                            <p class="">TRX<span>Tron (TRC20)</span></p>
                         </div>
                         <div class="col-6 col-md-6 mb-1">
                             <h5 class="">Saldo en USDT</h5>
@@ -73,25 +72,42 @@
             document.getElementById("wallet").innerHTML = wallet;
         };
 
+        //Validamos el envio del email
+
+        let enviar = document.getElementById("Codigo-e").style.display = "none";
+        let enviado = document.getElementById("Codigo-s").style.display = "block";
+
+
+        //Funcion para mandar el codigo al correo al solicitar un retiro
         let sendCodeEmail = () => {
-            url = "/wallet/" + document.getElementById("to").value + "/sendcodeemail"
-            fetch(url, []).then((response) => {
-                if (response.data > 0) {
-                    idliquidacion = response.data
-                    toastr.success("Codigo Enviado, Revise su correo", '¡Genial!', {
-                        "progressBar": true
-                    });
-                } else {
-                    toastr.error("El monto solicitado es menor al minimo permitido 50$", '¡Error!', {
+            (async () => {
+                try {
+                    url = "/wallet/" + document.getElementById("to").value + "/sendcodeemail"
+                    let response = await fetch(url, []);
+                    if (response.ok) {
+
+                        let datos = await response.json();
+
+                        if (datos > 0) {
+                            let enviar = document.getElementById("Codigo-e").style.display = "block";
+                            let enviado = document.getElementById("Codigo-s").style.display = "none";
+                            idliquidacion = datos;
+                            toastr.success("Codigo Enviado, Revise su correo", '¡Genial!', {
+                                "progressBar": true
+                            });
+                        }
+
+                    } else {
+                        toastr.error("El monto solicitado es menor al minimo permitido 100$", '¡Error!', {
+                            "progressBar": true
+                        });
+                    }
+                } catch (err) {
+                    toastr.error("Ocurrio un problema con la solicitud", '¡Error!', {
                         "progressBar": true
                     });
                 }
-            }).catch(function(_error) {
-                toastr.error("Ocurrio un problema con la solicitud", '¡Error!', {
-                    "progressBar": true
-                });
-            })
-
+            })();
         }
     </script>
 

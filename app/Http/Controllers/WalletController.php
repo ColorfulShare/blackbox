@@ -10,7 +10,7 @@ use App\Models\Inversion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
-use App\Models\Liquidaction;
+use App\Models\Liquidation;
 use App\Models\Wallet;
 
 class WalletController extends Controller
@@ -62,5 +62,19 @@ class WalletController extends Controller
             Log::error('Wallet - saveWallet -> Error: ' . $th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
+    }
+
+    /**
+     * Lleva a la vista de pagos
+     *
+     * @return void
+     */
+    public function payments()
+    {
+        $payments = Liquidation::where([['user_id', '=', Auth::user()->id], ['status', '=', '1']])->get();
+        foreach ($payments as $item) {
+            $item->fullname = $item->getUserLiquidation->username;
+        }
+        return view('withdraw.retiros', compact('payments'));
     }
 }

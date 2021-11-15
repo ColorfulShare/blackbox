@@ -13,6 +13,6 @@ class LogLiquidation extends Model
 
     public function getLiquidation()
     {
-        return $this->belongsTo('App\Models\Liquidaction', 'idliquidation', 'id');
+        return $this->belongsTo('App\Models\Liquidation', 'idliquidation', 'id');
     }
 }

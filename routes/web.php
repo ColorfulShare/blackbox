@@ -104,23 +104,21 @@ Route::middleware('auth')->group(function () {
         });
 
         //ADMIN
-        Route::prefix('genealogy')->group(function ()
-        {
+        Route::prefix('genealogy')->group(function () {
             Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
             Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
         });
     });
     //
     // Red de usuario
-    Route::prefix('genealogy')->group(function ()
-    {
+    Route::prefix('genealogy')->group(function () {
         // Ruta para ver la lista de usuarios
         //Route::get('users/{network}', [TreController::class, 'indexNewtwork'])->name('genealogy_list_network');
         // Ruta para visualizar el arbol o la matriz
         Route::get('/', [TreController::class, 'index'])->name('genealogy_type');
         // Ruta para visualizar el arbol o la matriz de un usuario en especifico
         Route::get('/{id}', [TreController::class, 'moretree'])->name('genealogy_type_id');
-        
+
         /*
         Route::post('{type}', 'TreeController@moretreeEmail')->name('genealogy_type_email');
         */
@@ -345,6 +343,13 @@ Route::group(['prefix' => 'wallet'], function () {
     Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
 });
 
+
+/* Withdraw */
+Route::group(['prefix' => 'withdraw'], function () {
+    Route::get('retiros', [WalletController::class, 'payments'])->name('withdraw.payments');
+
+    Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
+});
 
 /* Route Tables */
 

@@ -16,6 +16,7 @@ return [
     "Red" => "Red",
     "Matriz" => "Matriz",
     "Referidos" => "Referidos",
+    "Retiros" => "Retiros",
     "Usuarios" => "Usuarios",
     "Wallet" => "Wallet",
     "Inversiones" => "Inversiones",

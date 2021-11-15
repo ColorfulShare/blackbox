@@ -22,9 +22,8 @@ class LiquidationController extends Controller
     function __construct()
     {
         $this->walletController = new WalletController();
-        $this->DoubleAutenticationController = new DoubleAutenticationController();
+        $this->doubleAuthController = new DoubleAutenticationController();
     }
-
 
     public function withdraw()
     {
@@ -33,66 +32,45 @@ class LiquidationController extends Controller
     }
 
     /**
-     * Permite Enviar el codigo
-    
+     * Permite procesar las liquidaciones
+     *
+     * @param integer $iduser -  id del usuario
+     * @param array $listComision - comisiones a procesar si son selecionada
+     * @return integer
      */
-    public function sendCodeEmail($wallet): int
+    public function generarLiquidation(int $iduser, array $listComision): int
     {
         try {
-            $this->reversarRetiro30Min();
-            if (!session()->has('intentos_fallidos')) {
-                session(['intentos_fallidos' => 1]);
-            }
-            $liquidation = Liquidation::where([
-                ['user_id', '=', Auth::id()],
-                ['status', '=', 0],
-            ])->first();
-            if ($liquidation != null) {
-                return $liquidation->id;
-            }
+            $user = User::find($iduser);
+            $comisiones = collect();
 
-            $user = Auth::user();
-
-            $comisiones = Wallet::where([
-                ['user_id', '=', $user->id],
-                ['status', '=', 0],
-                ['liquidado', '=', 0],
-                ['tipo_transaction', '=', 0],
-            ])->get();
+            if ($listComision == []) {
+                $comisiones = Wallet::where([
+                    ['user_id', '=', $iduser],
+                    ['status', '=', 0],
+                    ['tipo_transaction', '=', 0],
+                ])->get();
+            } else {
+                $comisiones = Wallet::whereIn('id', $listComision)->get();
+            }
 
             $bruto = $comisiones->sum('amount');
-
-            if ($bruto < 100) {
-                return 0;
+            if ($bruto < 50) {
+                return 0; // Esta por debajo del limite diario
             }
-
             $feed = ($bruto * 0.05);
             $total = ($bruto - $feed);
 
             $arrayLiquidation = [
-                'user_id' => $user->id,
+                'user_id' => $iduser,
                 'total' => $total,
                 'monto_bruto' => $bruto,
                 'feed' => $feed,
                 'hash',
-                'wallet_used' => $wallet,
+                'wallet_used' => $user->type_wallet . ' - ' . $user->wallet_address,
                 'status' => 0,
-                'code_correo' => Str::random(10),
-                'fecha_code' => Carbon::now()
             ];
             $idLiquidation = $this->saveLiquidation($arrayLiquidation);
-
-            $dataEmail = [
-                'billetera' => $wallet,
-                'total' => $total,
-                'user' => $user->fullname,
-                'code' => $arrayLiquidation['code_correo']
-            ];
-
-            Mail::send('mails.SendCodeRetiro', $dataEmail, function ($msj) use ($user) {
-                $msj->subject('Codigo Retiro');
-                $msj->to($user->email);
-            });
 
             if (!empty($idLiquidation)) {
                 $listComi = $comisiones->pluck('id');
@@ -101,19 +79,31 @@ class LiquidationController extends Controller
                     'liquidation_id' => $idLiquidation
                 ]);
             }
-            return $idLiquidation;
+            return 1; // Liquidacion exitosa
         } catch (\Throwable $th) {
-            Log::error('Liquidaction - sendCodeEmail -> Error: ' . $th);
+            Log::error('Liquidaction - generarLiquidation -> Error: ' . $th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
 
+    /**
+     * Permite guardar las liquidaciones y devuelve el id de la misma
+     *
+     * @param array $data
+     * @return integer
+     */
     public function saveLiquidation(array $data): int
     {
         $liquidacion = Liquidation::create($data);
         return $liquidacion->id;
     }
 
+    /**
+     * Permite elegir que opcion hacer con las liquidaciones
+     *
+     * @param Request $request
+     * @return void
+     */
     public function procesarLiquidacion(Request $request)
     {
         if ($request->action == 'aproved') {
@@ -150,15 +140,15 @@ class LiquidationController extends Controller
                     }
                 }
 
-                /*Verifica si los codigo esta bien*/
+                //Verifica si los codigo esta bien
 
-                if (!$this->DoubleAutenticationController->checkCode($liquidation->user_id, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
+                if (!$this->doubleAuthController->checkCode($liquidation->iduser, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
                     session(['intentos_fallidos' => (session('intentos_fallidos') + 1)]);
                     return redirect()->back()->with('msj-danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
                 }
 
                 $accion = 'No Procesada';
-                if (!isset($request->fullname) && !isset($request->user_id) && !isset($request->total)) {
+                if (!isset($request->fullname) && !isset($request->iduser) && !isset($request->total)) {
                     $this->aprovarLiquidacion($idliquidation, '', '');
 
                     $accion = 'Aprobada';
@@ -170,10 +160,9 @@ class LiquidationController extends Controller
                     $total = $liquidation->total;
                 } else {
                     $fullname = $request->fullname;
-                    $iduser = $request->user_id;
+                    $iduser = $request->iduser;
                     $total = str_replace(',', '.', str_replace('.', '', $request->total));
                     $total = round($total, 2);
-
 
                     if ($request->action == 'reverse') {
                         $accion = 'Reversada';
@@ -215,6 +204,13 @@ class LiquidationController extends Controller
         }
     }
 
+    /**
+     * Permite aprobar las liquidaciones
+     *
+     * @param integer $idliquidation
+     * @param string $hash
+     * @return void
+     */
     public function aprovarLiquidacion($idliquidation, $hash, $comentario)
     {
         Liquidation::where('id', $idliquidation)->update([
@@ -230,7 +226,6 @@ class LiquidationController extends Controller
 
         Wallet::where('liquidation_id', $idliquidation)->update(['liquidado' => 1]);
     }
-
 
     /**
      * Permite procesar reversiones del sistema
@@ -255,8 +250,82 @@ class LiquidationController extends Controller
 
         ]);
 
+
         $liquidacion->status = 2;
         $liquidacion->save();
+    }
+
+
+    public function sendCodeEmail($wallet): int
+    {
+        try {
+            $this->reversarRetiro30Min();
+            if (!session()->has('intentos_fallidos')) {
+                session(['intentos_fallidos' => 1]);
+            }
+            $liquidation = Liquidation::where([
+                ['user_id', '=', Auth::id()],
+                ['status', '=', 0],
+            ])->first();
+            if ($liquidation != null) {
+                return $liquidation->id;
+            }
+
+            $user = Auth::user();
+
+            $comisiones = Wallet::where([
+                ['user_id', '=', $user->id],
+                ['status', '=', 0],
+                ['liquidado', '=', 0],
+                ['tipo_transaction', '=', 0],
+            ])->get();
+
+            $bruto = $comisiones->sum('amount');
+
+            if ($bruto < 25) {
+                return 0;
+            }
+
+            $feed = ($bruto * 0.05);
+            $total = ($bruto - $feed);
+
+            $arrayLiquidation = [
+                'user_id' => $user->id,
+                'total' => $total,
+                'monto_bruto' => $bruto,
+                'feed' => $feed,
+                'hash',
+                'wallet_used' => $wallet,
+                'status' => 0,
+                'code_correo' => Str::random(10),
+                'fecha_code' => Carbon::now()
+            ];
+            $idLiquidation = $this->saveLiquidation($arrayLiquidation);
+
+            $dataEmail = [
+                'billetera' => $wallet,
+                'total' => $total,
+                'user' => $user->firstname,
+                'code' => $arrayLiquidation['code_correo']
+            ];
+
+            Mail::send('mails.SendCodeRetiro', $dataEmail, function ($msj) use ($user) {
+                $msj->subject('Codigo Retiro');
+                $msj->to($user->email);
+            });
+
+            if (!empty($idLiquidation)) {
+                $listComi = $comisiones->pluck('id');
+                Wallet::whereIn('id', $listComi)->update([
+                    'status' => 1,
+                    'liquidation_id' => $idLiquidation
+                ]);
+            }
+            return $idLiquidation;
+        } catch (\Throwable $th) {
+            Log::error('Liquidaction - sendCodeEmail -> Error: ' . $th);
+            abort(403, "Ocurrio un error, contacte con el administrador");
+        }
     }
 
     /**
@@ -280,5 +349,25 @@ class LiquidationController extends Controller
             }
         }
         return $result;
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexPendientes()
+    {
+        try {
+            $liquidaciones = Liquidation::where('status', 0)->get();
+            foreach ($liquidaciones as $liqui) {
+                $liqui->fullname = $liqui->getUserLiquidation->username;
+            }
+            return view('withdraw.pending', compact('liquidaciones'));
+        } catch (\Throwable $th) {
+            Log::error('Liquidaction - indexPendientes -> Error: ' . $th);
+            abort(403, "Ocurrio un error, contacte con el administrador");
+        }
     }
 }
