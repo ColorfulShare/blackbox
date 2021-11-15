@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Education;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 
 class EducationController extends Controller
@@ -17,9 +17,16 @@ class EducationController extends Controller
      */
     public function index()
     {
-        $education = Education::orderBY('id', 'ASC')->get();
+        if (Auth::user()->admin == 1){
+            $education = Education::orderBY('id', 'desc')->get();
 
-        return view('education.index', compact('education'));
+            return view('education.componentAdmin.index', compact('education'));
+        }else if (Auth::user()->admin == 0) {
+           $education = Education::orderBY('id', 'desc')->get();
+
+           return view('education.componentUser.index', compact('education')); 
+        }
+       
     }
 
     /**
@@ -42,7 +49,7 @@ class EducationController extends Controller
     {
         $education = request()->validate([
            'description' => 'required',
-           'link' => 'required',
+           'link' => 'required|url',
            'image' => 'required|image',
        ]);
        
@@ -58,7 +65,7 @@ class EducationController extends Controller
 
         $education->save();
         
-        return redirect(route('education.index'))->with('msj-success', 'La Educacion fue creada con exito');
+        return redirect(route('education.componentAdmin.index'))->with('msj-success', 'La Educacion fue creada con exito');
     }
         
 

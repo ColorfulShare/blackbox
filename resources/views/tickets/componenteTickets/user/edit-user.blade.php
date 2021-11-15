@@ -25,7 +25,7 @@
                                 <div class="row">
                                     <div class="col-12 mx-auto ">
                                         <div class="card">
-                                            <div class="card-body chat-care rounded" style=" background: rgb(240, 230, 140) ">
+                                            <div class="card-body chat-care rounded">
                                                 <ul class="chat">
                                                     @foreach ( $message as $item )
                                                         {{-- user --}}
