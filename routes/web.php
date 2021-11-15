@@ -96,6 +96,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/impersonate/{user}/start', [ImpersonateController::class, 'start'])->name('impersonate.start');
             Route::get('/activacion', [UserController::class, 'activacion'])->name('user.activacion');
             Route::post('/activar', [UserController::class, 'activar'])->name('user.activar');
+            Route::patch('/profile-Update',[UserController::class, 'ProfileUpdate'])->name('profile.update');
         });
 
         //RENDIMIENTOS
