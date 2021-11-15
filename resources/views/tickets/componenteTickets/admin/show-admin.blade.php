@@ -56,13 +56,6 @@
 
                                                         {{-- admin --}}
                                                         <div class="chat">
-                                                            <div class="chat-avatar">
-                                                                <span class="avatar ">
-                                                                <img src="{{asset('images/avatars/2-small.png')}}" alt="avatar" class="img-circle" height="60" width="60">
-
-
-                                                                </span>
-                                                            </div>
                                                             <div class="chat-body">
                                                                 <div class="chat-content">
 
@@ -78,18 +71,9 @@
                                                         {{-- user --}}
                                                         @if ($item->type == 0)
                                                         <div class="chat chat-left">
-                                                            <div class="chat-avatar">
-                                                                <span class="avatar">
-                                                                    @if (Auth::user()->photoDB != NULL)
-                                                                    <img src="{{asset('storage/'.Auth::user()->photoDB)}}" alt="avatar" height="40" width="40">
-                                                                    @else
-                                                                    <img src="{{asset('images/avatars/1-small.png')}}" alt="avatar" class="img-circle" height="60" width="60">
-                                                                    @endif
-                                                                </span>
-                                                            </div>
                                                             <div class="chat-body">
                                                                 <div class="chat-content">
-                                                                    <div class="email-user mb-1">{{ $item->getUser->email}}</div>
+                                                                    <div class="name-user mb-1">{{ $item->getUser->firstname}} {{$item->getUser->lastname}}</div>
                                                                     <p>{{ $item->message }}</p>
                                                                 </div>
                                                             </div>
@@ -97,18 +81,10 @@
 
                                                         {{-- admin --}}
                                                         @elseif ($item->type == 1)
-                                                        <div class="chat">
-                                                            <div class="chat-avatar">
-                                                                <span class="avatar ">
-                                                                    <img src="{{asset('assets/img/sistema/favicon.png')}}" alt="avatar" height="40" width="40" style="background-color: white;" alt="avatar" height="40" width="40">
-
-
-                                                                </span>
-                                                            </div>
+                                                        <div class="chat">   
                                                             <div class="chat-body">
                                                                 <div class="chat-content">
-
-                                                                    <div class="email-admin mb-1">{{ $item->getAdmin->email}}</div>
+                                                                    <div class="name-admin mb-1">{{ $item->getAdmin->firstname}} {{$item->getAdmin->lastname}}</div>
                                                                     <p>{{ $item->message }}</p>
                                                                 </div>
                                                             </div>

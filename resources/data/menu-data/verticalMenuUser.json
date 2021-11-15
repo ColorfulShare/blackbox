@@ -58,7 +58,12 @@
         }
       ]
     },
-    
+      {
+      "url": "",
+      "name": "Educación",
+      "icon": "shopping-cart",
+      "slug": ""
+    },
     {
       "url": "/tickets/ticket-list-user",
       "name": "Tickets",

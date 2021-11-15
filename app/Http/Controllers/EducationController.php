@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Education;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 
 class EducationController extends Controller
@@ -16,7 +17,7 @@ class EducationController extends Controller
      */
     public function index()
     {
-        $education = Education::all();
+        $education = Education::orderBY('id', 'ASC')->get();
 
         return view('education.index', compact('education'));
     }
@@ -39,21 +40,27 @@ class EducationController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate([
+        $education = request()->validate([
            'description' => 'required',
            'link' => 'required',
-           'image' => 'required',
+           'image' => 'required|image',
        ]);
+       
+        $education = new Education();
+        $education->description = $request->description;
+        $education->link = $request->link;
+      
+        $image = $request->file('image');
+        $name = time() . "." . $image->extension();
+        $image->move(public_path('storage') . '/education', $name);
+        $education->image = '' . $name;
+        
 
-        DB::table('education')->insert([
-            'description'=> $data['description'],
-            'link'=> $data['link'],
-            'image' => $data['image'],
-        ]);
-
-
-       return redirect(route('education.index'))->with('msj-success', 'La Educacion fue creada con exito');
+        $education->save();
+        
+        return redirect(route('education.index'))->with('msj-success', 'La Educacion fue creada con exito');
     }
+        
 
     /**
      * Display the specified resource.

@@ -10,7 +10,7 @@
         <table class="table">
             <thead>
                 <tr class="text-center">
-                    <th>SL</th>
+                    <th>id</th>
                     <th>Sujeto</th>
                     <th>Estado</th>
                     <th>Última Respuesta</th>
