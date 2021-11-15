@@ -63,19 +63,12 @@
           "slug": "inversiones.index"
         }
       ]
-    },
+    },  
     {
+      "url": "/user/user-list",
       "name": "Usuarios",
-      "icon": "user",
-      "slug": "/",
-      "submenu": [
-        {
-          "url": "/user/user-list",
-          "name": "Lista",
-          "icon": "circle",
-          "slug": "users.list-user"
-        }
-      ]
+      "icon": "users",
+      "slug": "/"
     },
     {
       "url": "news/list",
@@ -122,10 +115,10 @@
       ]
     },
     {
-      "url": "/",
+      "url": "education/",
       "name": "Educación",
       "icon": "shopping-cart",
-      "slug": ""
+      "slug": "education.index"
     },
     {
       "name": "Retiros",

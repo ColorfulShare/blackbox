@@ -5,7 +5,7 @@
 @section('content')
 
 
-<div class="col-3"><a href="{{ route('ticket.list-user')}}" class="btn btn-danger  mb-2 waves-effect waves-light">Volver Atrás <i class="fas fa-chevron-left"></i></a>
+<div class="col-3" style="padding-left: 89%"><a href="{{ route('ticket.list-user')}}" class="btn btn-danger  mb-2 waves-effect waves-light">Volver Atrás <i class="fas fa-chevron-left"></i></a>
 </div>
 
 <section id="basic-vertical-layouts">

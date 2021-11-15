@@ -4,10 +4,12 @@
 
 @section('content')
 
-
-<div class="col-6 col-md-4" style="padding-left: 89%">
-    <a href="{{ route('ticket.list-user')}}" class="btn btn-danger mb-2 waves-effect waves-light">Volver Atrás</a>
+ <div class="row breadcrumbs-top">
+   <div class="col-6 col-md-4" style="padding-left: 90%">
+        <a href="{{ route('ticket.list-user')}}" class="btn btn-danger  mb-2  waves-effect waves-light">Volver Atrás</a>             
+  </div>
 </div>
+
 
 <section>
 
