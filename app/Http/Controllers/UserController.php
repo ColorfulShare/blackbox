@@ -45,7 +45,7 @@ class UserController extends Controller
         $user->code_email_date = Carbon::now();
 
         $dataEmail = [
-            'user' => $user->fullname,
+            'user' => $user->fullname(),
             'code' => $user->code_email
         ];
 

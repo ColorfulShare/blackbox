@@ -1,49 +1,46 @@
 <!-- Modal -->
-<div class="modal fade" id="openModalAprobar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  role="dialog" aria-labelledby="modalModalAprobarTitle" aria-hidden="true">
+<div class="modal fade" id="modalModalAprobar" tabindex="-1" role="dialog" aria-labelledby="modalModalAprobarTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title " id="modalModalAprobarTitle">Aprobar Retiro</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-bs-label="Close">
+                <h5 class="modal-title text-white" id="modalModalAprobarTitle">Aprobar Retiro</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body ">
+            <div class="modal-body text-justify">
+                {{-- <div class="alert alert-primary" role="alert">
+                    Intentos Fallidos {{session('intentos_fallidos')}}/3
+                  </div> --}}
                 <form action="{{route('settlement.process')}}" method="post">
                     @csrf
-                    <input type="hidden" name="idliquidation" value="idliquidacion" id="idliquidacion">
-                    <input type="hidden" name="action" value="aproved">
-                    <input type="hidden" name="wallet" value="wallet">
+                    <input type="hidden" name="idliquidation" :value="idliquidacion">
+                    <input type="hidden" name="action" value="aproved"> 
+                    <input type="hidden" name="wallet"  :value="wallet">
 
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label for="">Codigo Correo</label>
                         <input type="text" name="correo_code" class="form-control" required>
-                        <hr>
-
-
-                        <div class=" text-center">
-                            <div class="card-body">
-                                <a href="#" onclick="sendCodeEmail()" id="Codigo-s" class="btn btn-primary">Enviar Codigo</a>
-                                <p class="card-text"><span class="text-center" id="Codigo-e">Codigo Enviado, tienes 30 min sino se cancelara el retiro automaticamente</span></p>
-                            </div>
+                        <div class="col-12 text-center mt-1">
+                            <button type="button" class="btn btn-primary" v-on:click='sendCodeEmail' v-if='idliquidacion == 0'>Enviar Codigo</button>
+                            <span class='text-white' v-else>Codigo Enviado, tienes 30 min sino se cancelara el retiro automaticamente</span>
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label for="">Codigo Google</label>
                         <input type="text" name="google_code" class="form-control" required>
                     </div>
-                    <hr>
+                    <br>
                     <div class="form-group text-center">
-                        <button class="btn btn-primary ">Aprobar</button>
+                        <button class="btn btn-primary">Aprobar</button>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-default text-white" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
-
-
     </div>
 </div>

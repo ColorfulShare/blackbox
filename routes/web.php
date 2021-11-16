@@ -33,6 +33,7 @@ use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\TreController;
 use App\Http\Controllers\EducationController;
+use App\Models\Liquidation;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,9 +107,9 @@ Route::middleware('auth')->group(function () {
 
         //EDUCACION
         Route::prefix('education')->group(function () {
-         Route::get('/', [EducationController::class, 'index'])->name('education.index');
-         Route::get('/create', [EducationController::class, 'create'])->name('education.create');
-         Route::post('/', [EducationController::class, 'store'])->name('education.store');
+            Route::get('/', [EducationController::class, 'index'])->name('education.index');
+            Route::get('/create', [EducationController::class, 'create'])->name('education.create');
+            Route::post('/', [EducationController::class, 'store'])->name('education.store');
         });
 
         //ADMIN
@@ -354,7 +355,7 @@ Route::group(['prefix' => 'wallet'], function () {
 
 /* Withdraw */
 Route::group(['prefix' => 'withdraw'], function () {
- 
+
     Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
 });
 

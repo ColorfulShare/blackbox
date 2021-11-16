@@ -141,20 +141,19 @@ class LiquidationController extends Controller
                 }
 
                 //Verifica si los codigo esta bien
-
-                if (!$this->doubleAuthController->checkCode($liquidation->iduser, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
+                if ($liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
                     session(['intentos_fallidos' => (session('intentos_fallidos') + 1)]);
                     return redirect()->back()->with('msj-danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
                 }
 
                 $accion = 'No Procesada';
-                if (!isset($request->fullname) && !isset($request->iduser) && !isset($request->total)) {
+                if (!isset($request->username) && !isset($request->user_id) && !isset($request->total)) {
                     $this->aprovarLiquidacion($idliquidation, '', '');
 
                     $accion = 'Aprobada';
                     $request->comentario = '';
 
-                    $fullname = auth()->user()->fullname;
+                    $fullname = auth()->user()->username;
 
                     $iduser = auth()->user()->id;
                     $total = $liquidation->total;
@@ -163,6 +162,8 @@ class LiquidationController extends Controller
                     $iduser = $request->iduser;
                     $total = str_replace(',', '.', str_replace('.', '', $request->total));
                     $total = round($total, 2);
+                    // dd($total);
+                    // dd("ID Liquidacion " . $idliquidation, "Fulll Name " . $fullname, "ID Usuario " . $iduser, "Total " . $total);
 
                     if ($request->action == 'reverse') {
                         $accion = 'Reversada';
@@ -226,6 +227,10 @@ class LiquidationController extends Controller
 
         Wallet::where('liquidation_id', $idliquidation)->update(['liquidado' => 1]);
     }
+
+
+
+
 
     /**
      * Permite procesar reversiones del sistema
@@ -343,7 +348,7 @@ class LiquidationController extends Controller
         if ($liquidation != null) {
             $fechaActual = Carbon::now();
             $fechaCodeCorreo = new Carbon($liquidation->fecha_code);
-            if ($fechaCodeCorreo->diffInMinutes($fechaActual) >= 30) {
+            if ($fechaCodeCorreo->diffInMinutes($fechaActual) >= 5) {
                 $this->reversarLiquidacion($liquidation->id, 'Tiempo limite de codigo sobrepasado');
                 $result = true;
             }

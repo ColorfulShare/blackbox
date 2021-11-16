@@ -32,4 +32,9 @@ class Wallet extends Model
     {
         return $this->belongsTo('App\Models\Liquidation', 'liquidation_id', 'id');
     }
+    public function getWalletUser()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+    }
+
 }
