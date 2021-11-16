@@ -306,85 +306,50 @@ function linkAdmin(){
       </div>
     </div>
     <!-- Sales Stats Chart Card ends -->
-
-    <!-- App Design Card -->
-    <div class="col-lg-4 col-md-6 col-12">
-      <div class="card card-app-design">
-        <div class="card-body">
-          <span class="badge badge-light-primary">03 Sep, 20</span>
-          <h4 class="card-title mt-1 mb-75 pt-25">App design</h4>
-          <p class="card-text font-small-2 mb-2">
-            You can Find Only Post and Quotes Related to IOS like ipad app design, iphone app design
-          </p>
-          <div class="design-group mb-2 pt-50">
-            <h6 class="section-label">Team</h6>
-            <span class="badge badge-light-warning me-1">Figma</span>
-            <span class="badge badge-light-primary">Wireframe</span>
-          </div>
-          <div class="design-group pt-25">
-            <h6 class="section-label">Members</h6>
-            <div class="avatar">
-              <img src="{{asset('images/portrait/small/avatar-s-9.jpg')}}" width="34" height="34" alt="Avatar" />
-            </div>
-            <div class="avatar bg-light-danger">
-              <div class="avatar-content">PI</div>
-            </div>
-            <div class="avatar">
-              <img
-                src="{{asset('images/portrait/small/avatar-s-14.jpg')}}"
-                width="34"
-                height="34"
-                alt="Avatar"
-              />
-            </div>
-            <div class="avatar">
-              <img src="{{asset('images/portrait/small/avatar-s-7.jpg')}}" width="34" height="34" alt="Avatar" />
-            </div>
-            <div class="avatar bg-light-secondary">
-              <div class="avatar-content">AL</div>
-            </div>
-          </div>
-          <div class="design-planning-wrapper mb-2 py-75">
-            <div class="design-planning">
-              <p class="card-text mb-25">Due Date</p>
-              <h6 class="mb-0">12 Apr, 21</h6>
-            </div>
-            <div class="design-planning">
-              <p class="card-text mb-25">Budget</p>
-              <h6 class="mb-0">$49251.91</h6>
-            </div>
-            <div class="design-planning">
-              <p class="card-text mb-25">Cost</p>
-              <h6 class="mb-0">$840.99</h6>
-            </div>
-          </div>
-          <button type="button" class="btn btn-primary w-100">Join Team</button>
-        </div>
-      </div>
-    </div>
-    <!--/ App Design Card -->
   </div>
 
   <!-- List DataTable -->
   <div class="row">
     <div class="col-12">
-      <div class="card invoice-list-wrapper">
-        <div class="card-datatable table-responsive">
-          <table class="invoice-list-table table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>#</th>
-                <th><i data-feather="trending-up"></i></th>
-                <th>Client</th>
-                <th>Total</th>
-                <th class="text-truncate">Issued Date</th>
-                <th>Balance</th>
-                <th>Invoice Status</th>
-                <th class="cell-fit">Actions</th>
-              </tr>
-            </thead>
-          </table>
+      <div class="card">
+        <div class="card-body">
+          <h6>Ordenes</h6>
+          <div class="card-datatable table-responsive">
+            <table class="table myTable">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Usuario</th>
+                  <th>Monto</th>
+                  <th>Comprobante</th>
+                  <th>Pago</th>
+                  <th >Estatus</th>
+                  <th>Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($listOrdenes as $order)
+                  <tr>
+                    <td>{{$order->id}}</td>
+                    <td>{{$order->user_id}}</td>
+                    <td>{{$order->amount}}</td>
+                    <td>  
+                      @if($order->comprobante != null)
+                      <a class="btn btn-danger" target="_blank" href="{{asset('/storage/'.$order->user_id .'/comprobante/'.$order->comprobante)}}"><i data-feather='file-text'></i></a>
+                      @endif
+                    </td>
+                    <td>{{str_replace('_', ' ', $order->type_payment)}}</td>
+                    <td>
+                      <button type="button"
+                            class="@if ($order->status == '0') btn btn-info text-white text-bold-600  @elseif($order->status == '1') btn btn-warning text-white text-bold-600 @elseif($order->status == '2') btn btn-success text-white text-bold-600 @elseif($order->status == '3') btn btn-danger text-white text-bold-600 @endif">{{$order->status()}}
+                      </button>
+                    </td>
+                    <td>{{$order->created_at->format('Y/m/d')}}</td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -493,7 +458,7 @@ function linkAdmin(){
 
   <script>
     //TRACKER
-    $('#tracker').change(async function(e){
+    $('#tracker').change(function(e){
       let tipo = e.target.value
       getTracker(tipo);
     });
@@ -579,5 +544,12 @@ function linkAdmin(){
     supportTrackerChart.render();
     }
     getTracker();
+
+
+    //datataables ordenes 
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [[ 0, "desc" ]],
+    })
   </script>
 @endsection
