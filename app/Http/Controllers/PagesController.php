@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -18,8 +20,9 @@ class PagesController extends Controller
     public function profile()
     {
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Pages"], ['name' => "Profile"]];
-
-        return view('/content/pages/page-profile', ['breadcrumbs' => $breadcrumbs]);
+        $user = Auth::user();
+        $referidos = User::where('referred_by', $user->id)->orderBy('id','DESC')->take(9)->get();
+        return view('/content/pages/page-profile', ['breadcrumbs' => $breadcrumbs], compact('user','referidos'));
     }
 
     // FAQ

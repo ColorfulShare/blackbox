@@ -24,6 +24,7 @@ class User extends Authenticatable
         'firstname',
         'lastname',
         'username',
+        'photoDB',
         'phone',
         'countrie_id',
         'wallet',

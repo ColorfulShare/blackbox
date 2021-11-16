@@ -18,21 +18,19 @@ class CreateUsersTable extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('username');
+            $table->longtext('photoDB')->nullable();
             $table->string('phone');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->Integer('countrie_id')->default(0);
             $table->longText('wallet');
             $table->string('password');
-
             $table->string('referral_code')->unique()->nullable();
             $table->unsignedBigInteger('referred_by')->nullable();
             $table->foreign('referred_by')->references('id')->on('users');
-
             $table->string('referral_admin_red_code')->unique()->nullable();
             $table->unsignedBigInteger('referred_red_by')->nullable();
             $table->foreign('referred_red_by')->references('id')->on('users');
-
             $table->enum('admin', [0, 1])->default(0)->comment('permite saber si un usuario es admin o no');
             $table->enum('status', [0, 1, 2])->default(0)->comment('0 - inactivo, 1 - activo, 2 - eliminado');
             $table->date('expired_status')->nullable();
