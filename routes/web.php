@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function () {
 
         //EDUCACION
         Route::prefix('education')->group(function () {
-         Route::get('/', [EducationController::class, 'index'])->name('education.index');
+        Route::get('/', [EducationController::class, 'index'])->name('education.componentAdmin.index');
          Route::get('/create', [EducationController::class, 'create'])->name('education.create');
          Route::post('/', [EducationController::class, 'store'])->name('education.store');
         });
@@ -140,6 +140,12 @@ Route::middleware('auth')->group(function () {
         Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
 
         Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
+
+    });
+
+     //EDUCACION USER
+    Route::prefix('educations')->group(function () {
+       Route::get('/', [EducationController::class, 'index'])->name('education.componentUser.index');
     });
 
     // 2fact
