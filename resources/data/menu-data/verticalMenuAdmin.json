@@ -113,10 +113,10 @@
       "slug": "/",
       "submenu": [
         {
-          "url": "/",
+          "url": "/comisions",
           "name": "Comisiones",
           "icon": "circle",
-          "slug": ""
+          "slug": "comision.index"
         }
       ]
     },

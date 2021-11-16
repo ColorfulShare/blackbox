@@ -34,7 +34,11 @@ use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\TreController;
 use App\Http\Controllers\EducationController;
+<<<<<<< HEAD
 use App\Models\Liquidation;
+=======
+use App\Http\Controllers\ComisionController;
+>>>>>>> 19296e6db9466263b25290117e2dda27d2a49217
 
 /*
 |--------------------------------------------------------------------------
@@ -119,6 +123,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
             Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
         });
+<<<<<<< HEAD
+=======
+
+        //COMISIONES
+        Route::prefix('comisions')->group( function() {
+          Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
+        });      
+>>>>>>> 19296e6db9466263b25290117e2dda27d2a49217
     });
     //
     // Red de usuario

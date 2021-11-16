@@ -1,4 +1,4 @@
-
+.......
 @extends('layouts/contentLayoutMaster')
 
 @section('title', 'Red | Referidos')
