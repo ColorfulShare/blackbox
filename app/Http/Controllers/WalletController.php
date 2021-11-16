@@ -27,14 +27,23 @@ class WalletController extends Controller
         }
     }
 
+    /**
+     * Permite guardar la informacion de la wallet
+     *
+     * @param array $data
+     * @return void
+     */
     public function saveWallet($data)
     {
         try {
             if ($data['user_id'] != 1) {
                 if ($data['tipo_transaction'] == 1) {
+
                     $wallet = Wallet::create($data);
+
                     $saldoAcumulado = ($wallet->getWalletUser->wallet - $data['amount']);
                     $wallet->getWalletUser->update(['wallet' => $saldoAcumulado]);
+
                     $wallet->update(['amount' => -$data['amount']]);
                 } else {
                     if ($data['orden_purchases_id'] != null) {
@@ -52,7 +61,7 @@ class WalletController extends Controller
                         }
                     } else {
                         $wallet = Wallet::create($data);
-                        $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['amount']);
+                        $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['monto']);
                         $wallet->getWalletUser->update(['wallet' => $saldoAcumulado]);
                         $this->aceleracion($data['user_id'], $data['referred_id'], $data['amount'], $data['descripcion']);
                     }
@@ -63,6 +72,4 @@ class WalletController extends Controller
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
-
-  
 }

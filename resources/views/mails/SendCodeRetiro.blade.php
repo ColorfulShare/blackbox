@@ -1,77 +1,185 @@
-<!doctype html>
-<html lang="en-US">
+<html>
 
 <head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Reset Password Email Template</title>
-    <meta name="description" content="Reset Password Email Template.">
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <style type="text/css">
-        a:hover {
-            text-decoration: underline !important;
+        @media screen {
+            @font-face {
+                font-family: 'Lato';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
+            }
+
+            @font-face {
+                font-family: 'Lato';
+                font-style: normal;
+                font-weight: 700;
+                src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v11/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+            }
+
+            @font-face {
+                font-family: 'Lato';
+                font-style: italic;
+                font-weight: 400;
+                src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v11/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
+            }
+
+            @font-face {
+                font-family: 'Lato';
+                font-style: italic;
+                font-weight: 700;
+                src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+            }
+        }
+
+
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+
+
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
         }
     </style>
 </head>
 
-<body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
-    <!--100% body table-->
-    <table cellspacing="0" border="0" cellpadding="0" width="100%" bgcolor="#f2f3f8" style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;">
-        <tr>
-            <td>
-                <table style="background-color: #f2f3f8; max-width:670px;  margin:0 auto;" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td style="height:80px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center;">
+<body style=" margin: 0 !important; padding: 0 !important;">
 
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <!-- LOGO -->
+        <tr>
+            <td bgcolor="#000" align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="480">
+                    <tr>
+                        <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
+                            <img src="{{asset('assets/img/pandora.png')}}" class="mb-2" alt="logo" width="200">
                         </td>
                     </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- HERO -->
+        <tr>
+            <td bgcolor="#000" align="center" style="padding: 0px 10px 0px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="480">
                     <tr>
-                        <td style="height:20px;">&nbsp;</td>
+                        <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
+                            <h4 class="text-white card-title">Hola, {{$user}}
+                            </h4>
+                        </td>
                     </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- COPY BLOCK -->
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="480">
+                    <!-- COPY -->
                     <tr>
-                        <td>
-                            <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width:670px;background:#fff; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);">
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:0 35px;">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2">
-                                                <h2 class="card-title fw-bold mb-1 text-white">Usuario: {{$user}}</h2>
-                                                <h4>Detalles Orden</h4>
-                                                <h5>Billetera: <b>{{$billetera}}</b></h5>
-                                                <h5>Total a Recibir: <b>{{$total}}</b></h5>
+                        <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <h5 class="card-text mt-2">
+                                <p>Has tomado la mejor decisión, nuestro sistema y su gestión de Alta Frecuencia con Neurotecnologia te entregará de forma automática y desde tu propia cuenta la libertad financiera.</p>
+                                <p>Verifica tu correo para realizar el retiro con exito!</p>
+                                <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2">
+                                    <h2 class="card-title fw-bold mb-1 text-white">Usuario: {{$user}}</h2>
+                                    <h4>Detalles del retiro</h4>
+                                    <h5>Billetera: <b>{{$billetera}}</b></h5>
+                                    <h5>Total a Recibir: <b>{{$total}}</b></h5>
 
-                                                <p>Este es su codigo de retiro pendiente, vigente por solo 30 minutos</p>
-                                                <p>Codigo: <strong>{{$code}}</strong></p>
+                                    <p>Codigo: <strong>{{$code}}</strong></p>
 
-                                            </div>
-                                        </div>
+                                </div>
+                                </div>
+                                <br><br>
+                                <strong>Este es su codigo de retiro pendiente, vigente por solo 30 minutos</strong>
+                            </h5>
+                        </td>
+                    </tr>
+                    <!-- BULLETPROOF BUTTON -->
+                    <tr>
+                        <td bgcolor="#ffffff" align="left">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
+                                        <table border="0" cellspacing="0" cellpadding="0">
+
+                                        </table>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
                                 </tr>
                             </table>
                         </td>
-                    <tr>
-                        <td style="height:20px;">&nbsp;</td>
                     </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+            <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="480">
+
+
+
+                    <!-- ADDRESS -->
+
                     <tr>
-                        <td style="text-align:center;">
-                            <!--Footer-->
+                        <td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;">
+                            <p style="margin: 0;"> © 2021 blackbox. All rights reserved. </p>
                         </td>
-                    </tr>
-                    <tr>
-                        <td style="height:80px;">&nbsp;</td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
-    <!--/100% body table-->
+
 </body>
 
 </html>
