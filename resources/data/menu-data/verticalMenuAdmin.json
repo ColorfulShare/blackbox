@@ -77,6 +77,12 @@
       "slug": "news"
     },
     {
+      "url": "documents/list",
+      "name": "Documentos",
+      "icon": "archive",
+      "slug": "documents"
+    },
+    {
       "name": "De Interés",
       "icon": "sidebar",
       "slug": "/",

@@ -13,12 +13,14 @@
 
 <!-- custome scripts file for user -->
 <script src="{{ asset(mix('js/core/scripts.js')) }}"></script>
-<script src="{{ asset('js/scripts/jquery/3.6.0/jquery-3.6.0.min.js') }}"></script>
-<script src="{{ asset('js/scripts/jquery/jquery-confirm-v3.3.4/js/jquery-confirm.js') }}"></script>
+<script src="{{ asset('js/scripts/jquery/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('js/scripts/jquery/jquery-confirm.js') }}"></script>
+<script src="{{ asset('js/scripts/jquery/jquery-validate.min.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>
 
 <!-- tiny.cloud -->
 <script src="{{ asset(mix('js/scripts/forms/form-tinymce.min.js')) }}"></script>
+
 <script>
     // textarea
     tinymce.init({
@@ -64,6 +66,15 @@
         $("#" + preview_id).parent().parent().removeClass('d-none');
     }
 
+    // preview video
+    $(document).on("change", ".file_multi_video, #mp4", function (evt) {
+        var $source = $('#preview_vid');
+        $source[0].src = URL.createObjectURL(this.files[0]);
+        $source.parent()[0].load();
+    });
+
+    $("#validate").validate();
+
 </script>
 
 @stack('js')
@@ -77,6 +88,5 @@
 @yield('page-script')
 <!-- END: Page JS-->
 <!-- CDN JS-->
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>

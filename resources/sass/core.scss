@@ -9,5 +9,6 @@
 @import './base/themes/semi-dark-layout';
 
 // Custom
-@import './base/plugins/jquery-confirm/jquery-confirm';
+@import './base/plugins/jquery/jquery-confirm';
+@import './base/plugins/jquery/jquery-validate';
 @import './custom';
