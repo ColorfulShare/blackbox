@@ -319,4 +319,25 @@ class LiquidationController extends Controller
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
+
+       /**
+     * LLeva a la vistas de las liquidaciones reservadas o aprobadas a los Users
+     *
+     * @param string $status
+     * @return void
+     */
+    public function retiroHistory()
+    {
+        try {
+            $users = Auth::user();
+            $id = Auth::id();
+            $liquidaciones = Liquidation::where('user_id', $id)->get();
+            foreach ($liquidaciones as $liqui) {
+                $liqui->fullname = $liqui = $users->fullName();
+            }
+            return view('withdraw.retiros', compact('liquidaciones'));
+        } catch (\Throwable $th) {
+            Log::error('Liquidaction - retiroHistory -> Error: '.$th);
+            abort(403, "Ocurrio un error, contacte con el administrador");
+        }}
 }
