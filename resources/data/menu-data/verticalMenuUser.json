@@ -51,14 +51,19 @@
           "slug": ""
         },
         {
-          "url": "/withdraw/retiros",
+          "url": "/",
           "name": "Retiros",
           "icon": "circle",
           "slug": ""
         }
       ]
     },
-    
+       {
+      "url": "educations",
+      "name": "Educación",
+      "icon": "shopping-cart",
+      "slug": "education.index"
+    },
     {
       "url": "/tickets/ticket-list-user",
       "name": "Tickets",

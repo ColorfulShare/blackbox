@@ -1,4 +1,5 @@
 @extends('layouts/contentLayoutMaster')
+
 @section('content')
 <h2 class="text-center mb-5">Crear Nueva educacion</h2>
 <div class="row justify-content-center mt-5">
@@ -43,4 +44,3 @@
  </div>
 </div>
 @endsection
-

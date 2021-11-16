@@ -97,6 +97,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/impersonate/{user}/start', [ImpersonateController::class, 'start'])->name('impersonate.start');
             Route::get('/activacion', [UserController::class, 'activacion'])->name('user.activacion');
             Route::post('/activar', [UserController::class, 'activar'])->name('user.activar');
+            Route::patch('/profile-Update',[UserController::class, 'ProfileUpdate'])->name('profile.update');
         });
 
         //RENDIMIENTOS
@@ -107,16 +108,18 @@ Route::middleware('auth')->group(function () {
 
         //EDUCACION
         Route::prefix('education')->group(function () {
-         Route::get('/', [EducationController::class, 'index'])->name('education.index');
+        Route::get('/', [EducationController::class, 'index'])->name('education.componentAdmin.index');
          Route::get('/create', [EducationController::class, 'create'])->name('education.create');
          Route::post('/', [EducationController::class, 'store'])->name('education.store');
         });
 
-        //ADMIN
+        //GENEALOGY
         Route::prefix('genealogy')->group(function () {
             Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
             Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
         });
+
+        
     });
     //
     // Red de usuario
@@ -139,6 +142,12 @@ Route::middleware('auth')->group(function () {
         Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
 
         Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
+
+    });
+
+     //EDUCACION USER
+    Route::prefix('educations')->group(function () {
+       Route::get('/', [EducationController::class, 'index'])->name('education.componentUser.index');
     });
 
     // 2fact
@@ -366,8 +375,7 @@ Route::group(['prefix' => 'wallet'], function () {
 
 /* Withdraw */
 Route::group(['prefix' => 'withdraw'], function () {
-    Route::get('retiros', [WalletController::class, 'payments'])->name('withdraw.payments');
-
+ 
     Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
 });
 

@@ -15,6 +15,12 @@
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('css/base/pages/app-invoice-list.css')) }}">
+
+  <style>
+    #tracker{
+      width: 30%;
+    }
+  </style>
   @endsection
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
@@ -225,47 +231,36 @@ function linkAdmin(){
     <div class="col-lg-6 col-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between pb-0">
-          <h4 class="card-title">Support Tracker</h4>
-          <div class="dropdown chart-dropdown">
-            <button
-              class="btn btn-sm border-0 dropdown-toggle p-50"
-              type="button"
-              id="dropdownItem4"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Last 7 Days
-            </button>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem4">
-              <a class="dropdown-item" href="#">Last 28 Days</a>
-              <a class="dropdown-item" href="#">Last Month</a>
-              <a class="dropdown-item" href="#">Last Year</a>
-            </div>
-          </div>
+          <h4 class="card-title">Rastreador de soporte</h4>
+          <select name="tracker" id="tracker" class="form-select">
+            <option value="1">ultimos 7 dias</option>
+            <option value="2">ultimo mes</option>
+            <option value="3">ultimos año</option>
+          </select>
+          
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-sm-2 col-12 d-flex flex-column flex-wrap text-center">
-              <h1 class="font-large-2 fw-bolder mt-2 mb-0">163</h1>
+              <h1 class="font-large-2 fw-bolder mt-2 mb-0" id="totalTracker"></h1>
               <p class="card-text">Tickets</p>
             </div>
             <div class="col-sm-10 col-12 d-flex justify-content-center">
-              <div id="support-trackers-chart"></div>
+              <div id="support-trackers-chart-custom"></div>
             </div>
           </div>
           <div class="d-flex justify-content-between mt-1">
             <div class="text-center">
-              <p class="card-text mb-50">New Tickets</p>
-              <span class="font-large-1 fw-bold">29</span>
+              <p class="card-text mb-50">Nuevos</p>
+              <span class="font-large-1 fw-bold" id="newTracker"></span>
             </div>
             <div class="text-center">
-              <p class="card-text mb-50">Open Tickets</p>
-              <span class="font-large-1 fw-bold">63</span>
+              <p class="card-text mb-50">Abiertos</p>
+              <span class="font-large-1 fw-bold" id="openTracker"></span>
             </div>
             <div class="text-center">
-              <p class="card-text mb-50">Response Time</p>
-              <span class="font-large-1 fw-bold">1d</span>
+              <p class="card-text mb-50">Cerrados</p>
+              <span class="font-large-1 fw-bold" id="closeTracker"></span>
             </div>
           </div>
         </div>
@@ -275,140 +270,6 @@ function linkAdmin(){
   </div>
 
   <div class="row match-height">
-    <!-- Timeline Card -->
-    <div class="col-lg-4 col-12">
-      <div class="card card-user-timeline">
-        <div class="card-header">
-          <div class="d-flex align-items-center">
-            <i data-feather="list" class="user-timeline-title-icon"></i>
-            <h4 class="card-title">User Timeline</h4>
-          </div>
-        </div>
-        <div class="card-body">
-          <ul class="timeline ms-50">
-            <li class="timeline-item">
-              <span class="timeline-point timeline-point-indicator"></span>
-              <div class="timeline-event">
-                <h6>12 Invoices have been paid</h6>
-                <p>Invoices are paid to the company</p>
-                <div class="d-flex align-items-center">
-                  <img class="me-1" src="{{asset('images/icons/json.png')}}" alt="data.json" height="23" />
-                  <h6 class="more-info mb-0">data.json</h6>
-                </div>
-              </div>
-            </li>
-            <li class="timeline-item">
-              <span class="timeline-point timeline-point-warning timeline-point-indicator"></span>
-              <div class="timeline-event">
-                <h6>Client Meeting</h6>
-                <p>Project meeting with Carl</p>
-                <div class="d-flex align-items-center">
-                  <div class="avatar me-50">
-                    <img
-                      src="{{asset('images/portrait/small/avatar-s-9.jpg')}}"
-                      alt="Avatar"
-                      width="38"
-                      height="38"
-                    />
-                  </div>
-                  <div class="more-info">
-                    <h6 class="mb-0">Carl Roy (Client)</h6>
-                    <p class="mb-0">CEO of Infibeam</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="timeline-item">
-              <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
-              <div class="timeline-event">
-                <h6>Create a new project</h6>
-                <p>Add files to new design folder</p>
-                <div class="avatar-group">
-                  <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Billy Hopkins"
-                    class="avatar pull-up"
-                  >
-                    <img
-                      src="{{asset('images/portrait/small/avatar-s-9.jpg')}}"
-                      alt="Avatar"
-                      width="33"
-                      height="33"
-                    />
-                  </div>
-                  <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Amy Carson"
-                    class="avatar pull-up"
-                  >
-                    <img
-                      src="{{asset('images/portrait/small/avatar-s-6.jpg')}}"
-                      alt="Avatar"
-                      width="33"
-                      height="33"
-                    />
-                  </div>
-                  <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Brandon Miles"
-                    class="avatar pull-up"
-                  >
-                    <img
-                      src="{{asset('images/portrait/small/avatar-s-8.jpg')}}"
-                      alt="Avatar"
-                      width="33"
-                      height="33"
-                    />
-                  </div>
-                  <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Daisy Weber"
-                    class="avatar pull-up"
-                  >
-                    <img
-                      src="{{asset('images/portrait/small/avatar-s-7.jpg')}}"
-                      alt="Avatar"
-                      width="33"
-                      height="33"
-                    />
-                  </div>
-                  <div
-                    data-bs-toggle="tooltip"
-                    data-popup="tooltip-custom"
-                    data-bs-placement="bottom"
-                    title="Jenny Looper"
-                    class="avatar pull-up"
-                  >
-                    <img
-                      src="{{asset('images/portrait/small/avatar-s-20.jpg')}}"
-                      alt="Avatar"
-                      width="33"
-                      height="33"
-                    />
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="timeline-item">
-              <span class="timeline-point timeline-point-danger timeline-point-indicator"></span>
-              <div class="timeline-event">
-                <h6>Update project for client</h6>
-                <p class="mb-0">Update files as per new design</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!--/ Timeline Card -->
 
     <!-- Sales Stats Chart Card starts -->
     <div class="col-lg-4 col-md-6 col-12">
@@ -629,4 +490,94 @@ function linkAdmin(){
   <!-- Page js files -->
   <script src="{{ asset(mix('js/scripts/pages/dashboard-analytics.js')) }}"></script>
   <script src="{{ asset(mix('js/scripts/pages/app-invoice-list.js')) }}"></script>
+
+  <script>
+    //TRACKER
+    $('#tracker').change(async function(e){
+      let tipo = e.target.value
+      getTracker(tipo);
+    });
+
+    function getTracker(tipo = 1){
+      
+      fetch('/api/dashboard/tracker/'+tipo)
+      .then(response => response.json())
+      .then(response => {
+        $('#totalTracker').text(response.total);
+        $('#newTracker').text(response.new);
+        $('#openTracker').text(response.open);
+        $('#closeTracker').text(response.close);
+        apexTracker(response.porcentaje);
+      })
+      .catch(e => console.log(e));
+      
+    }
+
+    function apexTracker(porcentaje)
+    {
+      var $supportTrackerChart = document.querySelector('#support-trackers-chart-custom');
+      var supportTrackerChartOptions;
+      var supportTrackerChart;
+      var $avgSessionStrokeColor2 = '#ebf0f7';
+      var $textHeadingColor = '#5e5873';
+      var $white = '#fff';
+      var $strokeColor = '#ebe9f1';
+
+      supportTrackerChartOptions = {
+      chart: {
+        height: 270,
+        type: 'radialBar'
+      },
+      plotOptions: {
+        radialBar: {
+          size: 150,
+          offsetY: 20,
+          startAngle: -150,
+          endAngle: 150,
+          hollow: {
+            size: '65%'
+          },
+          track: {
+            background: $white,
+            strokeWidth: '100%'
+          },
+          dataLabels: {
+            name: {
+              offsetY: -5,
+              color: $textHeadingColor,
+              fontSize: '1rem'
+            },
+            value: {
+              offsetY: 15,
+              color: $textHeadingColor,
+              fontSize: '1.714rem'
+            }
+          }
+        }
+      },
+      colors: [window.colors.solid.danger],
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'horizontal',
+          shadeIntensity: 0.5,
+          gradientToColors: [window.colors.solid.primary],
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100]
+        }
+      },
+      stroke: {
+        dashArray: 8
+      },
+      series: [porcentaje],
+      labels: ['Tickets completados']
+    };
+    supportTrackerChart = new ApexCharts($supportTrackerChart, supportTrackerChartOptions);
+    supportTrackerChart.render();
+    }
+    getTracker();
+  </script>
 @endsection

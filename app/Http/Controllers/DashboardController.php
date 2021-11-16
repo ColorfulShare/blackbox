@@ -14,6 +14,7 @@ use App\Http\Controllers\InversionController;
 use App\Notifications\userActivacionExitosa;
 use App\Models\OrdenPurchase;
 use App\Models\Inversion;
+use App\Models\Ticket;
 
 class DashboardController extends Controller
 {
@@ -148,5 +149,40 @@ class DashboardController extends Controller
           Log::error('DashboardController - convertir -> Error: '.$th);
           abort(500, "Ocurrio un error, contacte con el administrador");
       }
+    }
+
+    public function getTracker($tipo = 1)
+    {
+      $fecha_fin = Carbon::now();
+
+      if($tipo == 1){
+        $fecha_ini = $fecha_fin->copy()->subDay(7);
+      }else if($tipo == 2){
+        $fecha_ini = $fecha_fin->copy()->subMonth(1);
+      }else if($tipo == 3){
+        $fecha_ini = $fecha_fin->copy()->subYear(1);
+      }
+      
+      $tickets = Ticket::whereBetween('created_at', [$fecha_ini, $fecha_fin])->get();
+      
+      $total = $tickets->count();
+      $new = Ticket::whereDate('created_at', $fecha_fin)->count();
+      $open = $tickets->where('status', 0)->count();
+      $close = $tickets->where('status', 1)->count();
+      //EVITA EL ERROR DE LA DIVISION ENTRE CERO
+      if($total > 0){
+        $porcentaje = ($close * 100 ) / $total;
+      }else{
+        $porcentaje = 0;
+      }
+      
+
+      return response()->json([
+        'total' => $total,
+        'new' => $new,
+        'open' => $open,
+        'close' => $close,
+        'porcentaje' => $porcentaje
+      ]);
     }
 }
