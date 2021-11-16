@@ -33,6 +33,7 @@ use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\TreController;
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\ComisionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -118,7 +119,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
         });
 
-        
+        //COMISIONES
+        Route::prefix('comisions')->group( function() {
+          Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
+        });      
     });
     //
     // Red de usuario
