@@ -154,7 +154,7 @@ class LiquidationController extends Controller
                     $accion = 'Aprobada';
                     $request->comentario = '';
 
-                    $fullname = auth()->user()->fullname;
+                    $fullname = auth()->user()->fullName();
 
                     $iduser = auth()->user()->id;
                     $total = $liquidation->total;

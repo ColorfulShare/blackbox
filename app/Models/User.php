@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\MyResetPassword;
 
 
 class User extends Authenticatable
@@ -71,7 +72,7 @@ class User extends Authenticatable
     protected $dates = [
         'expired_status'
     ];
-
+    
     public function fullName()
     {
         return $this->firstname . ' '. $this->lastname;
@@ -262,4 +263,11 @@ class User extends Authenticatable
         }
         return floatval($result * 100);
     }
+    
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MyResetPassword($token));
+    }
+
+
 }

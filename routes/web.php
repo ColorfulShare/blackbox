@@ -111,11 +111,13 @@ Route::middleware('auth')->group(function () {
          Route::post('/', [EducationController::class, 'store'])->name('education.store');
         });
 
-        //ADMIN
+        //GENEALOGY
         Route::prefix('genealogy')->group(function () {
             Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
             Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
         });
+
+        
     });
     //
     // Red de usuario
