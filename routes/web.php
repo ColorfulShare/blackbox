@@ -29,6 +29,7 @@ use App\Http\Controllers\ImpersonateController;
 use App\Http\Controllers\LiquidationController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\TreController;
@@ -331,6 +332,17 @@ Route::group(['prefix' => 'news'], function () {
     Route::delete('destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
     Route::patch('update/{id}', [NewsController::class, 'update'])->name('news.update');
 });
+
+//Ruta de documentos
+Route::group(['prefix' => 'documents'], function () {
+    Route::get('list', [DocumentsController::class, 'list'])->name('documents.list');
+    Route::get('create', [DocumentsController::class, 'create'])->name('documents.create');
+    Route::post('store', [DocumentsController::class, 'store'])->name('documents.store');
+    Route::get('edit/{id}', [DocumentsController::class, 'edit'])->name('documents.edit');
+    Route::delete('destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
+    Route::patch('update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
+});
+
 
 /* Route Tables */
 Route::group(['prefix' => 'table'], function () {

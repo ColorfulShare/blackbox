@@ -18,7 +18,7 @@
 
         <div class="card-content">
             <div class="card-body">
-                <form action="{{route('news.store')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('news.store')}}" id="validate" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -32,7 +32,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label" for="status"><b>Estado de la noticia</b></label>
-                                <select name="status" class="form-control custom-select" required>
+                                <select name="status" class="form-select custom-select" required>
                                     <option value="0">Inactivo</option>
                                     <option value="1">Activo</option>
                                 </select>

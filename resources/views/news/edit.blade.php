@@ -14,7 +14,7 @@
 
         <div class="card-content">
             <div class="card-body">
-                <form action="{{route('news.update', $news->id)}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('news.update', $news->id)}}" id="validate" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
 
@@ -29,7 +29,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label" for="status"><b>Estado de la noticia</b></label>
-                                <select name="status" class="form-control custom-select" required>
+                                <select name="status" class="form-select custom-select" required>
                                     <option value="0" @if($news->status == '0') selected @endif>Inactivo</option>
                                     <option value="1" @if($news->status == '1') selected @endif>Activo</option>
                                 </select>
