@@ -22,7 +22,7 @@ class CreateWalletsTable extends Migration
             $table->foreign('referred_id')->references('id')->on('users')->onUpdate('cascade');
             $table->foreignId('inversion_id')->nullable()->constrained('inversions')->comment('inversion la cual produce esta wallet');
             $table->double('amount');
-            $table->double('percentage')->nullable();
+            $table->double('percentage')->nullzable();
             $table->bigInteger('liquidation_id')->unsigned()->nullable();
             $table->string('descripcion');
             $table->tinyInteger('tipo_transaction')->default(0)->comment('0 - comision, 1 - retiro');

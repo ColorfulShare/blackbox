@@ -35,12 +35,15 @@ class WalletController extends Controller
      */
     public function saveWallet($data)
     {
-        // try {
+        try {
             if ($data['user_id'] != 1) {
                 if ($data['tipo_transaction'] == 1) {
+
                     $wallet = Wallet::create($data);
+
                     $saldoAcumulado = ($wallet->getWalletUser->wallet - $data['amount']);
                     $wallet->getWalletUser->update(['wallet' => $saldoAcumulado]);
+
                     $wallet->update(['amount' => -$data['amount']]);
                 } else {
                     if ($data['orden_purchases_id'] != null) {
@@ -51,23 +54,22 @@ class WalletController extends Controller
                         ])->first();
                         if ($check == null) {
                             $wallet = Wallet::create($data);
-                            // dd($wallet->getWalletUser);
+
                             $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['amount']);
                             $wallet->getWalletUser->update(['wallet' => $saldoAcumulado]);
                             $this->aceleracion($data['user_id'], $data['referred_id'], $data['amount'], $data['descripcion']);
                         }
                     } else {
                         $wallet = Wallet::create($data);
-                        $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['amount']);
+                        $saldoAcumulado = ($wallet->getWalletUser->wallet + $data['monto']);
                         $wallet->getWalletUser->update(['wallet' => $saldoAcumulado]);
                         $this->aceleracion($data['user_id'], $data['referred_id'], $data['amount'], $data['descripcion']);
                     }
-                    // $wallet->update(['balance' => $saldoAcumulado]);
                 }
             }
-        // } catch (\Throwable $th) {
-        //     Log::error('Wallet - saveWallet -> Error: ' . $th);
-        //     abort(403, "Ocurrio un error, contacte con el administrador");
-        // }
+        } catch (\Throwable $th) {
+            Log::error('Wallet - saveWallet -> Error: ' . $th);
+            abort(403, "Ocurrio un error, contacte con el administrador");
+        }
     }
 }
