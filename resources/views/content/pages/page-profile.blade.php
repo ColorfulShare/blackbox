@@ -15,10 +15,11 @@
       <div class="card profile-header mb-2">
         <!-- profile cover photo -->
         <img
-          class="card-img-top"
-          src="{{asset('images/profile/user-uploads/timeline.jpg')}}"
+          class="card-img-top text-center "
+          src="{{asset('/img/logo/blackbox.png')}}" style="width: 500px;  display:block; margin:auto; "
           alt="User Profile Image"
         />
+
         <!--/ profile cover photo -->
 
         <div class="position-relative">
@@ -178,11 +179,11 @@
     <!-- latest profile pictures -->
     <div class="card">
       <div class="card-body">
-        <h5 class="mb-0 text-center">Referidos</h5>
+        <h5 class="mb-0 text-center">Administradores de Red</h5>
         <div class="row">
 
             @if($referidos == 'vacio')
-            <h2 class="mt-1 text-center">Sin Referidos</h2>
+            <h4 class="mt-1 text-center">Sin Administrador</h4>
           @else
 
           @foreach ($referidos as $item)
@@ -214,6 +215,44 @@
     </div>
     <!--/ latest profile pictures -->
 
+    <!-- latest profile pictures -->
+    <div class="card">
+        <div class="card-body">
+          <h5 class="mb-0 text-center">Referidos</h5>
+          <div class="row">
+
+              @if($referidos == 'vacio')
+              <h2 class="mt-1 text-center">Sin Referidos</h2>
+            @else
+
+            @foreach ($referidos as $item)
+            <div class="col-md-4 col-6 profile-latest-img">
+                @if($item->photoDB != null)
+              <a href="#">
+                <img
+                src="{{asset('storage/photo/'.$item->photoDB)}}"
+                  class="img-fluid rounded"
+                  alt="avatar img"
+                />
+              </a>
+              <h6 class="text-center" style="font-size: 12px">{{Str::limit(ucfirst($item->firstname), 5)}}</h6>
+              @else
+              <a href="#">
+                  <img
+                  src="{{asset('images/portrait/small/avatar-s-2.jpg')}}"
+                    class="img-fluid rounded"
+                    alt="avatar img"
+                  />
+                </a>
+                <h6 class="text-center" style="font-size: 12px">{{Str::limit(ucfirst($item->firstname), 4)}}</h6>
+              @endif
+            </div>
+            @endforeach
+            @endif
+          </div>
+        </div>
+      </div>
+      <!--/ latest profile pictures -->
 
 
       </div>
