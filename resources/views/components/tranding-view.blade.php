@@ -37,7 +37,7 @@
               }
 
             ],
-            //"colorTheme": "dark",
+            "colorTheme": "dark",
             "isTransparent": true,
             "showSymbolLogo": true,
             "locale": "es"

@@ -299,11 +299,25 @@
         <li class="nav-item dropdown dropdown-user">
           <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true">
             <div class="user-nav d-sm-flex d-none">
-              <span class="user-name fw-bolder">John Doe</span>
+              <span class="user-name fw-bolder">{{ucfirst(Auth::user()->firstname)}}</span>
+              @if(Auth::user()->id ==1)
               <span class="user-status">Admin</span>
+              @endif
             </div>
             <span class="avatar">
-              <img class="round" src="{{asset('images/portrait/small/avatar-s-11.jpg')}}" alt="avatar" height="40" width="40">
+                @if(Auth::user()->photoDB != null)
+                <img
+              src="{{asset('storage/photo/'.Auth::user()->photoDB)}}"alt="avatar" height="40" width="40"
+                class="round img-fluid"
+                alt="Card image"
+              />
+               @else
+              <img
+                src="{{asset('images/portrait/small/avatar-s-2.jpg')}}"alt="avatar" height="40" width="40"
+                class="round img-fluid"
+                alt="Card image"
+              />
+              @endif
               <span class="avatar-status-online"></span>
             </span>
           </a>
@@ -331,13 +345,13 @@
               <i class="me-50" data-feather="help-circle"></i> FAQ
             </a>
             @if (session('impersonated_by'))
-          
+
             <a class="dropdown-item"  href="{{ route('impersonate.stop') }}">
               <i data-feather='home'></i>Volver al admin
             </a>
             @endif
             <form method="POST" class="" action="{{ route('logout') }}">
-              @csrf 
+              @csrf
               <button class="dropdown-item w-100" href="{{ route('logout') }}" onclick="event.preventDefault();
                         this.closest('form').submit();">
                   <i class="mr-50" data-feather="power"></i> Cerrar sesion

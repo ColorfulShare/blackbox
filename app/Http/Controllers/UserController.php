@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Collection;
 class UserController extends Controller
 {
     use Tree;
-    
+
     public function __construct()
     {
         $this->inversionController = new InversionController();
@@ -45,7 +45,7 @@ class UserController extends Controller
         $user->code_email_date = Carbon::now();
 
         $dataEmail = [
-            'user' => $user->fullname(),
+            'user' => $user->fullName(),
             'code' => $user->code_email
         ];
 
@@ -112,7 +112,7 @@ class UserController extends Controller
             }else{
                 Porcentaje::create(['porcentaje' => $porcentaje]);
             }
-            
+
         }else{
             $suma = $porcentajeUtilidad->porcentaje + $porcentaje;
             if($porcentaje > 0.20){
@@ -120,12 +120,12 @@ class UserController extends Controller
             }else{
                 $porcentajeUtilidad->update(['porcentaje' => $suma]);
             }
-            
+
         }
 
         return redirect()->back()->with('msj-success', 'Porcentaje actualizado correctamente');
     }
-    
+
     public function listUser()
     {
 
@@ -139,7 +139,7 @@ class UserController extends Controller
         $user = User::whereDoesntHave('inversiones',function($inversion){
             $inversion->where('status','=' ,1);
         })->get();
-        
+
         $paquetes = Package::all();
 
         return view('user.activacion', compact('user', 'paquetes'));
@@ -195,5 +195,45 @@ class UserController extends Controller
             Log::error('UserController - referidos -> Error: '.$th);
             abort(500, "Ocurrio un error, contacte con el administrador");
         }
+    }
+
+    public function ProfileUpdate(Request $request){
+        $user = User::find(Auth::user()->id);
+
+        $fields = [
+            "firstname" => ['required'],
+            "email" => [
+               'required',
+               'string',
+               'email',
+               'max:255',
+           ],
+
+        ];
+
+        $msj = [
+
+            'name.required' => 'El nombre es requerido.',
+          //  'last_name.required' => 'El apellido es requerido.',
+            'email.unique' => 'El correo debe ser unico.',
+          //  "wallet_address.min" => 'La dirección de la billetera debe tener un minimo de 21 caracteres.',
+         //   "wallet_address.max" => 'La dirección de la billetera no puede tener mas de 35 caracteres.',
+
+        ];
+
+        $this->validate($request, $fields, $msj);
+
+        $user->update($request->all());
+
+
+     if ($request->hasFile('photoDB')) {
+        $file = $request->file('photoDB');
+        $name = $user->id.'_'.$file->getClientOriginalName();
+        $file->move(public_path('storage') . '/photo', $name);
+        $user->photoDB = $name;
+
+     }
+        $user->save();
+        return back()->with('success', 'Perfil actualizado');
     }
 }

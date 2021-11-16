@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//RUTAS ADMIN
+//Route::middleware('admin')->group(function () {
+    //DASHBOARD
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/tracker/{tipo}', [DashboardController::class, 'getTracker'])->name('tracker');
+    });
+//});
