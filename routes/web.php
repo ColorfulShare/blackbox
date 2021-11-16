@@ -118,7 +118,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
         });
 
-        
+
     });
     //
     // Red de usuario
@@ -139,7 +139,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
         Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
-
+        Route::patch('/profile-user-Update',[UserController::class, 'ProfileUpdate'])->name('profile-user.update');
         Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
 
     });
@@ -363,7 +363,7 @@ Route::group(['prefix' => 'wallet'], function () {
 
 /* Withdraw */
 Route::group(['prefix' => 'withdraw'], function () {
- 
+
     Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
 });
 

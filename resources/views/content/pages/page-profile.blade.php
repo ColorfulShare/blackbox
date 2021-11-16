@@ -148,8 +148,16 @@
 
                         <div class="form-group">
                             <label for="fullname">Cuenta Broker</label>
-                            <input type="text" class="form-control border border-primary rounded" name="fullname" disabled
+                            <input type="text" class="form-control border border-primary rounded" name="Broker" disabled
                                 value="12345678">
+                        </div>
+                      </div>
+                      <div class="col-sm-8 mt-1">
+
+                        <div class="form-group">
+                            <label for="Wallet">Wallet</label>
+                            <input type="text" class="form-control border border-primary rounded" name="wallet" disabled
+                                value="sklamklasmlqwñleqwelkwokfioerf2384sdlfkñ">
                         </div>
                       </div>
                       <div class="col-sm-12 mt-1">
@@ -170,10 +178,16 @@
     <!-- latest profile pictures -->
     <div class="card">
       <div class="card-body">
-        <h5 class="mb-0">Referidos</h5>
+        <h5 class="mb-0 text-center">Referidos</h5>
         <div class="row">
-            @foreach ($referidos as $item)
+
+            @if($referidos == 'vacio')
+            <h2 class="mt-1 text-center">Sin Referidos</h2>
+          @else
+
+          @foreach ($referidos as $item)
           <div class="col-md-4 col-6 profile-latest-img">
+              @if($item->photoDB != null)
             <a href="#">
               <img
               src="{{asset('storage/photo/'.$item->photoDB)}}"
@@ -181,8 +195,20 @@
                 alt="avatar img"
               />
             </a>
+            <h6 class="text-center" style="font-size: 12px">{{Str::limit(ucfirst($item->firstname), 5)}}</h6>
+            @else
+            <a href="#">
+                <img
+                src="{{asset('images/portrait/small/avatar-s-2.jpg')}}"
+                  class="img-fluid rounded"
+                  alt="avatar img"
+                />
+              </a>
+              <h6 class="text-center" style="font-size: 12px">{{Str::limit(ucfirst($item->firstname), 4)}}</h6>
+            @endif
           </div>
           @endforeach
+          @endif
         </div>
       </div>
     </div>
@@ -203,10 +229,9 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="{{ route('profile.update',$user->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profile-user.update',$user->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
-
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -221,7 +246,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <h4 class="font-weight-bold text-white">Foto de perfil</h4>
+                            <h4 class="font-weight-bold text-white">Foto de perfil {{$user->id}}</h4>
                         </div>
                     </div>
                 </div>

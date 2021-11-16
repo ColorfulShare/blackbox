@@ -233,7 +233,10 @@ class UserController extends Controller
         $user->photoDB = $name;
 
      }
+
         $user->save();
         return back()->with('success', 'Perfil actualizado');
     }
+
+
 }
