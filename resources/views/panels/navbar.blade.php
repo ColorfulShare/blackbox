@@ -300,8 +300,8 @@
           <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-bs-toggle="dropdown" aria-haspopup="true">
             <div class="user-nav d-sm-flex d-none">
               <span class="user-name fw-bolder">{{ucfirst(Auth::user()->firstname)}}</span>
-              @if(Auth::user()->id ==1)
-              <span class="user-status">Admin</span>
+              @if(Auth::user()->id == 1)
+              <span class="user-status">Admin{{(Auth::user()->id)}}</span>
               @endif
             </div>
             <span class="avatar">

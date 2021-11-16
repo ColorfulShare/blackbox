@@ -18,9 +18,10 @@ use App\Notifications\userActivacionExitosa;
 use App\Models\OrdenPurchase;
 use App\Http\Traits\Tree;
 use Illuminate\Database\Eloquent\Collection;
-
+use App\Http\Traits\TwoFactor;
 class UserController extends Controller
 {
+    use TwoFactor;
     use Tree;
 
     public function __construct()
@@ -233,7 +234,10 @@ class UserController extends Controller
         $user->photoDB = $name;
 
      }
+
         $user->save();
         return back()->with('success', 'Perfil actualizado');
     }
+
+
 }

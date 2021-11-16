@@ -34,11 +34,8 @@ use App\Http\Controllers\RendimientoController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\TreController;
 use App\Http\Controllers\EducationController;
-<<<<<<< HEAD
 use App\Models\Liquidation;
-=======
 use App\Http\Controllers\ComisionController;
->>>>>>> 19296e6db9466263b25290117e2dda27d2a49217
 
 /*
 |--------------------------------------------------------------------------
@@ -123,14 +120,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
             Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
         });
-<<<<<<< HEAD
-=======
+
 
         //COMISIONES
         Route::prefix('comisions')->group( function() {
           Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
         });      
->>>>>>> 19296e6db9466263b25290117e2dda27d2a49217
     });
     //
     // Red de usuario
@@ -151,7 +146,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
         Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
-
+        Route::patch('/profile-user-Update',[UserController::class, 'ProfileUpdate'])->name('profile-user.update');
         Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
     });
 
