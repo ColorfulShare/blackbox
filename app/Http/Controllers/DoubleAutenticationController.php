@@ -41,7 +41,7 @@ class DoubleAutenticationController extends Controller
             ['token_google', '!=', null],
             ['activar_2fact', '=', '1'],
         ])->first();
-        
+
         $result = '';
         if ($check2Fact == null) {
             User::where('id', '=', $user_id)->update([
@@ -74,7 +74,7 @@ class DoubleAutenticationController extends Controller
                 $user->token_google
             ), 'utf-8');
         $code = 'data:image/png;base64,' . base64_encode($data);
-        
+
         $user->update(['QR_code' => $code]);
 
         return $code;
@@ -89,16 +89,40 @@ class DoubleAutenticationController extends Controller
     public function checkCodeLogin(Request $request)
     {
         $validate = $request->validate([
+
             'code' => 'required|numeric'
         ]);
+
         if ($validate) {
-            
+
             if ($this->checkCode(Auth::id(), $request->code)) {
                 session(['2fact' => 1]);
                 Auth::user()->update(['activar_2fact' => '1']);
                 return redirect()->route('dashboard')->with('success', 'Verificación correcta');
             }
-        
+
+            return back()->with('danger', 'Código de verificación incorrecto');
+        }
+    }
+
+    public function checkCodePerfil(Request $request)
+    {
+        $validate = $request->validate([
+
+            'code' => 'required|numeric'
+        ]);
+
+        if ($validate) {
+
+            if ($this->checkCode(Auth::id(), $request->code)) {
+                session(['2fact' => 1]);
+                Auth::user()->update(['activar_2fact' => '1']);
+                $data = [
+                    'verificado' => 'true'
+                ];
+                return response()->json(['valor'=>$data]);
+            }
+
             return back()->with('danger', 'Código de verificación incorrecto');
         }
     }
@@ -114,6 +138,7 @@ class DoubleAutenticationController extends Controller
     {
         $user = User::find($user_id);
         $result = false;
+        return (new Google2FA())->verifyKey($user->token_google, $code);
         if ((new Google2FA())->verifyKey($user->token_google, $code)) {
             $result = true;
         }
@@ -131,7 +156,7 @@ class DoubleAutenticationController extends Controller
 
             return response()->json(['success' => true]);
         } catch (\Throwable $th) {
-            
+
             Log::error('DoubleAutenticationController - removeAuth -> Error: '.$th);
             return response()->json(['success' => false]);
         }

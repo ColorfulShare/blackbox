@@ -301,7 +301,7 @@
             <div class="user-nav d-sm-flex d-none">
               <span class="user-name fw-bolder">{{ucfirst(Auth::user()->firstname)}}</span>
               @if(Auth::user()->id == 1)
-              <span class="user-status">Admin{{(Auth::user()->id)}}</span>
+              <span class="user-status">Admin</span>
               @endif
             </div>
             <span class="avatar">

@@ -8,6 +8,11 @@
 @endsection
 
 @section('content')
+<script>
+    function v(){
+      alert('verificando');
+    }
+</script>
 <div id="user-profile">
   <!-- profile header -->
   <div class="row">
@@ -259,89 +264,155 @@
 
   </div>
 
-
-
-
-        <!--/ suggestion -->
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="{{ route('profile-user.update',$user->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PATCH')
+ <!-- Modal de autenticacion -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="modal-content">
         <div class="modal-header">
-
-          <h5 class="modal-title" id="exampleModalLabel">Edicion de Perfil</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="exampleModalLabel">Se necesita verificacion para editar tus datos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
                 <div class="row">
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <h4 class="font-weight-bold text-white">Foto de perfil {{$user->id}}</h4>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body card-dashboard">
+                            <img
+                            class="card-img-top text-center "
+                            src="{{asset('/img/logo/blackbox.png')}}" style="width: 300px;  display:block; margin:auto; "
+                            alt="User Profile Image"
+                          />
+                                <div class="row">
+                                    <form class="auth-login-form mt-2" action="{{ route('2fact.post') }}" method="POST">
+                                    <div class="col-sm-12">
+                                        <h2 class="card-title fw-bold mb-1">Verificar 2Fact</h2>
+
+                                            @csrf
+                                            @if (!empty($urlQr))
+                                            <div class="mb-1 text-center">
+                                                <img src="{{$urlQr}}" alt="codigo qr google" class="d-inline">
+                                            </div>
+                                            @endif
+                                            <div class="mb-1">
+                                                <label class="form-label" for="username">Codigo 2Fact</label>
+                                                <input class="form-control border border-warning rounded-0" id="username" type="text" required name="code"
+                                                    placeholder="000000" aria-describedby="username" autofocus="" tabindex="1" />
+                                            </div>
+
+                                        {{-- <p class="text-center mt-2"><span>¿Nuevo en la plataforma?</span><a
+                                                href="{{ route('register') }}"><span>&nbsp;<b>Crea una cuenta</b></span></a></p> --}}
+                                    </div>
+                                    <div class="col-sm-12 ">
+
+                                        @if (!$user->activar_2fact)
+
+                                            <div class="mt-4 max-w-xl text-sm text-gray-600">
+                                                <p class="font-semibold">
+                                                    {{ __('La autenticación de dos factores ahora está deshabilitada. Escanee el siguiente código QR usando la aplicación de Google authenticator de su teléfono.') }}
+                                                </p>
+                                            </div>
+                                        @endif
+                                        @if ($user->activar_2fact)
+                                        <p class="font-semibold">{{ __('Ha habilitado la autenticación de dos factores.') }}</p>
+                                        @else
+                                        <p class="font-semibold">{{ __('No ha habilitado la autenticación de dos factores.') }}</p>
+                                        @endif
+
+                                        <div class="mt-1 max-w-xl text-sm text-gray-600">
+                                            <p>
+                                                {{ __('Cuando la autenticación de dos factores está habilitada, se le solicitará un token aleatorio seguro durante la autenticación. Puede recuperar este token de la aplicación Google Authenticator de su teléfono.') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary w-100 rounded-5 mt-2" onclick="v()" type="submit" tabindex="4">Verificar</button>
+                                </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label for="formFile" class="form-label">Seleccione su
-                                    Foto <b>(Se permiten JPG o PNG.
-                                        Tamaño máximo de 800kB)</label>
-                                <input type="file" id="photoDB" class="form-control" name="photoDB"
-                                onchange="previewFile(this, 'photo_preview')" accept="image/*">
-                              </div>
 
+        </div>
+    </div>
+    </div>
+</div>
+ <!-- Fin Modal Autenticacion -->
+                    <!-- Modal -->
+               {{--     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <form action="{{ route('profile-user.update',$user->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
 
-                            <div class="row">
-                                <div class="col-sm-12 mt-1 mb-1 center-block" id="photo_preview_wrapper">
-                                        <img id="photo_preview" class="img-fluid rounded " width="100" />
-                                </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="fullname">Nombre Completo</label>
-                                    <input type="text" class="form-control border border-primary rounded" name="firstname"
-                                        value="{{ $user->firstname}}">
-                                </div>
+                            <h5 class="modal-title" id="exampleModalLabel">Edicion de Perfil</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                            <div class="modal-body">
+                                    <div class="row">
 
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control border border-primary rounded" name="email"
-                                        value="{{ $user->email }}">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h4 class="font-weight-bold text-white">Foto de perfil {{$user->id}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label for="formFile" class="form-label">Seleccione su
+                                                        Foto <b>(Se permiten JPG o PNG.
+                                                            Tamaño máximo de 800kB)</label>
+                                                    <input type="file" id="photoDB" class="form-control" name="photoDB"
+                                                    onchange="previewFile(this, 'photo_preview')" accept="image/*">
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-sm-12 mt-1 mb-1 center-block" id="photo_preview_wrapper">
+                                                            <img id="photo_preview" class="img-fluid rounded " width="100" />
+                                                    </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="fullname">Nombre Completo</label>
+                                                        <input type="text" class="form-control border border-primary rounded" name="firstname"
+                                                            value="{{ $user->firstname}}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" class="form-control border border-primary rounded" name="email"
+                                                            value="{{ $user->email }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group mt-1">
+                                                        <label for="whatsapp">Telefono</label>
+                                                        <input type="text" class="form-control border border-primary rounded" name="phone"
+                                                            value="{{ $user->phone }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                             </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group mt-1">
-                                    <label for="whatsapp">Telefono</label>
-                                    <input type="text" class="form-control border border-primary rounded" name="phone"
-                                        value="{{ $user->phone }}">
-                                </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
                         </div>
-                      </div>
-                </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-      </div>
-    </div>
-</form>
-  </div>
+                        </div>
+                    </form>
+                    </div> --}}
 @endsection
 
 @section('page-script')

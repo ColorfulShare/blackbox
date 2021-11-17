@@ -125,7 +125,7 @@ Route::middleware('auth')->group(function () {
         //COMISIONES
         Route::prefix('comisions')->group( function() {
           Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
-        });      
+        });
     });
     //
     // Red de usuario
@@ -158,6 +158,8 @@ Route::middleware('auth')->group(function () {
     // 2fact
     Route::get('/2fact', [DoubleAutenticationController::class, 'index'])->name('2fact');
     Route::post('/2fact', [DoubleAutenticationController::class, 'checkCodeLogin'])->name('2fact.post');
+    Route::post('/2fact-perfil', [DoubleAutenticationController::class, 'checkCodePerfil'])->name('2fact-perfil.post');
+
 
     //DASHBOARD
 
