@@ -4,13 +4,10 @@
 @else
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/vendors.min.css')) }}" />
 @endif
-
 @yield('vendor-style')
-<!-- END: Vendor CSS-->
 
 <!-- BEGIN: Theme CSS-->
 <link rel="stylesheet" href="{{ asset(mix('css/core.css')) }}" />
-
 @php $configData = Helper::applClasses(); @endphp
 
 <!-- BEGIN: Page CSS-->
@@ -19,9 +16,9 @@
 @else
 <link rel="stylesheet" href="{{ asset(mix('css/base/core/menu/menu-types/vertical-menu.css')) }}" />
 @endif
-
 <link rel="stylesheet" href="{{ asset('vendors/css/extensions/toastr.min.css') }}">
 <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}" />
+
 {{-- Page Styles --}}
 @yield('page-style')
 
@@ -29,14 +26,12 @@
 <link rel="stylesheet" href="{{ asset(mix('css/overrides.css')) }}" />
 
 <!-- BEGIN: Custom CSS-->
-
-{{-- quill --}}
-
 @if($configData['direction'] === 'rtl' && isset($configData['direction']))
 <link rel="stylesheet" href="{{ asset(mix('css-rtl/custom-rtl.css')) }}" />
 <link rel="stylesheet" href="{{ asset(mix('css-rtl/style-rtl.css')) }}" />
-
 @else
 {{-- user custom styles --}}
+@stack('css')
+<link rel="stylesheet" href="{{ asset('css/base/pages/app-dataTables.css') }}" />
 <link rel="stylesheet" href="{{ asset(mix('css/style.css')) }}" />
 @endif

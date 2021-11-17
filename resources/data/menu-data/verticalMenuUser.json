@@ -70,7 +70,12 @@
       "icon": "alert-circle",
       "slug": ""
     },
-
+    {
+      "url": "/documents/show",
+      "name": "Documentos",
+      "icon": "archive",
+      "slug": ""
+    },
     {
       "navheader": "Apps & Pages",
       "slug": ""

@@ -49,5 +49,3 @@
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 @endsection
-{{-- CONFIGURACIÓN DE DATATABLE --}}
-@include('panels.datatables-config')

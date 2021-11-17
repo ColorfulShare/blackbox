@@ -52,7 +52,7 @@
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-12 d-flex justify-content-center my-2">
                                         <label class="btn btn-primary btn-lg btn-block" for="banner">Selecciona una imagen de portada</label>
-                                    </div>
+                                    </div> 
                                     <div class="col-12">
                                         <input type="file" name="banner" id="banner" class="form-control d-none" onchange="previewFile(this, 'photo_preview')" accept="image/*">
                                     </div>

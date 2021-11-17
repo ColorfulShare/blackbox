@@ -63,8 +63,6 @@
 
 @endsection
 
-@include('panels.datatables-config')
-
 @section('vendor-script')
   <!-- vendor files -->
     <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>

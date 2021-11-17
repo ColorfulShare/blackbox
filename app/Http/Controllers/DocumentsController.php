@@ -89,9 +89,38 @@ class DocumentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        try {
+
+            $documents = Documents::all();
+
+            return view('documents.show', compact('documents'));
+
+        } catch (\Throwable $th) {
+            Log::error('DocumentsController-show -> Error: '.$th);
+            abort(403, "Ocurrio un error, contacte con el administrador");
+        }
+    }
+
+       /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pdf($id)
+    {
+        try {
+
+            $documents = Documents::find($id);
+
+            return view('documents.pdf', compact('documents'));
+
+        } catch (\Throwable $th) {
+            Log::error('DocumentsController-pdf -> Error: '.$th);
+            abort(403, "Ocurrio un error, contacte con el administrador");
+        }
     }
 
     /**

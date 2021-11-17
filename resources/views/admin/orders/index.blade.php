@@ -98,8 +98,7 @@
 @endsection
 
 
-{{-- CONFIGURACIÓN DE DATATABLE --}}
-@include('panels.datatables-config')
+
 
 @section('vendor-script')
   <!-- vendor files -->

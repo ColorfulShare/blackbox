@@ -125,7 +125,28 @@ Route::middleware('auth')->group(function () {
         //COMISIONES
         Route::prefix('comisions')->group( function() {
           Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
-        });      
+        });    
+        
+        //NOTICIAS
+        Route::group(['prefix' => 'news'], function () {
+            Route::get('list', [NewsController::class, 'list'])->name('news.list');
+            Route::get('create', [NewsController::class, 'create'])->name('news.create');
+            Route::post('store', [NewsController::class, 'store'])->name('news.store');
+            Route::get('edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
+            Route::delete('destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+            Route::patch('update/{id}', [NewsController::class, 'update'])->name('news.update');
+        });
+        
+        //DOCUMENTOS
+        Route::group(['prefix' => 'documents'], function () {
+            Route::get('list', [DocumentsController::class, 'list'])->name('documents.list');
+            Route::get('show', [DocumentsController::class, 'show'])->name('documents.show');
+            Route::get('create', [DocumentsController::class, 'create'])->name('documents.create');
+            Route::post('store', [DocumentsController::class, 'store'])->name('documents.store');
+            Route::get('edit/{id}', [DocumentsController::class, 'edit'])->name('documents.edit');
+            Route::delete('destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
+            Route::patch('update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
+        });
     });
     //
     // Red de usuario
@@ -169,6 +190,13 @@ Route::middleware('auth')->group(function () {
         Route::post('convertir', [DashboardController::class, 'convertir'])->name('dashboard.convertir');
     });
 
+
+    //DOCUMENTOS
+    Route::group(['prefix' => 'documents'], function () {
+        Route::get('show', [DocumentsController::class, 'show'])->name('documents.show');
+        Route::get('pdf/{id}', [DocumentsController::class, 'pdf'])->name('documents.pdf');
+    });
+    
     //TIENDA
     Route::prefix('shop')->group(function () {
         Route::get('/', [TiendaController::class, 'index'])->name('shop');
@@ -337,25 +365,7 @@ Route::group(['prefix' => 'tickets'], function () {
     Route::get('ticket-show-admin/{id}',  [TicketsController::class, 'showAdmin'])->name('ticket.show-admin');
 });
 
-//Ruta de las noticias
-Route::group(['prefix' => 'news'], function () {
-    Route::get('list', [NewsController::class, 'list'])->name('news.list');
-    Route::get('create', [NewsController::class, 'create'])->name('news.create');
-    Route::post('store', [NewsController::class, 'store'])->name('news.store');
-    Route::get('edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
-    Route::delete('destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
-    Route::patch('update/{id}', [NewsController::class, 'update'])->name('news.update');
-});
 
-//Ruta de documentos
-Route::group(['prefix' => 'documents'], function () {
-    Route::get('list', [DocumentsController::class, 'list'])->name('documents.list');
-    Route::get('create', [DocumentsController::class, 'create'])->name('documents.create');
-    Route::post('store', [DocumentsController::class, 'store'])->name('documents.store');
-    Route::get('edit/{id}', [DocumentsController::class, 'edit'])->name('documents.edit');
-    Route::delete('destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
-    Route::patch('update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
-});
 
 
 /* Route Tables */

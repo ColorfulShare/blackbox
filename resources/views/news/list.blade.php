@@ -4,11 +4,11 @@
 
 @section('content')
 
-<div class="card">
+<div class="card p-2">
     <div class="card-header d-flex justify-content-end">
         <a href="{{ route('news.create') }}" class="btn btn-primary">Crear nueva noticia</a>
     </div>
-    <table class="table">
+    <table class="table myTable border rounded">
         <thead>
             <tr class="text-center">
                 <th>id</th>
@@ -33,10 +33,10 @@
 
                 <td>{{ date('d-m-Y', strtotime($item->created_at))}}</td>
                 <td>
-                    <a href="{{ route('news.edit', $item->id) }}" class="item-edit"><i class="text-primary"
+                    <a href="{{ route('news.edit', $item->id) }}" class="item-edit"><i class="text-primary font-medium-3"
                             data-feather='edit'></i></a>
 
-                    <a href="javascript:;" class="item-edit delete"><i class="text-danger" data-feather='trash'></i>
+                    <a href="javascript:;" class="item-edit delete"><i class="text-danger font-medium-3" data-feather='trash'></i>
                         <form id="delete" action="{{ route('news.destroy', $item->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
