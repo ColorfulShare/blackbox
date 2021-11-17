@@ -8,7 +8,6 @@
 <style>
   .auth-wrapper.auth-v1 .auth-inner {
     max-width: 700px;
-
   }
 
   select.option {
@@ -193,8 +192,9 @@ $referred = DB::table('users')
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="terms" tabindex="4" name="terms" />
                 <label class="form-check-label" for="terms">
-                  Acepto los <a href="#">Términos y Condiciones</a>
+                  Acepto los <a href="{{asset('pdf/TERMINOS_Y_CONDICIONES,_POLITICA_DE_PRIVACIDAD_BLACKBOX.pdf')}}" target="_blanck">Términos y Condiciones</a>
                 </label>
+                
                 @error('terms')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
