@@ -22,21 +22,11 @@
 
           <div class="mb-1">
             <label for="login-email" class="form-label">Email</label>
-            <input
-              type="text"
-              class="form-control @error('email') is-invalid @enderror"
-              id="login-email"
-              name="email"
-              placeholder="john@example.com"
-              aria-describedby="login-email"
-              tabindex="1"
-              autofocus
-              value="{{ old('email') }}"
-            />
+            <input type="text" class="form-control @error('email') is-invalid @enderror" id="login-email" name="email" placeholder="john@example.com" aria-describedby="login-email" tabindex="1" autofocus value="{{ old('email') }}" />
             @error('email')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
             @enderror
           </div>
 
@@ -45,70 +35,48 @@
               <label class="form-label" for="login-password">Password</label>
               @if (Route::has('password.request'))
               <a href="{{ route('password.request') }}">
-                <small>Forgot Password?</small>
+                <small> ¿haz olvidado la contraseña?</small>
               </a>
               @endif
             </div>
+            
             <div class="input-group input-group-merge form-password-toggle">
-              <input
-                type="password"
-                class="form-control form-control-merge"
-                id="login-password"
-                name="password"
-                tabindex="2"
-                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                aria-describedby="login-password"
-              />
+              <input type="password" class="form-control form-control-merge" id="login-password" name="password" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="login-password" />
               <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
             </div>
           </div>
           <div class="mb-1">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="remember" name="remember" tabindex="3" {{ old('remember') ? 'checked' : '' }} />
-              <label class="form-check-label" for="remember"> Remember Me </label>
+              <label class="form-check-label" for="remember">Recuérdame </label>
             </div>
           </div>
           <div class="row justify-content-md-center">
             <div class="col-12 col-md-10 text-center mb-2">
               {!! htmlFormSnippet([
-                "theme" => "dark",
-                "size" => "normal",
-                "tabindex" => "3",
-                "callback" => "callbackFunction",
-                "expired-callback" => "expiredCallbackFunction",
-                "error-callback" => "errorCallbackFunction",
+              "theme" => "dark",
+              "size" => "normal",
+              "tabindex" => "3",
+              "callback" => "callbackFunction",
+              "expired-callback" => "expiredCallbackFunction",
+              "error-callback" => "errorCallbackFunction",
               ]) !!}
             </div>
           </div>
-          <button type="submit" class="btn btn-primary w-100" tabindex="4">Sign in</button>
+          <button type="submit" class="btn btn-primary w-100" tabindex="4">Iniciar sesión</button>
         </form>
 
         <p class="text-center mt-2">
-          <span>New on our platform?</span>
+          <span>¿Nuevo en nuestra plataforma?</span>
           @if (Route::has('register'))
           <a href="{{ route('register') }}">
-            <span>Create an account</span>
+            <span>Crea una cuenta</span>
           </a>
           @endif
         </p>
 
         <div class="divider my-2">
-          <div class="divider-text">or</div>
-        </div>
-
-        <div class="auth-footer-btn d-flex justify-content-center">
-          <a href="#" class="btn btn-facebook">
-            <i data-feather="facebook"></i>
-          </a>
-          <a href="#" class="btn btn-twitter white">
-            <i data-feather="twitter"></i>
-          </a>
-          <a href="#" class="btn btn-google">
-            <i data-feather="mail"></i>
-          </a>
-          <a href="#" class="btn btn-github">
-            <i data-feather="github"></i>
-          </a>
+          <div class="divider-text"></div>
         </div>
       </div>
     </div>
