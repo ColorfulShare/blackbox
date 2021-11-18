@@ -71,6 +71,5 @@
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
 @endsection
 
-{{-- CONFIGURACIÓN DE DATATABLE --}}
-@include('panels.datatables-config')
+
 
