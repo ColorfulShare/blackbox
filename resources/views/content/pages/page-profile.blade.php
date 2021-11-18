@@ -5,12 +5,28 @@
 @section('page-style')
   {{-- Page Css files --}}
   <link rel="stylesheet" href="{{ asset(mix('css/base/pages/page-profile.css')) }}">
+
 @endsection
 
 @section('content')
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     function v(){
-      alert('verificando');
+    axios({
+  method: 'post',
+  url: '/2fact-perfil',
+  headers: {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+  }
+}).then((response)=>{
+            if(response.data.valor.verificado == 'true'){
+                let hijo = document.getElementById('hijo')
+                document.getElementById('padre').removeChild(hijo);
+            }
+        });
     }
 </script>
 <div id="user-profile">
@@ -273,9 +289,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-                <div class="row">
+                <div class="row" id="padre">
 
-                    <div class="card">
+                        @csrf
+                    <div class="card" id="hijo">
                         <div class="card-content">
                             <div class="card-body card-dashboard">
                             <img
@@ -284,7 +301,6 @@
                             alt="User Profile Image"
                           />
                                 <div class="row">
-                                    <form class="auth-login-form mt-2" action="{{ route('2fact.post') }}" method="POST">
                                     <div class="col-sm-12">
                                         <h2 class="card-title fw-bold mb-1">Verificar 2Fact</h2>
 
@@ -325,15 +341,15 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary w-100 rounded-5 mt-2" onclick="v()" type="submit" tabindex="4">Verificar</button>
-                                </form>
+                                    <button class="btn btn-primary w-100 rounded-5 mt-2" onclick="v()"  >Verificar</button>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
-        </div>
-    </div>
+                </div>
+           </div>
+       </div>
     </div>
 </div>
  <!-- Fin Modal Autenticacion -->
