@@ -5,7 +5,7 @@
 @section('content')
 
 
-<div style="padding-left:87%">
+<div style="padding-left:82%">
     <a href="{{ route('ticket.list-user')}}" class="btn btn-danger  mb-2 waves-effect waves-light">Volver Atrás <i class="fas fa-chevron-left"></i></a>
 </div>
 
@@ -27,6 +27,32 @@
                                 <div class="col-12 mt-2">
                                     <button type="submit" class="col-12 btn btn-danger  mr-1 mb-1 waves-effect waves-light">Enviar
                                     Ticket</button>
+
+
+                                    <div class="col-12 mt-2 mb-2">
+                                        <!-- <label class="form-label  mb-1" for="message"><b>Mensaje</b></label> -->
+
+
+                                        <div class="container"> 
+                                            <!-- <div class="row">
+                                                <div class="col-12 mx-auto ">
+                                                    <div class="card">
+                                                        <div class="card-body chat-care">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        </div>
+
+                                        <br>
+                                        <span class=" text-bold-600">Escriba Su Pregunta</span>
+                                        <textarea class="form-control chat-window-message" type="text" id="message" name="message" required rows="3"></textarea>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <button type="submit" class="col-12 btn btn-danger  mr-1 mb-1 waves-effect waves-light">Enviar
+                                            Ticket</button>
                                     </div>
                                 </div>
                             </div>

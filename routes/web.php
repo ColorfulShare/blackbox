@@ -125,8 +125,8 @@ Route::middleware('auth')->group(function () {
         //COMISIONES
         Route::prefix('comisions')->group( function() {
           Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
-        });    
-        
+        });
+
         //NOTICIAS
         Route::group(['prefix' => 'news'], function () {
             Route::get('list', [NewsController::class, 'list'])->name('news.list');
@@ -136,7 +136,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
             Route::patch('update/{id}', [NewsController::class, 'update'])->name('news.update');
         });
-        
+
         //DOCUMENTOS
         Route::group(['prefix' => 'documents'], function () {
             Route::get('list', [DocumentsController::class, 'list'])->name('documents.list');
@@ -180,6 +180,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/2fact', [DoubleAutenticationController::class, 'index'])->name('2fact');
     Route::post('/2fact', [DoubleAutenticationController::class, 'checkCodeLogin'])->name('2fact.post');
     Route::post('/2fact-perfil', [DoubleAutenticationController::class, 'checkCodePerfil'])->name('2fact-perfil.post');
+    Route::post('/axios', [DoubleAutenticationController::class, 'axios'])->name('axios');
 
 
     //DASHBOARD
@@ -198,7 +199,7 @@ Route::middleware('auth')->group(function () {
         Route::get('show', [DocumentsController::class, 'show'])->name('documents.show');
         Route::get('pdf/{id}', [DocumentsController::class, 'pdf'])->name('documents.pdf');
     });
-    
+
     //TIENDA
     Route::prefix('shop')->group(function () {
         Route::get('/', [TiendaController::class, 'index'])->name('shop');

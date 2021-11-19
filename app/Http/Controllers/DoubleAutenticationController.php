@@ -107,6 +107,7 @@ class DoubleAutenticationController extends Controller
 
     public function checkCodePerfil(Request $request)
     {
+
         $validate = $request->validate([
 
             'code' => 'required|numeric'
@@ -124,7 +125,15 @@ class DoubleAutenticationController extends Controller
             }
 
             return back()->with('danger', 'Código de verificación incorrecto');
+        }else{
+            return response()->json('error');
         }
+    }
+    public function axios(){
+        $data = [
+            'verificado' => 'true'
+        ];
+        return response()->json(['valor'=>$data]);
     }
 
     /**
