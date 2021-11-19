@@ -24,7 +24,7 @@
             <div class="card-body ">
                 <div class="table-responsive">
                     <h1><strong >Lista de usuarios</strong></h1>
-                    <table class="table nowrap scroll-horizontal-vertical myTable2 table-striped mt-2">
+                    <table class="table nowrap scroll-horizontal-vertical myTable table-striped mt-2">
                         <thead>
                             <tr class="text-center ">
                                 <th>#</th>
@@ -68,6 +68,7 @@
         </div>
     </div>
 </div>
+@include('panels.custom-js')
 @endsection
 
 
