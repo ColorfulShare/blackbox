@@ -200,8 +200,6 @@ class UserController extends Controller
 
     public function ProfileUpdate(Request $request){
 
-        return redirect(route('/2fact'));
-
         $user = User::find(Auth::user()->id);
         $fields = [
             "firstname" => ['required'],
