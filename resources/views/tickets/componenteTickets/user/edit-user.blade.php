@@ -21,8 +21,8 @@
                         </div>
                         <div class="col-12 mt-2 mb-2">
                             <label class="form-label text-dark mb-1" for="message"><b>Chat con el administrador</b></label>
-                            <div class="container">
-                                <div class="row">
+                            <div class="">
+                                <div class="">
                                     <div class="col-12 mx-auto ">
                                         <div class="card">
                                             <div class="card-body chat-care rounded">

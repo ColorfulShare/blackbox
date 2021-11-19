@@ -29,9 +29,7 @@
                                 <th>#</th>
                                 <th>Nombre</th>
                                 <th>Correo</th>
-                                <th>telefono</th>
                                 <th>Estado</th>
-                                <th>Nivel</th>
                                 <th>Ingreso</th>
                                 <th>Accion</th>
                             </tr>
@@ -42,8 +40,6 @@
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->firstname}}</td>
                                 <td>{{$item->email}}</td>
-                                <td>{{$item->phonel}}</td>
-
                                 @if ($item->status == '0')
                                 <td> <a class=" btn btn-danger text-white text-bold-600">Inactivo</a></td>
                                 @elseif($item->status == '1')
@@ -57,7 +53,6 @@
                                 @elseif($item->status == '5')
                                 <td> <a class=" btn btn-danger text-white text-bold-600">Eliminado</a></td>
                                 @endif
-                                <td>{{$item->nivel}}</td>
                                 <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
                                 <td>
                                     <form action="{{route('impersonate.start', $item)}}" method="POST" class="btn">

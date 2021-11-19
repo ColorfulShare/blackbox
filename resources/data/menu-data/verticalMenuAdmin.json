@@ -44,9 +44,9 @@
           "slug": "referidos.index"
         },
         {
-          "url": "/",
+          "url": "/user/user-list",
           "name": "Usuarios",
-          "icon": "circle",
+          "icon": "users",
           "slug": ""
         }
       ]
@@ -64,12 +64,6 @@
         }
       ]
     },  
-    {
-      "url": "/user/user-list",
-      "name": "Usuarios",
-      "icon": "users",
-      "slug": "/"
-    },
     {
       "url": "news/list",
       "name": "Noticias",

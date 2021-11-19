@@ -30,8 +30,8 @@
                                         <label class="form-label  mb-1" id="form-label" for="message"><b>Conversación con el
                                                 administrador</b></label>
 
-                                        <div class="container">
-                                            <div class="row">
+                                        <div class="">
+                                            <div class="">
                                                 <div class="col-12 mx-auto ">
                                                     <div class="card">
 

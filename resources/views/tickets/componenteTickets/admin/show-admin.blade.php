@@ -19,12 +19,10 @@
 
                             <div class="form-body">
                                 <div class="row">
-
                                     <div class="col-12">
                                         <label class="form-label  mb-1" for="issue"><b>Asunto del
                                                 ticket</b></label>
                                         <input class="form-control border  rounded-0" type="text" readonly id="issue" name="issue" value="{{ $ticket->issue }}" rows="3" />
-
                                     </div>
 
                                     <div class="col-12 mt-2">
@@ -47,7 +45,7 @@
 
                                     <div class="col-12 mt-2 mb-2">
                                         <label class="form-label  mb-1" for="message"><b>Chat con el
-                                                administrador</b></label>
+                                        administrador</b></label>
 
                                         <section class="chat-app-window mb-2 border  rounded-0">
                                             <div class="active-chat">
