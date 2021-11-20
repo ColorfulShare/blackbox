@@ -38,24 +38,25 @@
                         <tbody>
                             @foreach ($comision as $item)
 	                            <tr class="text-center">
-	                                <td>{{$item->id}}</td>
-	                                <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
-	                                <td>{{$item->getUser->firstname}} {{$item->getUser->lastname}}</td>
-	                              
+	                              <td>{{$item->id}}</td>
+	                              <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
+	                              <td>{{$item->getUser->firstname}} {{$item->getUser->lastname}}</td>   
 		                            @if($item->getUser->referred_id === 0)
 		                              <td>{{$item->getUser->firstname}} {{$item->getUser->lastname}}</td>
 		                            @else
 		                           	  <td>{{$item->getUser->referred_id}}</td>
 		                            @endif
-	                                <td>{{$item->amount}}</td>
-	                                 <td> <a class=" btn btn-primary text-white text-bold-600">Pagada</a></td>
-	                                <td>
-	                                  @if ($item->level == '0')
-                                        <a class=" btn btn-primary text-white text-bold-600">Normal</a>
-                                      @else($item->level == '1')
-                                        <a class=" btn btn-danger text-white text-bold-600">Admin de red</a>
-                                      @endif
-	                                </td>  
+	                              <td>{{$item->amount}}</td>
+	                              <td>
+                                  <a class=" btn btn-primary text-white text-bold-600">Pagada</a>   
+                                </td> 
+	                              <td>
+	                                @if ($item->level == '0')
+                                    <a class=" btn btn-primary text-white text-bold-600">Normal</a>
+                                  @else($item->level == '1')
+                                    <a class=" btn btn-danger text-white text-bold-600">Admin de red</a>
+                                  @endif
+	                              </td>  
 	                            </tr>
                             @endforeach
                         </tbody>

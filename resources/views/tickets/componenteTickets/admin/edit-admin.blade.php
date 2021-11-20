@@ -68,45 +68,49 @@
                                     </div>       
                                     <div class="col-12 mt-2 mb-2">
                                         <label class="form-label " for="note"><b>Chat con el usuario</b></label>
-                                        <div class="">
+                                        @if(count($message) > 0 )
                                             <div class="">
-                                                <div class="col-12 mx-auto">
-                                                    <div class="card">
-                                                        <div class="card-body chat-care rounded">
-                                                            <ul class="chat">
-                                                                @foreach ( $message as $item )
-                                                                {{-- user --}}
-                                                                @if ($item->type == 0)
-                                                                <li class="agent clearfix">
-                                                                    <div class="chat-body clearfix">
-                                                                        <div class="header clearfix">
-                                                                            <strong class="primary-font">{{ $item->getUser->firstname}} {{$item->getUser->lastname}}</strong>
+                                                <div class="">
+                                                    <div class="col-12 mx-auto">
+                                                        <div class="card">
+                                                            <div class="card-body chat-care rounded">
+                                                                <ul class="chat">
+                                                                    @foreach ( $message as $item )
+                                                                    {{-- user --}}
+                                                                    @if ($item->type == 0)
+                                                                    <li class="agent clearfix">
+                                                                        <div class="chat-body clearfix">
+                                                                            <div class="header clearfix">
+                                                                                <strong class="primary-font">{{ $item->getUser->firstname}} {{$item->getUser->lastname}}</strong>
+                                                                            </div>
+                                                                            <p class="primary-font">
+                                                                                {{ $item->message }}
+                                                                            </p>
                                                                         </div>
-                                                                        <p class="primary-font">
-                                                                            {{ $item->message }}
-                                                                        </p>
-                                                                    </div>
-                                                                </li>
-                                                                {{-- admin --}}
-                                                                @elseif ($item->type == 1)
-                                                                <li class="admin clearfix">
-                                                                    <div class="chat-body clearfix">
-                                                                        <div class="header clearfix">
-                                                                            <strong class="right primary-font">{{ $item->getAdmin->firstname}} {{$item->getAdmin->lastname}}</strong>
+                                                                    </li>
+                                                                    {{-- admin --}}
+                                                                    @elseif ($item->type == 1)
+                                                                    <li class="admin clearfix">
+                                                                        <div class="chat-body clearfix">
+                                                                            <div class="header clearfix">
+                                                                                <strong class="right primary-font">{{ $item->getAdmin->firstname}} {{$item->getAdmin->lastname}}</strong>
+                                                                            </div>
+                                                                            <p>
+                                                                                {{ $item->message }}
+                                                                            </p>
                                                                         </div>
-                                                                        <p>
-                                                                            {{ $item->message }}
-                                                                        </p>
-                                                                    </div>
-                                                                </li>
-                                                                @endif
-                                                                @endforeach
-                                                            </ul>
+                                                                    </li>
+                                                                    @endif
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @else 
+                                            <p class="text-center"> No tiene mensajes disponibles</p>
+                                        @endif 
                                         <span class="text-bold-600">Respuesta para el usuario</span>
                                         <textarea class="form-control  chat-window-message" type="text" id="message" name="message"></textarea>
                                     </div>

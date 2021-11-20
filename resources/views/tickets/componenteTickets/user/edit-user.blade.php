@@ -21,13 +21,12 @@
                         </div>
                         <div class="col-12 mt-2 mb-2">
                             <label class="form-label text-dark mb-1" for="message"><b>Chat con el administrador</b></label>
-
+                            @if(count($message) > 0 )
                             <div class="">
                                 <div class="">
                                     <div class="col-12 mx-auto ">
                                         <div class="card" style="background-color: #0c2e54;
-background-image: linear-gradient(180deg, #0c2e54 25%, #031c6b 100%);
-">
+                                          background-image: linear-gradient(180deg, #0c2e54 25%, #031c6b 100%);">
                                             <div class="card-body chat-care rounded">
                                                 <ul class="chat">
                                                     @foreach ( $message as $item )
@@ -63,6 +62,9 @@ background-image: linear-gradient(180deg, #0c2e54 25%, #031c6b 100%);
                                     </div>
                                 </div>
                             </div>
+                            @else 
+                                <p class="text-center"> No tiene mensajes disponibles</p>
+                            @endif 
                             <span class="text-dark">Respuesta</span>
                             <textarea class="text-tex form-control" type="text" name="message" rows="3"></textarea>
                         </div>
