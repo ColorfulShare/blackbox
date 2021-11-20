@@ -41,7 +41,7 @@
                     </a></td>
                 @else
                 <td><a href="{{ route('ticket.show-user',$item->id) }}">
-                        <buttom class=" btn text-bold-600 text-white" style="background: rgba(246, 74, 0, 0.77);border-radius: 8px;">Editar</buttom>
+                        <buttom class=" btn text-bold-600 text-white" style="background: rgba(246, 74, 0, 0.77);border-radius: 8px;">Ver</buttom>
                     </a></td>
                 @endif
 
