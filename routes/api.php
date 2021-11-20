@@ -24,5 +24,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     //DASHBOARD
     Route::prefix('dashboard')->group(function () {
         Route::get('/tracker/{tipo}', [DashboardController::class, 'getTracker'])->name('tracker');
+        Route::get('/sale/{tipo}', [DashboardController::class, 'getSale'])->name('sale');
     });
 //});

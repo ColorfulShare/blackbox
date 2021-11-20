@@ -187,4 +187,36 @@ class DashboardController extends Controller
         'porcentaje' => $porcentaje
       ]);
     }
+
+    public function getSale($tipo = 1)
+    {
+      $fecha_fin = Carbon::now();
+
+      if($tipo == 1){
+        $fecha_ini = $fecha_fin->copy()->subDay(7);
+      }else if($tipo == 2){
+        $fecha_ini = $fecha_fin->copy()->subDay(28);
+      }else if($tipo == 3){
+        $fecha_ini = $fecha_fin->copy()->subYear(1);
+      }
+      
+      $ordenes = OrdenPurchase::where('package_id','!=', null)->get();
+      $bonosUnilevel = Wallet::where('descripcion', 'like',  '%'.'Bono unilevel'.'%')->get();
+      
+      //EVITA EL ERROR DE LA DIVISION ENTRE CERO
+      if($total > 0){
+        $porcentaje = ($close * 100 ) / $total;
+      }else{
+        $porcentaje = 0;
+      }
+      
+
+      return response()->json([
+        'total' => $total,
+        'new' => $new,
+        'open' => $open,
+        'close' => $close,
+        'porcentaje' => $porcentaje
+      ]); 
+    }
 }

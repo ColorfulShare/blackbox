@@ -25,7 +25,7 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label" for="title"><b>Titulo</b></label>
-                                <input type="text" name="title" class="form-control" required>
+                                <input type="text" name="title" id="title" class="form-control" required>
                             </div>
                         </div>
 
@@ -78,5 +78,35 @@
         </div>
     </div>
 </div>
+    
+@endsection
 
+
+@section('vendor-script')
+  <!-- vendor files -->
+    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
+    <script src="{{ asset('assets/js/forms/form-tinymce.min.js') }}"></script>
+    <script>
+        // textarea
+        tinymce.init({
+            selector: 'textarea#tiny',
+            height: 200,
+            menubar: false,
+            statusbar: false,
+            skin: "oxide-dark",
+             content_css: "dark",
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic forecolor backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+    </script>
 @endsection

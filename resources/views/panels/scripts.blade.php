@@ -12,13 +12,7 @@
 
 <!-- custome scripts file for user -->
 <script src="{{ asset(mix('js/core/scripts.js')) }}"></script>
-<script src="{{ asset('js/scripts/jquery/jquery-3.6.0.min.js') }}"></script>
-<script src="{{ asset('js/scripts/jquery/jquery-confirm.js') }}"></script>
-<script src="{{ asset('js/scripts/jquery/jquery-validate.min.js') }}"></script>
-<script src="{{ asset('js/scripts/tables/jquery.dataTables.js') }}"></script>
-<script src="{{ asset(mix('js/scripts/forms/form-tinymce.min.js')) }}"></script>
-<script src="{{ asset('js/scripts/custom.js') }}"></script>
-@include('panels.custom-js')
+
 @stack('js')
 
 @if($configData['blankPage'] === false)

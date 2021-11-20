@@ -73,12 +73,13 @@ class InversionController extends Controller
 
             $ordenpurchase->inversion_id = $inversion->id;
             $ordenpurchase->save();
-
+            
             if($comision == true){
                 $users = $this->getDataFather($user, 6);
+    
                 $this->bonoUnilevel($users, $user, $inversion->id);
             }
-
+    
             //BONO DIRECTO
             
             if(isset($user->refirio) && $user->refirio->type == 'red'){
@@ -116,8 +117,10 @@ class InversionController extends Controller
                 'amount' => $monto,
                 'descripcion' => 'Bono unilevel nivel '.$user->nivel. ' del usuario '.$usuario->email,
                 'status' => 0,
+                'percentage' => 0,
                 'inversion_id' => $idInversion
             ]);
+
         }
 
     }

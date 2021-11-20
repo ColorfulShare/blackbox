@@ -32,6 +32,5 @@
 @else
 {{-- user custom styles --}}
 @stack('css')
-<link rel="stylesheet" href="{{ asset('css/base/pages/app-dataTables.css') }}" />
 <link rel="stylesheet" href="{{ asset(mix('css/style.css')) }}" />
 @endif

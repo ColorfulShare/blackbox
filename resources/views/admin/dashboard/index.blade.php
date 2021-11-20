@@ -452,9 +452,7 @@ function linkAdmin(){
   <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap4.js')) }}"></script>
 @endsection
 @section('page-script')
-  <!-- Page js files -->
-  <script src="{{ asset(mix('js/scripts/pages/dashboard-analytics.js')) }}"></script>
-  <script src="{{ asset(mix('js/scripts/pages/app-invoice-list.js')) }}"></script>
+
 
   <script>
     //TRACKER
@@ -551,5 +549,104 @@ function linkAdmin(){
         responsive: true,
         order: [[ 0, "desc" ]],
     })
+
+    /*
+    function getSale(tipo = 1){
+      
+      fetch('/api/dashboard/sales/'+tipo)
+      .then(response => response.json())
+      .then(response => {
+
+        apexSale(response);
+      })
+      .catch(e => console.log(e));
+      
+    }
+    */
+    function apexSale(response = null){
+      //GRAFICO DE SALEs
+      var $salesVisitChart = document.querySelector('#sales-visit-chart');
+      var salesVisitChartOptions;
+      var salesVisitChart;
+      var $white = '#fff';
+      var $strokeColor = '#ebe9f1';
+      // Sales Chart
+      // -----------------------------
+      salesVisitChartOptions = {
+        chart: {
+          height: 300,
+          type: 'radar',
+          dropShadow: {
+            enabled: true,
+            blur: 8,
+            left: 1,
+            top: 1,
+            opacity: 0.2
+          },
+          toolbar: {
+            show: false
+          },
+          offsetY: 5
+        },
+        series: [
+          {
+            name: 'Sales',
+            data: [90, 50, 86, 40, 100, 20, 15]
+          },
+          {
+            name: 'Visit',
+            data: [70, 75, 70, 76, 20, 85, 10]
+          }
+        ],
+        stroke: {
+          width: 0
+        },
+        colors: [window.colors.solid.primary, window.colors.solid.info],
+        plotOptions: {
+          radar: {
+            polygons: {
+              strokeColors: [$strokeColor, 'transparent', 'transparent', 'transparent', 'transparent', 'transparent'],
+              connectorColors: 'transparent'
+            }
+          }
+        },
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shade: 'dark',
+            gradientToColors: [window.colors.solid.primary, window.colors.solid.info],
+            shadeIntensity: 1,
+            type: 'horizontal',
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 100, 100, 100]
+          }
+        },
+        markers: {
+          size: 0
+        },
+        legend: {
+          show: false
+        },
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        dataLabels: {
+          background: {
+            foreColor: [$strokeColor, $strokeColor, $strokeColor, $strokeColor, $strokeColor, $strokeColor]
+          }
+        },
+        yaxis: {
+          show: false
+        },
+        grid: {
+          show: false,
+          padding: {
+            bottom: -27
+          }
+        }
+      };
+      salesVisitChart = new ApexCharts($salesVisitChart, salesVisitChartOptions);
+      salesVisitChart.render();
+    }
+    apexSale()
   </script>
 @endsection
