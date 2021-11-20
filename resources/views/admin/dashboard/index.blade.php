@@ -10,6 +10,19 @@
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap4.min.css')) }}">
 @endsection
+
+
+<!--Sweealert2 -->
+@section('vendor-script')
+  <script src="{{ asset(mix('vendors/js/extensions/sweetalert2.all.min.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/extensions/polyfill.min.js')) }}"></script>
+@endsection
+@section('page-script')
+  <script src="{{ asset(mix('js/scripts/extensions/ext-component-sweet-alerts.js')) }}"></script>
+@endsection
+
+
+
 @section('page-style')
   <!-- Page css files -->
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
@@ -22,7 +35,6 @@
     }
   </style>
   @endsection
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
      const linkReferido = @json($linkReferido);
      const linkAdminRed = @json($linkAdminRed);
@@ -39,6 +51,7 @@
             icon: 'success',
             text: "Ya puedes pegarlo en su navegador",
             type: "success",
+            background:'#283046',
             confirmButtonClass: 'btn btn-outline-primary',
         })
 }
@@ -55,6 +68,7 @@ function linkAdmin(){
             icon: 'success',
             text: "Ya puedes pegarlo en su navegador",
             type: "success",
+            background:'#283046',
             confirmButtonClass: 'btn btn-outline-primary',
         })
 }
@@ -237,7 +251,7 @@ function linkAdmin(){
             <option value="2">ultimo mes</option>
             <option value="3">ultimos año</option>
           </select>
-          
+
         </div>
         <div class="card-body">
           <div class="row">
@@ -333,7 +347,7 @@ function linkAdmin(){
                     <td>{{$order->id}}</td>
                     <td>{{$order->user_id}}</td>
                     <td>{{$order->amount}}</td>
-                    <td>  
+                    <td>
                       @if($order->comprobante != null)
                       <a class="btn btn-danger" target="_blank" href="{{asset('/storage/'.$order->user_id .'/comprobante/'.$order->comprobante)}}"><i data-feather='file-text'></i></a>
                       @endif
@@ -462,7 +476,7 @@ function linkAdmin(){
     });
 
     function getTracker(tipo = 1){
-      
+
       fetch('/api/dashboard/tracker/'+tipo)
       .then(response => response.json())
       .then(response => {
@@ -473,7 +487,7 @@ function linkAdmin(){
         apexTracker(response.porcentaje);
       })
       .catch(e => console.log(e));
-      
+
     }
 
     function apexTracker(porcentaje)
@@ -544,7 +558,7 @@ function linkAdmin(){
     getTracker();
 
 
-    //datataables ordenes 
+    //datataables ordenes
     $('.myTable').DataTable({
         responsive: true,
         order: [[ 0, "desc" ]],

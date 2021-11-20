@@ -107,12 +107,10 @@ class DoubleAutenticationController extends Controller
 
     public function checkCodePerfil(Request $request)
     {
-
         $validate = $request->validate([
 
             'code' => 'required|numeric'
         ]);
-
         if ($validate) {
 
             if ($this->checkCode(Auth::id(), $request->code)) {
@@ -121,19 +119,42 @@ class DoubleAutenticationController extends Controller
                 $data = [
                     'verificado' => 'true'
                 ];
-                return response()->json(['valor'=>$data]);
+                return response()->json(['valores' => $data]);
+            }else{
+                $data = [
+                    'verificado' => 'false'
+                ];
+                return response()->json(['valores' => $data]);
             }
 
             return back()->with('danger', 'Código de verificación incorrecto');
-        }else{
-            return response()->json('error');
         }
+
     }
-    public function axios(){
-        $data = [
-            'verificado' => 'true'
-        ];
-        return response()->json(['valor'=>$data]);
+    public function axios(Request $request){
+
+        $validate = $request->validate([
+
+            'code' => 'required|numeric'
+        ]);
+        if ($validate) {
+
+            if ($this->checkCode(Auth::id(), $request->code)) {
+                session(['2fact' => 1]);
+                Auth::user()->update(['activar_2fact' => '1']);
+                $data = [
+                    'verificado' => 'true'
+                ];
+                return response()->json(['valores' => $data]);
+            }else{
+                $data = [
+                    'verificado' => 'false'
+                ];
+                return response()->json(['valores' => $data]);
+            }
+
+            return back()->with('danger', 'Código de verificación incorrecto');
+        }
     }
 
     /**

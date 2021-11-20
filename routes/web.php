@@ -36,6 +36,7 @@ use App\Http\Controllers\TreController;
 use App\Http\Controllers\EducationController;
 use App\Models\Liquidation;
 use App\Http\Controllers\ComisionController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -180,7 +181,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/2fact', [DoubleAutenticationController::class, 'index'])->name('2fact');
     Route::post('/2fact', [DoubleAutenticationController::class, 'checkCodeLogin'])->name('2fact.post');
     Route::post('/2fact-perfil', [DoubleAutenticationController::class, 'checkCodePerfil'])->name('2fact-perfil.post');
-    Route::post('/axios', [DoubleAutenticationController::class, 'axios'])->name('axios');
+
 
 
     //DASHBOARD
