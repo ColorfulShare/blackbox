@@ -25,9 +25,7 @@
                             <div class="">
                                 <div class="">
                                     <div class="col-12 mx-auto ">
-                                        <div class="card" style="background-color: #0c2e54;
-background-image: linear-gradient(180deg, #0c2e54 25%, #031c6b 100%);
-">
+                                        <div class="card fondo">
                                             <div class="card-body chat-care rounded">
                                                 <ul class="chat">
                                                     @foreach ( $message as $item )
@@ -38,19 +36,19 @@ background-image: linear-gradient(180deg, #0c2e54 25%, #031c6b 100%);
                                                             <div class="header clearfix">
                                                                 <strong class="primary-font">{{ $item->getUser->firstname}} {{ $item->getUser->lastname}}</strong>
                                                             </div>
-                                                            <p id="mensaje">
+                                                            <p>
                                                                 {{ $item->message }}
                                                             </p>
                                                         </div>
                                                     </li>
                                                     {{-- admin --}}
                                                     @elseif ($item->type == 1)
-                                                    <li class="admin clearfix">
-                                                        <div class="chat-body clearfix">
+                                                    <li class="admin clearfix" >
+                                                        <div class="chat-body clearfix" >
                                                             <div class="header clearfix">
-                                                                <strong class="right primary-font">{{ $item->getAdmin->firstname }} {{ $item->getAdmin->lastname}}</strong>
+                                                                <strong class="right primary-font" >{{ $item->getAdmin->firstname }} {{ $item->getAdmin->lastname}}</strong>
                                                             </div>
-                                                            <p id="mensaje">
+                                                            <p >
                                                                 {{ $item->message }}
                                                             </p>
                                                         </div>

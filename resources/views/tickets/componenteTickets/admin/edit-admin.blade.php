@@ -2,7 +2,7 @@
 @section('title', 'Atendiendo el Ticket')
 @section('content')
 
-<div style="padding-left:87%">
+<div style="padding-left:84%">
     <a href="{{ route('ticket.list-admin')}}" class="btn btn-danger  mb-2 waves-effect waves-light">Volver Atrás</a>
 </div>
 <section id="basic-vertical-layouts">
@@ -78,7 +78,7 @@
                                         <div class="">
                                             <div class="">
                                                 <div class="col-12 mx-auto">
-                                                    <div class="card">
+                                                    <div class="card fondo">
                                                         <div class="card-body chat-care rounded">
                                                             <ul class="chat">
                                                                 @foreach ( $message as $item )

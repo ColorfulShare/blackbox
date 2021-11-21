@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div style="padding-left:87%">
+<div style="padding-left:84%">
     <a href="{{ route('ticket.list-user')}}" class="btn btn-danger mb-2 waves-effect waves-light">Volver Atrás</a>
 </div>
 
@@ -33,7 +33,7 @@
                                         <div class="">
                                             <div class="">
                                                 <div class="col-12 mx-auto ">
-                                                    <div class="card">
+                                                    <div class="card fondo" >
 
                                                         <div class="card-body chat-care">
                                                             <ul class="chat">
