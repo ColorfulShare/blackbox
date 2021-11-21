@@ -24,17 +24,13 @@
                                         <input class="form-control" required type="text" name="issue" rows="3" />
                                     </div>
                                 </div>
-                                <div class="col-12 mt-2">
-                                    <button type="submit" class="col-12 btn btn-danger  mr-1 mb-1 waves-effect waves-light">Enviar
-                                    Ticket</button>
+
+                                <div class="col-12 mt-2 mb-2">
+                                    <!-- <label class="form-label  mb-1" for="message"><b>Mensaje</b></label> -->
 
 
-                                    <div class="col-12 mt-2 mb-2">
-                                        <!-- <label class="form-label  mb-1" for="message"><b>Mensaje</b></label> -->
-
-
-                                        <div class="container"> 
-                                            <!-- <div class="row">
+                                    <div class="container">
+                                        <!-- <div class="row">
                                                 <div class="col-12 mx-auto ">
                                                     <div class="card">
                                                         <div class="card-body chat-care">
@@ -42,25 +38,24 @@
                                                     </div>
                                                 </div>
                                             </div> -->
-                                        </div>
-
-                                        <br>
-                                        <span class=" text-bold-600">Escriba Su Pregunta</span>
-                                        <textarea class="form-control chat-window-message" type="text" id="message" name="message" required rows="3"></textarea>
                                     </div>
 
+                                    <br>
+                                    <span class=" text-bold-600">Escriba Su Pregunta</span>
+                                    <textarea class="form-control chat-window-message" type="text" id="message" name="message" required rows="3"></textarea>
+                                </div>
 
-                                    <div class="col-12">
-                                        <button type="submit" class="col-12 btn btn-danger  mr-1 mb-1 waves-effect waves-light">Enviar
-                                            Ticket</button>
-                                    </div>
+                                <div class="col-12">
+                                    <button type="submit" class="col-12 btn btn-danger  mr-1 mb-1 waves-effect waves-light">Enviar
+                                        Ticket</button>
                                 </div>
                             </div>
-                        </form>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 
