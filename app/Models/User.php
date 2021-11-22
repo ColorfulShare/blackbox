@@ -109,7 +109,7 @@ class User extends Authenticatable
 
     public function referidos()
     {
-        return $this->hasMany('App\Models\User', 'referred_id');
+        return $this->hasMany('App\Models\User', 'referred_by');
     }
 
     public function estado()
