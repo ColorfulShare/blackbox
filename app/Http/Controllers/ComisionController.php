@@ -16,7 +16,7 @@ class ComisionController extends Controller
     public function index()
     {
        $comision = Comision::where('status', '=', '1')->get();
-
+     
        return view('comision.index', compact('comision'));
     }
 

@@ -46,56 +46,58 @@
                                     <div class="col-12 mt-2 mb-2">
                                         <label class="form-label  mb-1" for="message"><b>Chat con el
                                         administrador</b></label>
+                                        @if(count($message) > 0 )
+                                            <section class="chat-app-window mb-2 border  rounded-0">
+                                                <div class="active-chat">
+                                                    <div class="user-chats ps ps--active-y bg-lp">
+                                                        <div class="chats chat-thread">
 
-                                        <section class="chat-app-window mb-2 border  rounded-0">
-                                            <div class="active-chat">
-                                                <div class="user-chats ps ps--active-y bg-lp">
-                                                    <div class="chats chat-thread">
+                                                            {{-- admin --}}
+                                                            <div class="chat">
+                                                                <div class="chat-body">
+                                                                    <div class="chat-content">
 
-                                                        {{-- admin --}}
-                                                        <div class="chat">
-                                                            <div class="chat-body">
-                                                                <div class="chat-content">
-
-                                                                    <div class="email-admin mb-1">{{$admin}}</div>
-                                                                    <p>¿Cómo podemos ayudarle? </p>
-                                                                    <p> </p>
+                                                                        <div class="email-admin mb-1">{{$admin}}</div>
+                                                                        <p>¿Cómo podemos ayudarle? </p>
+                                                                        <p> </p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
 
-                                                        @foreach ( $message as $item )
+                                                            @foreach ( $message as $item )
 
-                                                        {{-- user --}}
-                                                        @if ($item->type == 0)
-                                                        <div class="chat chat-left">
-                                                            <div class="chat-body">
-                                                                <div class="chat-content">
-                                                                    <div class="name-user mb-1">{{ $item->getUser->firstname}} {{$item->getUser->lastname}}</div>
-                                                                    <p>{{ $item->message }}</p>
+                                                            {{-- user --}}
+                                                            @if ($item->type == 0)
+                                                            <div class="chat chat-left">
+                                                                <div class="chat-body">
+                                                                    <div class="chat-content">
+                                                                        <div class="name-user mb-1">{{ $item->getUser->firstname}} {{$item->getUser->lastname}}</div>
+                                                                        <p>{{ $item->message }}</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
 
-                                                        {{-- admin --}}
-                                                        @elseif ($item->type == 1)
-                                                        <div class="chat">   
-                                                            <div class="chat-body">
-                                                                <div class="chat-content">
-                                                                    <div class="name-admin mb-1">{{ $item->getAdmin->firstname}} {{$item->getAdmin->lastname}}</div>
-                                                                    <p>{{ $item->message }}</p>
+                                                            {{-- admin --}}
+                                                            @elseif ($item->type == 1)
+                                                            <div class="chat">   
+                                                                <div class="chat-body">
+                                                                    <div class="chat-content">
+                                                                        <div class="name-admin mb-1">{{ $item->getAdmin->firstname}} {{$item->getAdmin->lastname}}</div>
+                                                                        <p>{{ $item->message }}</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                            @endif
+
+                                                            @endforeach
+
                                                         </div>
-                                                        @endif
-
-                                                        @endforeach
-
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </section>
-
+                                            </section>
+                                        @else 
+                                            <p class="text-center"> No tiene mensajes disponibles</p>
+                                        @endif
                                         <span class="text-danger text-bold-600">Aqui podra escribir el mensaje para el admin</span>
                                         <textarea class="form-control border  rounded-0" type="text" id="message" name="message" disabled rows="3"></textarea>
                                     </div>

@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="col-12 mt-2 mb-2">
                                         <label class="form-label " for="note"><b>Chat con el usuario</b></label>
-                                        <div class="">
+                                        @if(count($message) > 0 )
                                             <div class="">
                                                 <div class="col-12 mx-auto">
                                                     <div class="card fondo">
@@ -113,7 +113,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @else 
+                                            <p class="text-center"> No tiene mensajes disponibles</p>
+                                        @endif 
                                         <span class="text-bold-600">Respuesta para el usuario</span>
                                         <textarea class="form-control  chat-window-message" type="text" id="message" name="message"></textarea>
                                     </div>
