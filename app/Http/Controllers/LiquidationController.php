@@ -110,7 +110,7 @@ class LiquidationController extends Controller
                     $iduser = $request->user_id;
                     $total = str_replace(',', '.', str_replace('.', '', $request->total));
                     $total = round($total, 2);
-                  
+
                     if ($request->action == 'reverse') {
                         $accion = 'Reversada';
                         $this->reversarLiquidacion($idliquidation, $request->comentario);
@@ -140,7 +140,7 @@ class LiquidationController extends Controller
                     'status' => 0,
                     'tipo_transaction' => 1,
                 ];
-                
+
                 $this->walletController->saveWallet($arrayWallet);
 
                 return redirect()->back()->with('msj-success', 'La Liquidacion fue ' . $accion . ' con exito');
@@ -318,6 +318,15 @@ class LiquidationController extends Controller
             Log::error('Liquidaction - indexPendientes -> Error: ' . $th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
+    }
+    public function realizados(){
+        $liquidaciones = Liquidation::where('status', 1)->get();
+        foreach ($liquidaciones as $liqui) {
+            $liqui->fullname = $liqui->getUserLiquidation->username;
+        }
+        $registros = $liquidaciones->count();
+
+        return view('withdraw.realizados', compact('liquidaciones'));
     }
 
        /**

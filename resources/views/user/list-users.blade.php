@@ -72,7 +72,6 @@
         </div>
     </div>
 </div>
-@include('panels.custom-js')
 @endsection
 
 
@@ -82,5 +81,13 @@
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
 @endsection
-
+@section('page-script')
+    <script>
+        //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [[ 0, "desc" ]],
+    })
+    </script>
+@endsection
 

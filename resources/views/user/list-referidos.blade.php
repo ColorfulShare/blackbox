@@ -24,7 +24,7 @@
             <div class="card-body ">
                 <div class="table-responsive">
                     <h1><strong > Referidos en Red</strong></h1>
-                    <table class="table nowrap scroll-horizontal-vertical myTable2 table-striped mt-2">
+                    <table class="table nowrap scroll-horizontal-vertical myTable table-striped mt-2">
                         <thead>
                             <tr class="text-center ">
                                 <th>#</th>
@@ -77,4 +77,12 @@
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
 @endsection
-
+@section('page-script')
+    <script>
+        //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [[ 0, "desc" ]],
+    })
+    </script>
+@endsection
