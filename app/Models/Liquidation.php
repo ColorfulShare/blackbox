@@ -17,6 +17,11 @@ class Liquidation extends Model
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
+    public function getUser()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
     /**
      * Permite obtener la informacion de obtener los comentarios sobre la liquidacion
      *

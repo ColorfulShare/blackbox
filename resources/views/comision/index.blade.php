@@ -23,7 +23,7 @@
             <div class="card-body ">
                 <div class="table-responsive">
                     <h1><strong >Lista de comisiones</strong></h1>
-                    <table class="table nowrap scroll-horizontal-vertical myTable2 table-striped mt-2">
+                    <table class="table nowrap scroll-horizontal-vertical myTable table-striped mt-2">
                         <thead>
                             <tr class="text-center ">
                                 <th>id</th>
@@ -41,21 +41,27 @@
 	                              <td>{{$item->id}}</td>
 	                              <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
 	                              <td>{{$item->getUser->firstname}} {{$item->getUser->lastname}}</td>   
-		                            @if($item->getUser->referred_id === 0)
-		                              <td>{{$item->getUser->firstname}} {{$item->getUser->lastname}}</td>
+		                            @if($item->getUser->referred_by  === null)
+		                              <td>Sin referido</td>
 		                            @else
-		                           	  <td>{{$item->getUser->referred_id}}</td>
+		                           	  <td>{{$item->getUser->referred_by}}</td>
 		                            @endif
 	                              <td>{{$item->amount}}</td>
 	                              <td>
-                                  <a class=" btn btn-primary text-white text-bold-600">Pagada</a>   
+                                  @if ($item->status == '0')
+                                    <a class=" btn btn-primary text-white text-bold-600">En espera</a>
+                                  @elseif($item->status = '1')
+                                    <a class=" btn btn-success text-white text-bold-600">Pagada</a>
+                                  @elseif($item->status = '2')
+                                    <a class=" btn btn-danger text-white text-bold-600">Cancelada</a>
+                                  @endif  
                                 </td> 
 	                              <td>
-	                                @if ($item->level == '0')
+	                              <!--  @if ($item->getUser->rank_id == '0')
                                     <a class=" btn btn-primary text-white text-bold-600">Normal</a>
-                                  @else($item->level == '1')
+                                  @else($item->getUser->rank_id == '1')
                                     <a class=" btn btn-danger text-white text-bold-600">Admin de red</a>
-                                  @endif
+                                  @endif -->
 	                              </td>  
 	                            </tr>
                             @endforeach
@@ -68,11 +74,21 @@
 </div>
 @endsection
 
-
 @section('vendor-script')
   <!-- vendor files -->
   <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
 @endsection
+
+@section('page-script')
+    <script>
+        //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [[ 0, "desc" ]],
+    })
+    </script>
+@endsection
+
 

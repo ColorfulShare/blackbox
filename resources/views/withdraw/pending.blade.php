@@ -21,6 +21,7 @@
                                     <th>Billetera</th>
                                     <th>Estado</th>
                                     <th>Fecha</th>
+                                    <th>tipo</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
@@ -47,6 +48,13 @@
                                         @endif
                                     </td>
                                     <td>{{date('Y-m-d', strtotime($liqui->created_at))}}</td>
+                                    <td>
+                                        @if($liqui->getUser->type == 'red')
+                                          Red
+                                        @elseif($liqui->getUser->type == 'profesional')
+                                          Profesional
+                                        @endif
+                                    </td>
                                     <td>
                                         <button class="btn btn-primary" onclick="vm_liquidation.getDetailComisionLiquidation({{$liqui->id}})">
                                             <i class="fa fa-eye"></i>

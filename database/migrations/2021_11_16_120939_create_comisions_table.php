@@ -17,8 +17,7 @@ class CreateComisionsTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->integer('amount');
-            $table->tinyInteger('level')->default(0)->comment('0 - normal, 1 -  admin de red');
-            $table->tinyInteger('status')->default(0)->comment('0 - pendiente , 1 - pagada, 2 - Cancelada');
+            $table->tinyInteger('status')->default(0)->comment('0 - en espera , 1 - pagada, 2 - cancelada');
             $table->timestamps();
         });
     }
