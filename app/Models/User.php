@@ -42,7 +42,6 @@ class User extends Authenticatable
         'date_reset_points_binary',
         'not_payment_binary_point_direct',
         'referral_code',
-        'referred_by',
         'referral_admin_red_code',
         'referred_red_by',
         'code_email',
@@ -109,7 +108,7 @@ class User extends Authenticatable
 
     public function referidos()
     {
-        return $this->hasMany('App\Models\User', 'referred_by');
+        return $this->hasMany('App\Models\User', 'referred_id');
     }
 
     public function estado()
@@ -125,7 +124,7 @@ class User extends Authenticatable
     //Esto se utiliza?????
     public function refirio()
     {
-        return $this->belongsTo('App\Models\User', 'referred_by');
+        return $this->belongsTo('App\Models\User', 'referred_id');
     }
 
     public static function getUniqueReferralCode()

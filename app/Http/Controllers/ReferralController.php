@@ -33,7 +33,7 @@ public function linkAdminRed(Request $request, $referral_admin_red_code)
 
     public function referidos(){
         $id = Auth::user()->id;
-        $referido = User::where('referred_by',$id)->take(10)->get();
+        $referido = User::where('referred_id',$id)->take(10)->get();
 
         return view('referidos.index' , compact('referido'));
     }
