@@ -78,7 +78,12 @@
 
 @endsection
 
-@push('js')
+@section('vendor-script')
+<!-- vendor files -->
+<script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
+<script src="{{ asset('assets/js/forms/form-tinymce.min.js') }}"></script>
+
 <script>
     $(document).ready(function() {
         @if($news->banner != NULL)
@@ -86,4 +91,29 @@
         @endif
     });
 </script>
-@endpush
+
+<script>
+    // textarea
+    tinymce.init({
+        selector: 'textarea#tiny',
+        height: 200,
+        menubar: false,
+        statusbar: false,
+        skin: "oxide-dark",
+        content_css: "dark",
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+            'bold italic forecolor backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist | ' +
+            'removeformat | help',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    });
+
+    $("#validate").validate();
+
+</script>
+@endsection
