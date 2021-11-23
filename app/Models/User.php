@@ -122,7 +122,7 @@ class User extends Authenticatable
             return "Eliminado";
         }
     }
-
+    //Esto se utiliza?????
     public function refirio()
     {
         return $this->belongsTo('App\Models\User', 'referred_by');
@@ -269,6 +269,4 @@ class User extends Authenticatable
     {
         $this->notify(new MyResetPassword($token));
     }
-
-
 }

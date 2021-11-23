@@ -191,32 +191,122 @@ class DashboardController extends Controller
     public function getSale($tipo = 1)
     {
       $fecha_fin = Carbon::now();
-
+      $meses = [];
       if($tipo == 1){
+        $nombre = "Última semana";
         $fecha_ini = $fecha_fin->copy()->subDay(7);
-      }else if($tipo == 2){
-        $fecha_ini = $fecha_fin->copy()->subDay(28);
-      }else if($tipo == 3){
-        $fecha_ini = $fecha_fin->copy()->subYear(1);
-      }
-      
-      $ordenes = OrdenPurchase::where('package_id','!=', null)->get();
-      $bonosUnilevel = Wallet::where('descripcion', 'like',  '%'.'Bono unilevel'.'%')->get();
-      
-      //EVITA EL ERROR DE LA DIVISION ENTRE CERO
-      if($total > 0){
-        $porcentaje = ($close * 100 ) / $total;
-      }else{
-        $porcentaje = 0;
-      }
-      
 
+        $ordenes = OrdenPurchase::select(             
+          DB::raw('date_format(created_at,"%d") as created'),
+          DB::raw('SUM(amount) as montos'),
+        )
+        ->where('package_id','!=', null)
+        ->whereBetween('created_at', [$fecha_ini, $fecha_fin])
+        ->groupBy('created')
+        ->get()
+        ->toArray();
+
+        $bonosUnilevel = Wallet::select(             
+                          DB::raw('date_format(created_at,"%d") as created'),
+                          DB::raw('SUM(amount) as montos'),
+                        )
+                        ->where('descripcion', 'like',  '%'.'Bono unilevel'.'%')
+                        ->whereBetween('created_at', [$fecha_ini, $fecha_fin])
+                        ->groupBy('created')
+                        ->get()
+                        ->toArray();
+        
+        //FORMATEAMOS
+        $valores = [];
+        for ( $date = $fecha_ini->copy(); $date->lt( $fecha_fin->copy()->addDay(1)) ; $date->addDay(1) ) {
+            $valores[$date->format('d')] = [
+              'created' => $date->format('d'),
+              'ordenes' => 1,
+              'bono' => 1
+            ];
+        }
+        foreach($ordenes as $order){
+          $valores[$order['created']]['ordenes'] = intval($order['montos'] > 0? $order['montos'] : 1);
+        }
+        foreach($bonosUnilevel as $bono){
+          $valores[$bono['created']]['bono'] = intval($bono['montos'] > 0? $bono['montos'] : 1);
+        }
+        ////////
+      }else if($tipo == 2){
+        $nombre = "Últimos 28 dias";
+        $fecha_ini = $fecha_fin->copy()->subDay(28);
+        $valores = [];
+        for ( $date = $fecha_ini->copy(); $date->lt( $fecha_fin->copy()->addDay(1)) ; $date->addDay(7) ) {
+
+          $ordenes = OrdenPurchase::where('package_id','!=', null)
+          ->whereBetween('created_at', [$date, $date->copy()->addDay(8)])
+          ->sum('amount');
+          
+          $bonos = Wallet::where('descripcion', 'like',  '%'.'Bono unilevel'.'%')
+          ->whereBetween('created_at', [$date, $date->copy()->addDay(8)])
+          ->sum('amount');
+          
+          $valores[$date->format('d/Y').'-'.$date->copy()->addDay(7)->format('d/Y')] = [
+            'created' => $date->format('d/Y').'-'.$date->copy()->addDay(7)->format('d/Y'),
+            'ordenes' => intval($ordenes > 0? $ordenes : 1),
+            'bono' => intval($bonos > 0? $bonos : 1)
+          ];
+        }
+
+      }else if($tipo == 3){
+        $nombre = "Último año";
+        $fecha_ini = $fecha_fin->copy()->subYear(1);
+
+        $ordenes = OrdenPurchase::select(             
+          DB::raw('date_format(created_at,"%m/%Y") as created'),
+          DB::raw('SUM(amount) as montos'),
+        )
+        ->where('package_id','!=', null)
+        ->whereBetween('created_at', [$fecha_ini, $fecha_fin])
+        ->groupBy('created')
+        ->get()
+        ->toArray();
+
+        $bonosUnilevel = Wallet::select(             
+          DB::raw('date_format(created_at,"%m/%Y") as created'),
+          DB::raw('SUM(amount) as montos'),
+        )
+        ->where('descripcion', 'like',  '%'.'Bono unilevel'.'%')
+        ->whereBetween('created_at', [$fecha_ini, $fecha_fin])
+        ->groupBy('created')
+        ->get()
+        ->toArray();
+
+        //FORMATEAMOS
+        $valores = [];
+        for ( $date = $fecha_ini->copy(); $date->lt( $fecha_fin->copy()->addMonth(1)) ; $date->addMonth(1) ) {
+            $valores[$date->format('m/Y')] = [
+              'created' => $date->format('m/Y'),
+              'ordenes' => 1,
+              'bono' => 1
+            ];
+        }
+        
+        foreach($ordenes as $order){
+          $valores[$order['created']]['ordenes'] = intval($order['montos'] > 0? $order['montos'] : 0 );
+        }
+        foreach($bonosUnilevel as $bono){
+          $valores[$bono['created']]['bono'] = intval($bono['montos']  > 0? $bono['montos'] : 0);
+        }
+        ////////
+         
+      }
+      $valores = collect($valores);
+      
+      $head = $valores->pluck('created')->toArray();
+      $ordenes = $valores->pluck('ordenes')->toArray();
+      $bonos = $valores->pluck('bono')->toArray();   
+    
       return response()->json([
-        'total' => $total,
-        'new' => $new,
-        'open' => $open,
-        'close' => $close,
-        'porcentaje' => $porcentaje
+        'head' => $head,
+        'ordenes' => $ordenes,
+        'bonos' => $bonos,
+        'nombre' => $nombre
       ]); 
     }
 }

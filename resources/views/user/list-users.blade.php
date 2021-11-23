@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
   <link rel="stylesheet" href="{{ asset(mix('css/base/pages/app-invoice-list.css')) }}">
   @endsection
-
+ 
 @section('content')
 <div class="col-12">
     <div class="card bg-lp">
@@ -72,9 +72,8 @@
         </div>
     </div>
 </div>
-@include('panels.custom-js')
-@endsection
 
+@endsection
 
 @section('vendor-script')
   <!-- vendor files -->
@@ -82,5 +81,13 @@
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
     <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
 @endsection
-
+@section('page-script')
+    <script>
+        //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [[ 0, "desc" ]],
+    })
+    </script>
+@endsection
 

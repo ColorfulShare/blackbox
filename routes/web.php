@@ -396,7 +396,7 @@ Route::group(['prefix' => 'wallet'], function () {
 Route::group(['prefix' => 'withdraw'], function () {
 
     Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
-
+    Route::get('/Realizados', [LiquidationController::class, 'realizados'])->name('withdraw.realizados');
     Route::get('retiros', [LiquidationController::class, 'retiroHistory'])->name('withdraw.retiros');
 });
 

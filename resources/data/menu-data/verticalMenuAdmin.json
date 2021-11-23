@@ -63,7 +63,7 @@
           "slug": "inversiones.index"
         }
       ]
-    },  
+    },
     {
       "url": "news/list",
       "name": "Noticias",
@@ -132,7 +132,7 @@
           "slug": ""
         },
         {
-          "url": "/",
+          "url": "/withdraw/Realizados",
           "name": "Realizados",
           "icon": "circle",
           "slug": ""
