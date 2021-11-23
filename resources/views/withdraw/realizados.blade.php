@@ -8,21 +8,20 @@
             <div class="card-content">
                 <div class="card-body card-dashboard">
                     <div class="table-responsive">
-                        <h1 class="">Solicitud de Retiros</h1>
+                        <h1 class="">Solicitudes de Retiros Realizados</h1>
                         <table class="table nowrap scroll-horizontal-vertical myTable table-striped">
                             <thead class="">
                                 <tr class="text-center bg-purple-alt2">
                                     <th>ID</th>
                                     <th>Nombre</th>
-                                    {{--<th>Total</th>̣--}}
+                                    {{--<th>Total</th>--}}
                                     <th>Monto</th>
                                     {{--<th>Feed</th>--}}
                                     <th>Hash</th>
                                     <th>Billetera</th>
                                     <th>Estado</th>
                                     <th>Fecha</th>
-                                    <th>tipo</th>
-                                    <th>Accion</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,18 +47,7 @@
                                         @endif
                                     </td>
                                     <td>{{date('Y-m-d', strtotime($liqui->created_at))}}</td>
-                                    <td>{{$liqui->getUser->type}}</td>
-                                    <td>
-                                        <button class="btn btn-primary" onclick="vm_liquidation.getDetailComisionLiquidation({{$liqui->id}})">
-                                            <i class="fa fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-success" onclick="vm_liquidation.getDetailComisionLiquidationStatus({{$liqui->id}}, 'aproved')">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        <button class="btn btn-danger" onclick="vm_liquidation.getDetailComisionLiquidationStatus({{$liqui->id}}, 'reverse')">
-                                            <i class="fa fa-reply"></i>
-                                        </button>
-                                    </td>
+
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -73,4 +61,19 @@
     @include('settlement.componentes.modalAction')--}}
 </div>
 
+@endsection
+@section('vendor-script')
+  <!-- vendor files -->
+  <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
+    <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
+@endsection
+@section('page-script')
+    <script>
+        //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [[ 0, "desc" ]],
+    })
+    </script>
 @endsection
