@@ -11,18 +11,6 @@
   <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/responsive.bootstrap4.min.css')) }}">
 @endsection
 
-
-<!--Sweealert2 -->
-@section('vendor-script')
-  <script src="{{ asset(mix('vendors/js/extensions/sweetalert2.all.min.js')) }}"></script>
-  <script src="{{ asset(mix('vendors/js/extensions/polyfill.min.js')) }}"></script>
-@endsection
-@section('page-script')
-  <script src="{{ asset(mix('js/scripts/extensions/ext-component-sweet-alerts.js')) }}"></script>
-@endsection
-
-
-
 @section('page-style')
   <!-- Page css files -->
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/charts/chart-apex.css')) }}">
@@ -290,15 +278,15 @@ function linkAdmin(){
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-start pb-1">
           <div>
-            <h4 class="card-title mb-25">Sales</h4>
-            <p class="card-text">Last 6 months</p>
+            <h4 class="card-title mb-25">Total vendidos</h4>
+            <p class="card-text" id="sale-ultimaSemana">Última semana</p>
           </div>
           <div class="dropdown chart-dropdown">
             <i data-feather="more-vertical" class="font-medium-3 cursor-pointer" data-bs-toggle="dropdown"></i>
             <div class="dropdown-menu dropdown-menu-end">
-              <a class="dropdown-item" href="#">Last 28 Days</a>
-              <a class="dropdown-item" href="#">Last Month</a>
-              <a class="dropdown-item" href="#">Last Year</a>
+              <a class="dropdown-item saleDropdown" value="1">Última semana</a>
+              <a class="dropdown-item saleDropdown" value="2">Últimos 28 dias</a>
+              <a class="dropdown-item saleDropdown" value="3">Ultimo año</a>
             </div>
           </div>
         </div>
@@ -306,13 +294,13 @@ function linkAdmin(){
           <div class="d-inline-block me-1">
             <div class="d-flex align-items-center">
               <i data-feather="circle" class="font-small-3 text-primary me-50"></i>
-              <h6 class="mb-0">Sales</h6>
+              <h6 class="mb-0">Paquetes</h6>
             </div>
           </div>
           <div class="d-inline-block">
             <div class="d-flex align-items-center">
               <i data-feather="circle" class="font-small-3 text-info me-50"></i>
-              <h6 class="mb-0">Visits</h6>
+              <h6 class="mb-0">Comisiones unilevel</h6>
             </div>
           </div>
           <div id="sales-visit-chart" class="mt-50"></div>
@@ -464,10 +452,13 @@ function linkAdmin(){
   <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/responsive.bootstrap4.js')) }}"></script>
+
+  <script src="{{ asset(mix('vendors/js/extensions/sweetalert2.all.min.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/extensions/polyfill.min.js')) }}"></script>
 @endsection
 @section('page-script')
 
-
+  <script src="{{ asset(mix('js/scripts/extensions/ext-component-sweet-alerts.js')) }}"></script>
   <script>
     //TRACKER
     $('#tracker').change(function(e){
@@ -564,26 +555,29 @@ function linkAdmin(){
         order: [[ 0, "desc" ]],
     })
 
-    /*
+    
     function getSale(tipo = 1){
       
-      fetch('/api/dashboard/sales/'+tipo)
+      fetch('/api/dashboard/sale/'+tipo)
       .then(response => response.json())
       .then(response => {
-
+        $('#sale-ultimaSemana').text(response.nombre)
         apexSale(response);
       })
       .catch(e => console.log(e));
       
     }
-    */
+
+    var renderizado = false
+    //GRAFICO DE SALEs
+    var $salesVisitChart = document.querySelector('#sales-visit-chart');
+    var salesVisitChartOptions;
+    var salesVisitChart;
+    var $white = '#fff';
+    var $strokeColor = '#ebe9f1';    
+
     function apexSale(response = null){
-      //GRAFICO DE SALEs
-      var $salesVisitChart = document.querySelector('#sales-visit-chart');
-      var salesVisitChartOptions;
-      var salesVisitChart;
-      var $white = '#fff';
-      var $strokeColor = '#ebe9f1';
+  
       // Sales Chart
       // -----------------------------
       salesVisitChartOptions = {
@@ -604,12 +598,12 @@ function linkAdmin(){
         },
         series: [
           {
-            name: 'Sales',
-            data: [90, 50, 86, 40, 100, 20, 15]
+            name: 'Paquetes',
+            data: response.ordenes
           },
           {
-            name: 'Visit',
-            data: [70, 75, 70, 76, 20, 85, 10]
+            name: 'Comisiones unilevel',
+            data: response.bonos
           }
         ],
         stroke: {
@@ -642,7 +636,7 @@ function linkAdmin(){
         legend: {
           show: false
         },
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        labels: response.head,
         dataLabels: {
           background: {
             foreColor: [$strokeColor, $strokeColor, $strokeColor, $strokeColor, $strokeColor, $strokeColor]
@@ -658,9 +652,20 @@ function linkAdmin(){
           }
         }
       };
+      
       salesVisitChart = new ApexCharts($salesVisitChart, salesVisitChartOptions);
-      salesVisitChart.render();
+      salesVisitChart.render().then(() => renderizado = true);
+      
     }
-    apexSale()
+    getSale();
+
+    $('.saleDropdown').click(function(e){
+      if(renderizado == true){
+        salesVisitChart.destroy();
+      }
+      getSale(e.target.attributes[1].value);
+      
+    });
+
   </script>
 @endsection
