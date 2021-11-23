@@ -41,6 +41,7 @@
 	                              <td>{{$item->id}}</td>
 	                              <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
 	                              <td>{{$item->getUser->firstname}} {{$item->getUser->lastname}}</td>   
+
 		                            @if($item->getUser->referred_id  === '0')
 		                              <td>Sin referido</td>
 		                            @else

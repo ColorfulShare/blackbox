@@ -109,7 +109,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'referral_code' => User::getUniqueReferralCode(),
-            'referred_by' => $this->getReferredBy(),
+            'referred_id' => $this->getReferredBy(),
             'referral_admin_red_code'=>User::getUniqueAdminRedReferralCode(),
             'referred_red_by'=> $this->getReferredAdmiBy(),
         ]);
