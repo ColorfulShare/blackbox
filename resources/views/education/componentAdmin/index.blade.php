@@ -27,7 +27,7 @@
         </div>
         <div class="card-body ">
           <div class="table-responsive">
-            <table class="table nowrap scroll-horizontal-vertical myTable2 table-striped mt-2">  
+            <table class="table nowrap scroll-horizontal-vertical myTable table-striped mt-2">  
               <thead class="thead-light text-center">
                 <th>id</th>
                 <th>descripcion</th>
@@ -56,15 +56,22 @@
     </div>
   </div>
 @endsection
-@section('script')
-
-@endsection
 
 @section('vendor-script')
   <!-- vendor files -->
   <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
   <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+@endsection
+@section('page-script')
+    <script>
+        //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [[ 0, "desc" ]],
+    })
+    </script>
 @endsection
 
