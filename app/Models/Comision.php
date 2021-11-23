@@ -16,11 +16,6 @@ class Comision extends Model
 
     public function getUser()
     {
-    	return $this->belongsTo('App\Models\User', 'user_id', 'id');
-    }
-
-    public function referred()
-    {
-    	return $this->hasOne('App\Models\User', 'user_id', 'referred_id');
+    	return $this->belongsTo('App\Models\User', 'user_id');
     }
 }

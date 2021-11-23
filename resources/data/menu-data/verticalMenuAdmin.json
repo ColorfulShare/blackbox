@@ -46,7 +46,7 @@
         {
           "url": "/user/user-list",
           "name": "Usuarios",
-          "icon": "users",
+          "icon": "circle",
           "slug": ""
         }
       ]
@@ -103,7 +103,7 @@
     },
     {
       "name": "Informes",
-      "icon": "sidebar",
+      "icon": "clipboard",
       "slug": "/",
       "submenu": [
         {
