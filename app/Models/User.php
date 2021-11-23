@@ -78,6 +78,12 @@ class User extends Authenticatable
         return $this->firstname . ' ' . $this->lastname;
     }
 
+
+    public function getUser()
+    {
+        return $this->hasMany('App\Models\user', 'type');
+    }
+
     public function inversiones()
     {
         return $this->hasMany('App\Models\Inversion', 'user_id');
