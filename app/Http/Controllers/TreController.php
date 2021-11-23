@@ -111,7 +111,7 @@ class TreController extends Controller
     private function getData($id, $nivel)
     {
         try {
-            $resul = User::where('referred_by', $id)->get();
+            $resul = User::where('referred_id', $id)->get();
             foreach ($resul as $user) {
                 $user->nivel = $nivel;
                 $user->logoarbol = asset('assets/img/sistema/favicon.png');

@@ -26,8 +26,6 @@ class CreateUsersTable extends Migration
             $table->longText('wallet');
             $table->string('password');
             $table->string('referral_code')->unique()->nullable();
-            $table->unsignedBigInteger('referred_by')->nullable();
-            $table->foreign('referred_by')->references('id')->on('users');
             $table->string('referral_admin_red_code')->unique()->nullable();
             $table->unsignedBigInteger('referred_red_by')->nullable();
             $table->foreign('referred_red_by')->references('id')->on('users');

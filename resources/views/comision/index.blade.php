@@ -41,10 +41,10 @@
 	                              <td>{{$item->id}}</td>
 	                              <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
 	                              <td>{{$item->getUser->firstname}} {{$item->getUser->lastname}}</td>   
-		                            @if($item->getUser->referred_by  === null)
+		                            @if($item->getUser->referred_id  === null)
 		                              <td>Sin referido</td>
 		                            @else
-		                           	  <td>{{$item->getUser->referred_by}}</td>
+		                           	  <td>{{$item->getUser->referred_id}}</td>
 		                            @endif
 	                              <td>{{$item->amount}}</td>
 	                              <td>
