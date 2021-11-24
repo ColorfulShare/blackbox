@@ -99,7 +99,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="480">
                     <tr>
                         <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
-                            <img src="{{asset('assets/img/pandora.png')}}" class="mb-2" alt="logo" width="200">
+                            <img src="{{asset('img/logo/blackbox.png')}}" style="width: 150px;">
                         </td>
                     </tr>
                 </table>
