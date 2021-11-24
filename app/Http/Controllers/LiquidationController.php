@@ -27,13 +27,9 @@ class LiquidationController extends Controller
 
     public function withdraw()
     { 
-        try{
+      
         $this->reversarRetiro30Min();
         return view('wallet.withdraw');
-    }catch(\Throwable $th) {
-            Log::error('Liquidaction - withdraw Liquidation -> Error: ' . $th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
-        }
     }
 
     /**
