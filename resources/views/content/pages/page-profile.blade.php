@@ -89,17 +89,17 @@
   <!-- profile header -->
   <div class="row">
     <div class="col-12">
-      <div class="card profile-header mb-2">
+      <div class="card profile-header mb-5">
         <!-- profile cover photo -->
         <img
           class="card-img-top text-center "
-          src="{{asset('/img/logo/blackbox.png')}}" style="width: 500px;  display:block; margin:auto; "
+          src="{{asset('/img/logo/blackbox.png')}}" style="width: 400px;  display:block; margin:auto; "
           alt="User Profile Image"
         />
 
         <!--/ profile cover photo -->
 
-        <div class="position-relative">
+        <div class="position-relative mt-4">
           <!-- profile picture -->
           <div class="profile-img-container d-flex align-items-center">
             <div class="profile-img">
@@ -118,8 +118,8 @@
               @endif
             </div>
             <!-- profile title -->
-            <div class="profile-title ms-3">
-              <h2 class="text-white">{{ucfirst($user->firstname)}}</h2>
+            <div class="profile-title ms-3 mt-5">
+              <h2 class="text-white">{{ucfirst($user->fullname())}}</h2>
             </div>
           </div>
         </div>
@@ -142,33 +142,9 @@
 
             <!-- collapse  -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <div class="profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
-                <ul class="nav nav-pills mb-0">
-                  <li class="nav-item">
-                    <a class="nav-link fw-bold active" href="#">
-                      <span class="d-none d-md-block">Feed</span>
-                      <i data-feather="rss" class="d-block d-md-none"></i>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link fw-bold" href="#">
-                      <span class="d-none d-md-block">About</span>
-                      <i data-feather="info" class="d-block d-md-none"></i>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link fw-bold" href="#">
-                      <span class="d-none d-md-block">Photos</span>
-                      <i data-feather="image" class="d-block d-md-none"></i>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link fw-bold" href="#">
-                      <span class="d-none d-md-block">Friends</span>
-                      <i data-feather="users" class="d-block d-md-none"></i>
-                    </a>
-                  </li>
-                </ul>
+              <div class="profile-tabs d-flex justify-content-between flex-wrap  mt-md-0">
+                </div>
+                </div>
                 <!-- edit button -->
                 <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#modal2fa">
                   <i data-feather="edit" class="d-block d-md-none" ></i>
