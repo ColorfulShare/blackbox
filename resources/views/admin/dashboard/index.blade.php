@@ -126,111 +126,49 @@ function linkAdmin(){
 
 
         </div>
-    </div>
+      </div>
     </div>
     <!-- Orders Chart Card ends -->
   </div>
 
   <div class="row match-height">
-    <!-- Avg Sessions Chart Card starts -->
-    <div class="col-lg-6 col-12">
+    <!-- Sales Stats Chart Card starts -->
+    <div class="col-lg-4 col-md-6 col-12">
       <div class="card">
-        <div class="card-body">
-          <div class="row pb-50">
-            <div class="col-sm-6 col-12 d-flex justify-content-between flex-column order-sm-1 order-2 mt-1 mt-sm-0">
-              <div class="mb-1 mb-sm-0">
-                <h2 class="fw-bolder mb-25">2.7K</h2>
-                <p class="card-text fw-bold mb-2">Avg Sessions</p>
-                <div class="font-medium-2">
-                  <span class="text-success me-25">+5.2%</span>
-                  <span>vs last 7 days</span>
-                </div>
-              </div>
-              <button type="button" class="btn btn-primary">View Details</button>
-            </div>
-            <div class="col-sm-6 col-12 d-flex justify-content-between flex-column text-end order-sm-2 order-1">
-              <div class="dropdown chart-dropdown">
-                <button
-                  class="btn btn-sm border-0 dropdown-toggle p-50"
-                  type="button"
-                  id="dropdownItem5"
-                  data-bs-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Last 7 Days
-                </button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownItem5">
-                  <a class="dropdown-item" href="#">Last 28 Days</a>
-                  <a class="dropdown-item" href="#">Last Month</a>
-                  <a class="dropdown-item" href="#">Last Year</a>
-                </div>
-              </div>
-              <div id="avg-sessions-chart"></div>
-            </div>
+        <div class="card-header d-flex justify-content-between align-items-start pb-1">
+          <div>
+            <h4 class="card-title mb-25">Total vendidos</h4>
+            <p class="card-text" id="sale-ultimaSemana">Última semana</p>
           </div>
-          <hr />
-          <div class="row avg-sessions pt-50">
-            <div class="col-6 mb-2">
-              <p class="mb-50">Goal: $100000</p>
-              <div class="progress progress-bar-primary" style="height: 6px">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  aria-valuenow="50"
-                  aria-valuemin="50"
-                  aria-valuemax="100"
-                  style="width: 50%"
-                ></div>
-              </div>
-            </div>
-            <div class="col-6 mb-2">
-              <p class="mb-50">Users: 100K</p>
-              <div class="progress progress-bar-warning" style="height: 6px">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  aria-valuenow="60"
-                  aria-valuemin="60"
-                  aria-valuemax="100"
-                  style="width: 60%"
-                ></div>
-              </div>
-            </div>
-            <div class="col-6">
-              <p class="mb-50">Retention: 90%</p>
-              <div class="progress progress-bar-danger" style="height: 6px">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  aria-valuenow="70"
-                  aria-valuemin="70"
-                  aria-valuemax="100"
-                  style="width: 70%"
-                ></div>
-              </div>
-            </div>
-            <div class="col-6">
-              <p class="mb-50">Duration: 1yr</p>
-              <div class="progress progress-bar-success" style="height: 6px">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  aria-valuenow="90"
-                  aria-valuemin="90"
-                  aria-valuemax="100"
-                  style="width: 90%"
-                ></div>
-              </div>
+          <div class="dropdown chart-dropdown">
+            <i data-feather="more-vertical" class="font-medium-3 cursor-pointer" data-bs-toggle="dropdown"></i>
+            <div class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item saleDropdown" value="1">Última semana</a>
+              <a class="dropdown-item saleDropdown" value="2">Últimos 28 dias</a>
+              <a class="dropdown-item saleDropdown" value="3">Ultimo año</a>
             </div>
           </div>
         </div>
+        <div class="card-body">
+          <div class="d-inline-block me-1">
+            <div class="d-flex align-items-center">
+              <i data-feather="circle" class="font-small-3 text-primary me-50"></i>
+              <h6 class="mb-0">Paquetes</h6>
+            </div>
+          </div>
+          <div class="d-inline-block">
+            <div class="d-flex align-items-center">
+              <i data-feather="circle" class="font-small-3 text-info me-50"></i>
+              <h6 class="mb-0">Comisiones unilevel</h6>
+            </div>
+          </div>
+          <div id="sales-visit-chart" class="mt-50"></div>
+        </div>
       </div>
     </div>
-    <!-- Avg Sessions Chart Card ends -->
-
+    <!-- Sales Stats Chart Card ends -->
     <!-- Support Tracker Chart Card starts -->
-    <div class="col-lg-6 col-12">
+    <div class="col-lg-5 col-md-6 col-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between pb-0">
           <h4 class="card-title">Rastreador de soporte</h4>
@@ -269,45 +207,57 @@ function linkAdmin(){
       </div>
     </div>
     <!-- Support Tracker Chart Card ends -->
-  </div>
-
-  <div class="row match-height">
-
-    <!-- Sales Stats Chart Card starts -->
-    <div class="col-lg-4 col-md-6 col-12">
-      <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-start pb-1">
-          <div>
-            <h4 class="card-title mb-25">Total vendidos</h4>
-            <p class="card-text" id="sale-ultimaSemana">Última semana</p>
+    <!-- Orders Chart Card starts -->
+    <div class="col-lg-3 col-md-6 col-sm-12">
+      <div class="card card-light">
+        <div class="card-body text-left">
+          <div class="row">
+              <div class="col-12">
+                  <h4 class="mb-1 text-dark texto-card-1">Estadísticas</h4>
+              </div>
+              <div class="col-12 d-flex justify-content-between flex-wrap">
+                  <div class="d-flex mt-2">
+                      <div>
+                        <i data-feather='user' style="width: 6em; height: 3.5em;"></i>
+                      </div>
+                      <div class="pl-1">
+                          <h3 class="my-0"><span >{{$estadisticas['activos']}}</span> </h3>
+                          <p><small class="small">Usuarios Activos</small></p>
+                      </div>
+                  </div>
+                  <div class="d-flex mt-2">
+                      <div>
+                        <i data-feather='dollar-sign' style="width: 6em; height: 3.5em;"></i>
+                      </div>
+                      <div class="pl-1">
+                          <h3 class="my-0">$ <span >{{$estadisticas['comisionesPagadas']}}</span> </h3>
+                          <p><small class="small">Comisiones pagadas (último mes)</small></p>
+                      </div>
+                  </div>
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i data-feather='corner-down-left' style="width: 6em; height: 3.5em;"></i>
+                    </div>
+                    <div class="pl-1">
+                        <h3 class="my-0"><span >{{$estadisticas['totalPedidos']}}</span> </h3>
+                        <p><small class="small">Total pedidos</small></p>
+                    </div>
+                </div>
+                <div class="d-flex mt-2">
+                  <div>
+                    <i data-feather='check-circle' style="width: 6em; height: 3.5em;"></i>
+                  </div>
+                  <div class="pl-1">
+                      <h3 class="my-0"><span >$ {{$estadisticas['totalInvertido']}}</span> </h3>
+                      <p><small class="small">Total invertido</small></p>
+                  </div>
+              </div>
+              </div>
           </div>
-          <div class="dropdown chart-dropdown">
-            <i data-feather="more-vertical" class="font-medium-3 cursor-pointer" data-bs-toggle="dropdown"></i>
-            <div class="dropdown-menu dropdown-menu-end">
-              <a class="dropdown-item saleDropdown" value="1">Última semana</a>
-              <a class="dropdown-item saleDropdown" value="2">Últimos 28 dias</a>
-              <a class="dropdown-item saleDropdown" value="3">Ultimo año</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="d-inline-block me-1">
-            <div class="d-flex align-items-center">
-              <i data-feather="circle" class="font-small-3 text-primary me-50"></i>
-              <h6 class="mb-0">Paquetes</h6>
-            </div>
-          </div>
-          <div class="d-inline-block">
-            <div class="d-flex align-items-center">
-              <i data-feather="circle" class="font-small-3 text-info me-50"></i>
-              <h6 class="mb-0">Comisiones unilevel</h6>
-            </div>
-          </div>
-          <div id="sales-visit-chart" class="mt-50"></div>
         </div>
       </div>
     </div>
-    <!-- Sales Stats Chart Card ends -->
+    <!-- Orders Chart Card ends -->
   </div>
 
   <!-- List DataTable -->

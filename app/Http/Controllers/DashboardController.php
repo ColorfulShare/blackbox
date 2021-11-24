@@ -42,7 +42,19 @@ class DashboardController extends Controller
       $ordenes = OrdenPurchase::whereDate('created_at', $hoy)->count();
       
       $listOrdenes = OrdenPurchase::orderBy('id', 'desc')->take(100)->get();
-    
+
+      $activos = User::where('status', '1')->count();
+      $comisionesPagadas = Wallet::whereIn('status', [0,1])->where('tipo_transaction', 0)->sum('amount');
+      $totalPedidos = OrdenPurchase::count();
+      $totalInvertido = Inversion::sum('invested');
+
+      $estadisticas = [
+        'activos' => $activos,
+        'comisionesPagadas' => $comisionesPagadas,
+        'totalPedidos' => $totalPedidos,
+        'totalInvertido' => $totalInvertido
+      ];
+      
     }else{
       $inversion = Auth::user()->inversionMasAlta();
       $users = null;
@@ -59,7 +71,7 @@ class DashboardController extends Controller
       return view('/content/dashboard/dashboard-analytics', compact('porcentaje','linkReferido','linkAdminRed', 'user'));
     }else{
       // El dashboard del admin
-      return view('/admin/dashboard/index', compact('porcentaje', 'users','linkReferido','linkAdminRed', 'user', 'ordenes', 'listOrdenes'));
+      return view('/admin/dashboard/index', compact('porcentaje', 'users','linkReferido','linkAdminRed', 'user', 'ordenes', 'listOrdenes', 'estadisticas'));
     }
   }
 

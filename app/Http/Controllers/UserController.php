@@ -19,6 +19,8 @@ use App\Models\OrdenPurchase;
 use App\Http\Traits\Tree;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Traits\TwoFactor;
+use Illuminate\Validation\Rule;
+
 class UserController extends Controller
 {
     use TwoFactor;
@@ -159,9 +161,11 @@ class UserController extends Controller
                 'amount' => $package->price,
                 'fee' => 0,
                 'package_id' => $package->id,
-                'status' => '2'
+                'status' => '2',
+                'genero_comision' => $request->comision != null ? 1 : 0,
+                'activacion' => 'manual'
             ]);
-
+            
             $user->status = '1';
             $user->expired_status = Carbon::now()->addYear(1);
             $user->save();
@@ -201,43 +205,38 @@ class UserController extends Controller
     public function ProfileUpdate(Request $request){
 
         $user = User::find(Auth::user()->id);
-        $fields = [
-            "firstname" => ['required'],
-            "email" => [
-               'required',
-               'string',
-               'email',
-               'max:255',
-           ],
 
-        ];
+        $request->validate([
+            'firstname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id, 'id')],
+            'photoDB' => ['mimes:jpg,jpeg,png'],
 
-        $msj = [
-
-            'name.required' => 'El nombre es requerido.',
-          //  'last_name.required' => 'El apellido es requerido.',
-            'email.unique' => 'El correo debe ser unico.',
-          //  "wallet_address.min" => 'La dirección de la billetera debe tener un minimo de 21 caracteres.',
-         //   "wallet_address.max" => 'La dirección de la billetera no puede tener mas de 35 caracteres.',
-
-        ];
-
-        $this->validate($request, $fields, $msj);
+        ]);
 
         $user->update($request->all());
 
+        if ($request->hasFile('photoDB')) {
+            $file = $request->file('photoDB');
+            $name = $user->id.'_'.$file->getClientOriginalName();
+            $file->move(public_path('storage') . '/photo', $name);
+            $user->photoDB = $name;
 
-     if ($request->hasFile('photoDB')) {
-        $file = $request->file('photoDB');
-        $name = $user->id.'_'.$file->getClientOriginalName();
-        $file->move(public_path('storage') . '/photo', $name);
-        $user->photoDB = $name;
-
-     }
+        }
 
         $user->save();
         return back()->with('success', 'Perfil actualizado');
     }
 
+    public function profile()
+    {
+        $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Pages"], ['name' => "Profile"]];
+        $user = Auth::user();
+        $referidos = User::where('referred_id', $user->id)->orderBy('id','DESC')->take(9)->get();
+        if(count($referidos) == 0){
+         $sinreferido = 'vacio';
+         $referidos = $sinreferido;
+        }
 
+        return view('/content/pages/page-profile', ['breadcrumbs' => $breadcrumbs], compact('user','referidos'));
+    }
 }

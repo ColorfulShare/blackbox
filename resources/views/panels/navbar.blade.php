@@ -322,7 +322,7 @@
             </span>
           </a>
           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-            <a class="dropdown-item" href="{{url('page/profile')}}">
+            <a class="dropdown-item" href="{{route('user.profile')}}">
               <i class="me-50" data-feather="user"></i> Profile
             </a>
             <a class="dropdown-item" href="{{url('app/email')}}">
