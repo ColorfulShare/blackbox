@@ -18,73 +18,73 @@
 @endsection
 @section('page-script')
   <script src="{{ asset(mix('js/scripts/extensions/ext-component-sweet-alerts.js')) }}"></script>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+
+
+
+          function proccess(){
+
+              var laravelToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+              axios.post('/2fact-perfil', {
+                  code: document.getElementById('code').value,
+              }).then(function (response) {
+                  if(response.data.valores.verificado == 'true'){
+                      let timerInterval
+                  Swal.fire({
+                  icon: 'success',
+                  title: 'Verficado',
+                  background:'#283046',
+                  footer: '<h3 class="text-center">Ya puede cambiar los datos de su perfil</h3>',
+                  timer: 2300,
+                  timerProgressBar: true,
+                      didOpen: () => {
+                          Swal.showLoading()
+                          const b = Swal.getHtmlContainer().querySelector('b')
+                          timerInterval = setInterval(() => {
+                          b.textContent = Swal.getTimerLeft()
+                          }, 100)
+                      },willClose: () => {
+                          clearInterval(timerInterval)
+                      }
+                  })
+                  let formulario = document.getElementById("formulario");
+                  let Towfa = document.getElementById("Towfa");
+
+                  let reemplazar = document.getElementById('modal2fa').replaceChild(formulario, Towfa);
+
+              }else{
+                  let timerInterval
+                  Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  background:'#283046',
+                  footer: '<h1 class="text-center">Codigo incorrecto</h1>',
+                  timer: 2000,
+                  timerProgressBar: true,
+                      didOpen: () => {
+                          Swal.showLoading()
+                          const b = Swal.getHtmlContainer().querySelector('b')
+                          timerInterval = setInterval(() => {
+                          b.textContent = Swal.getTimerLeft()
+                          }, 100)
+                      },willClose: () => {
+                          clearInterval(timerInterval)
+                      }
+                  })
+              }
+                  console.log(response.data.valores.verificado);
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+              ;
+              };
+  </script>
 @endsection
 <!--------------->
 @section('content')
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-
-
-
-        function proccess(){
-
-            var laravelToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            axios.post('/2fact-perfil', {
-                code: document.getElementById('code').value,
-            }).then(function (response) {
-                if(response.data.valores.verificado == 'true'){
-                    let timerInterval
-                Swal.fire({
-                icon: 'success',
-                title: 'Verficado',
-                background:'#283046',
-                footer: '<h3 class="text-center">Ya puede cambiar los datos de su perfil</h3>',
-                timer: 2300,
-                timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading()
-                        const b = Swal.getHtmlContainer().querySelector('b')
-                        timerInterval = setInterval(() => {
-                        b.textContent = Swal.getTimerLeft()
-                        }, 100)
-                    },willClose: () => {
-                        clearInterval(timerInterval)
-                    }
-                })
-                let formulario = document.getElementById("formulario");
-                let Towfa = document.getElementById("Towfa");
-
-                let reemplazar = document.getElementById('modal2fa').replaceChild(formulario, Towfa);
-
-            }else{
-                let timerInterval
-                Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                background:'#283046',
-                footer: '<h1 class="text-center">Codigo incorrecto</h1>',
-                timer: 2000,
-                timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading()
-                        const b = Swal.getHtmlContainer().querySelector('b')
-                        timerInterval = setInterval(() => {
-                        b.textContent = Swal.getTimerLeft()
-                        }, 100)
-                    },willClose: () => {
-                        clearInterval(timerInterval)
-                    }
-                })
-            }
-                console.log(response.data.valores.verificado);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-            ;
-            };
-</script>
-
 <div id="user-profile">
   <!-- profile header -->
   <div class="row">
@@ -188,7 +188,7 @@
 <!-- profile info section -->
   <div class="container">
     <div class="row">
-      <div class="col-sm-9">
+      <div class="col-sm-12">
 
         <div class="card">
             <div class="card-body">
@@ -250,91 +250,6 @@
             </div>
           </div>
       </div>
-
-  <!-- right profile info section -->
-  <div class="col-lg-3 col-sm-3 order-3">
-    <!-- latest profile pictures -->
-    <div class="card">
-      <div class="card-body">
-        <h5 class="mb-0 text-center">Administradores de Red</h5>
-        <div class="row">
-
-            @if($referidos == 'vacio')
-            <h4 class="mt-1 text-center">Sin Administrador</h4>
-          @else
-
-          @foreach ($referidos as $item)
-          <div class="col-md-4 col-6 profile-latest-img">
-              @if($item->photoDB != null)
-            <a href="#">
-              <img
-              src="{{asset('storage/photo/'.$item->photoDB)}}"
-                class="img-fluid rounded"
-                alt="avatar img"
-              />
-            </a>
-            <h6 class="text-center" style="font-size: 12px">{{Str::limit(ucfirst($item->firstname), 5)}}</h6>
-            @else
-            <a href="#">
-                <img
-                src="{{asset('images/portrait/small/avatar-s-2.jpg')}}"
-                  class="img-fluid rounded"
-                  alt="avatar img"
-                />
-              </a>
-              <h6 class="text-center" style="font-size: 12px">{{Str::limit(ucfirst($item->firstname), 4)}}</h6>
-            @endif
-          </div>
-          @endforeach
-          @endif
-        </div>
-      </div>
-    </div>
-    <!--/ latest profile pictures -->
-
-    <!-- latest profile pictures -->
-    <div class="card">
-        <div class="card-body">
-          <h5 class="mb-0 text-center">Referidos</h5>
-          <div class="row">
-
-              @if($referidos == 'vacio')
-              <h2 class="mt-1 text-center">Sin Referidos</h2>
-            @else
-
-            @foreach ($referidos as $item)
-            <div class="col-md-4 col-6 profile-latest-img">
-                @if($item->photoDB != null)
-              <a href="#">
-                <img
-                src="{{asset('storage/photo/'.$item->photoDB)}}"
-                  class="img-fluid rounded"
-                  alt="avatar img"
-                />
-              </a>
-              <h6 class="text-center" style="font-size: 12px">{{Str::limit(ucfirst($item->firstname), 5)}}</h6>
-              @else
-              <a href="#">
-                  <img
-                  src="{{asset('images/portrait/small/avatar-s-2.jpg')}}"
-                    class="img-fluid rounded"
-                    alt="avatar img"
-                  />
-                </a>
-                <h6 class="text-center" style="font-size: 12px">{{Str::limit(ucfirst($item->firstname), 4)}}</h6>
-              @endif
-            </div>
-            @endforeach
-            @endif
-          </div>
-        </div>
-      </div>
-      <!--/ latest profile pictures -->
-
-
-      </div>
-
-  </div>
 
  <!-- Modal de autenticacion -->
   <div class="modal fade" id="modal2fa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -442,7 +357,7 @@
                                                         Foto <b>(Se permiten JPG o PNG.
                                                             Tamaño máximo de 800kB)</label>
                                                     <input type="file" id="photoDB" class="form-control" name="photoDB"
-                                                    onchange="previewFile(this, 'photo_preview')" accept="image/*">
+                                                    onchange="previewFile(this, 'photo_preview')" accept="image/jpg, image/jpeg, image/png" >
                                                 </div>
 
 
@@ -477,9 +392,9 @@
                                                 <div class="col-sm-6">
 
                                                     <div class="form-group mt-1">
-                                                        <label for="fullname">Cuenta Broker</label>
+                                                        <label for="Broker">Cuenta Broker</label>
                                                         <input type="text" class="form-control border border-primary rounded" name="Broker"
-                                                            value="12345678">
+                                                            value="">
                                                     </div>
                                                   </div>
 
@@ -488,7 +403,7 @@
                                                     <div class="form-group mt-1">
                                                         <label for="Wallet">Wallet</label>
                                                         <input type="text" class="form-control border border-primary rounded" name="wallet"
-                                                            value="sklamklasmlqwñleqwelkwokfioerf2384sdlfkñ">
+                                                            value="{{ $user->wallet != null ? $user->wallet : ''}}">
                                                     </div>
                                                   </div>
                                             </div>

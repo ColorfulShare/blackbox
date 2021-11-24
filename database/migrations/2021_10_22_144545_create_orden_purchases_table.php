@@ -23,6 +23,8 @@ class CreateOrdenPurchasesTable extends Migration
             $table->string('comprobante')->nullable();
             $table->enum('type_payment', ['USDT_TRC20', 'USDT_ERC20', 'BTC'])->nullable();
             $table->enum('status', [0, 1, 2, 3])->default(0)->comment('0 - En Espera, 1 - finalizado, 2 - Aprobado, 3 Rechazada');
+            $table->boolean('genero_comision')->default(1);
+            $table->enum('activacion', ['real', 'manual'])->default('real');
             $table->timestamps();
         });
     }

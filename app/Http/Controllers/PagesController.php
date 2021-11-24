@@ -21,7 +21,7 @@ class PagesController extends Controller
     {
         $breadcrumbs = [['link' => "/", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Pages"], ['name' => "Profile"]];
         $user = Auth::user();
-        $referidos = User::where('referred_by', $user->id)->orderBy('id','DESC')->take(9)->get();
+        $referidos = User::where('referred_id', $user->id)->orderBy('id','DESC')->take(9)->get();
         if(count($referidos) == 0){
          $sinreferido = 'vacio';
          $referidos = $sinreferido;

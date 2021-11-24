@@ -38,7 +38,7 @@
           "slug": "genealogy.buscar"
         },
         {
-          "url": "/referidos",
+          "url": "/user/referidos/buscar",
           "name": "Referidos",
           "icon": "circle",
           "slug": "referidos.index"
@@ -46,7 +46,7 @@
         {
           "url": "/user/user-list",
           "name": "Usuarios",
-          "icon": "users",
+          "icon": "circle",
           "slug": ""
         }
       ]
@@ -91,7 +91,7 @@
     },
     {
       "name": "Informes",
-      "icon": "sidebar",
+      "icon": "clipboard",
       "slug": "/",
       "submenu": [
         {

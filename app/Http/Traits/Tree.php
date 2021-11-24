@@ -19,8 +19,8 @@ trait Tree{
         $usuarios = collect();
 
         for ($i=0; $i < $nivel; $i++) { 
-            if($user->referred_by != null){
-                $user = User::where('id', $user->referred_by)->first();
+            if($user->referred_id != null){
+                $user = User::where('id', $user->referred_id)->first();
                 
                 if(isset($user)){
             

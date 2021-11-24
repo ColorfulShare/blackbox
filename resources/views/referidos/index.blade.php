@@ -1,7 +1,7 @@
 
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Red | Usuarios')
+@section('title', 'Red | Referidos')
 
 @section('vendor-style')
   <!-- vendor css files -->
@@ -37,12 +37,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($referido as $item)
+                            @foreach ($referidos as $item)
                             <tr class="text-center">
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->firstname}}</td>
                                 <td>{{$item->email}}</td>
-                                <td>{{$item->phonel}}</td>
+                                <td>{{$item->phone}}</td>
 
                                 @if ($item->status == '0')
                                 <td> <a class=" btn btn-danger text-white text-bold-600">Inactivo</a></td>
@@ -58,7 +58,7 @@
                                 <td> <a class=" btn btn-danger text-white text-bold-600">Eliminado</a></td>
                                 @endif
                                 <td>{{$item->nivel}}</td>
-                                <td>{{date('d-m-Y', strtotime($item->created_at))}}</td>
+                                <td>{{$item->created_at->format('d-m-Y')}}</td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -2,7 +2,7 @@
     <div class="art">
         <div class="row g-0">
             <div class="col-md-4 p-2">
-                <img id="imagen" class="rounded-circle img-fluid" width="110px" height="110px">
+                <img src="{{asset('img/logo/blackbox.png')}}" id="imagen" class="rounded-circle img-fluid" width="130px" height="130px">
             </div>
 
             <div class="col-md-8">

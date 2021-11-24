@@ -102,6 +102,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/activacion', [UserController::class, 'activacion'])->name('user.activacion');
             Route::post('/activar', [UserController::class, 'activar'])->name('user.activar');
             Route::patch('/profile-Update', [UserController::class, 'ProfileUpdate'])->name('profile.update');
+
+            //REFERIDOS
+            Route::get('/referidos/buscar', [ReferralController::class, 'buscar'])->name('referidos.buscar');
+            Route::get('/referidos', [ReferralController::class, 'listReferidos'])->name('referidos.index');
         });
 
         //RENDIMIENTOS
@@ -179,8 +183,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
         Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
-        Route::patch('/profile-user-Update',[UserController::class, 'ProfileUpdate'])->name('profile-user.update');
         Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
+
+        //PROFILE
+        Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
+        Route::patch('/profile-user-Update',[UserController::class, 'ProfileUpdate'])->name('profile-user.update');
+
     });
 
     //EDUCACION USER
@@ -481,5 +489,3 @@ Route::get('rAdminRed/{referral_admin_red_code}', [ReferralController::class, 'l
 Route::get('/cookie', function () {
     return Cookie::get('referral');
 });
-
-Route::get('/referidos', [ReferralController::class, 'referidos'])->name('referidos.index');
