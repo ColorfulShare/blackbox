@@ -80,7 +80,7 @@
                                                 <div class="col-12 mx-auto">
                                                     <div class="card fondo">
                                                         <div class="card-body chat-care rounded">
-                                                            <ul class="card-body clearfix">
+                                                            <ul class="chat">
                                                                 @foreach ( $message as $item )
                                                                 {{-- user --}}
                                                                 @if ($item->type == 0)
