@@ -22,7 +22,7 @@ class BannerController extends Controller
     {
         try {
 
-            $banner = Banner::all();
+            $banner = Banner::where('id', 1)->get();
 
             return view('admin.interest.banner.list', compact('banner'));
 
