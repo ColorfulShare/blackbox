@@ -42,7 +42,8 @@
                         <div class="col-12 mt-2">
                             <div class="form-group">
                                 <label class="form-label" for="description"><b>Contenido de la noticia</b></label>
-                                <textarea name="description" id="tiny" class="form-control" cols="30" rows="5"></textarea>
+                                <textarea name="description" id="tiny" class="form-control" cols="30" rows="5"
+                                    required></textarea>
                             </div>
                         </div>
 
@@ -51,10 +52,12 @@
                             <div class="form-group">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-12 d-flex justify-content-center my-2">
-                                        <label class="btn btn-primary btn-lg btn-block" for="banner">Selecciona una imagen de portada</label>
-                                    </div> 
+                                        <label class="btn btn-primary btn-lg btn-block" for="banner">Selecciona una
+                                            imagen de portada</label>
+                                    </div>
                                     <div class="col-12">
-                                        <input type="file" name="banner" id="banner" class="form-control d-none" onchange="previewFile(this, 'photo_preview')" accept="image/*">
+                                        <input type="file" name="banner" id="banner" class="form-control d-none"
+                                            onchange="previewFile(this, 'photo_preview')" accept="image/*">
                                     </div>
                                 </div>
 
@@ -78,35 +81,58 @@
         </div>
     </div>
 </div>
-    
+
 @endsection
 
 
 @section('vendor-script')
-  <!-- vendor files -->
-    <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
-    <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
-    <script src="{{ asset('assets/js/forms/form-tinymce.min.js') }}"></script>
-    <script>
-        // textarea
-        tinymce.init({
-            selector: 'textarea#tiny',
-            height: 200,
-            menubar: false,
-            statusbar: false,
-            skin: "oxide-dark",
-             content_css: "dark",
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | ' +
-                'bold italic forecolor backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist | ' +
-                'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-        });
-    </script>
+
+<script src="{{ asset('assets/js/forms/form-tinymce.min.js') }}"></script>
+<script>
+    // textarea
+    tinymce.init({
+        selector: 'textarea#tiny',
+        height: 200,
+        menubar: false,
+        statusbar: false,
+        skin: "oxide-dark",
+        content_css: "dark",
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+            'bold italic forecolor backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist | ' +
+            'removeformat | help',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    });
+
+    $("#validate").validate();
+
+    // preview imagen
+    function previewFile(input, preview_id) {
+
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#" + preview_id).attr('src', e.target.result);
+                $("#" + preview_id).css('height', '100%');
+                $("#" + preview_id).parent().parent().removeClass('d-none');
+            }
+            $("label[for='" + $(input).attr('id') + "']").text(input.files[0].name);
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function previewPersistedFile(url, preview_id) {
+        $("#" + preview_id).attr('src', url);
+        $("#" + preview_id).css('height', '100%');
+        $("#" + preview_id).parent().parent().removeClass('d-none');
+    }
+
+</script>
 @endsection

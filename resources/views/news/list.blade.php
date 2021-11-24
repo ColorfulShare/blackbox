@@ -36,8 +36,14 @@
                     <a href="{{ route('news.edit', $item->id) }}" class="item-edit"><i class="text-primary font-medium-3"
                             data-feather='edit'></i></a>
 
-                    <a href="javascript:;" class="item-edit delete"><i class="text-danger font-medium-3" data-feather='trash'></i>
+                    {{-- <a href="#" class="item-edit" onclick="destroy()"><i class="text-danger font-medium-3" data-feather='trash'></i>
                         <form id="delete" action="{{ route('news.destroy', $item->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </a> --}}
+                    <a class="item-edit" onclick="destroy({{ $item->id }})"><i class="text-danger font-medium-3" data-id = "{{ $item->id }}" data-feather='trash'></i>
+                        <form id="delete_{{ $item->id }}" action="{{ route('news.destroy', $item->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -45,8 +51,22 @@
                 </td>
             </tr>
             @endforeach
-        </tbody>
+        </tbody>yava, esa libreria no se esta usando la de confirm
     </table>
 </div>
 
+@endsection
+
+@section('vendor-script')
+<script>
+
+    function destroy(id) {
+        form = $('#delete_'+id);
+        form.submit();
+    };
+    
+
+</script>
+<script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
 @endsection

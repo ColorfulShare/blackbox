@@ -59,30 +59,30 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        try {
 
-            $fields = [
-                "title" => ['required'],
-                "description" => ['required'],
-                "banner" => ['required'],
-                "status" => ['required'],
-            ];
+        $fields = [
+            "title" => ['required'],
+            "description" => ['required'],
+            "banner" => ['required'],
+            "status" => ['required'],
+        ];
     
-            $msj = [
-                'title.required' => 'El titulo es Requerido',
-                'description.required' => 'El contenido es Requerido',
-                'banner.required' => 'La foto es Requerida',
-                'status.required' => 'El estado es Requerido',
-            ];
-    
-            $this->validate($request, $fields, $msj);
-                
-            //  guarda el banner
-            if ($request->hasFile('banner')) {
-                $file = $request->banner;
-                $filen = $file->getClientOriginalExtension();
-                $name = $request->title.'.'.$filen;
-                $file->move(public_path('storage') . '/news-banner', $name);
+        $msj = [
+            'title.required' => 'El titulo es Requerido',
+            'description.required' => 'El contenido es Requerido',
+            'banner.required' => 'La foto es Requerida',
+            'status.required' => 'El estado es Requerido',
+        ];
+        
+        $this->validate($request, $fields, $msj);
+        
+        //  guarda el banner
+        if ($request->hasFile('banner')) {
+            $file = $request->banner;
+            $filen = $file->getClientOriginalExtension();
+            $name = $request->title.'.'.$filen;
+            $file->move(public_path('storage') . '/news-banner', $name);
+
             // crea el registro
             $news = News::create([
                 'title' => $request->title,
@@ -91,15 +91,9 @@ class NewsController extends Controller
                 'banner' => $name,
             ]);
             $news->save();
-
         } 
-            
+        
         return redirect()->route('news.list')->with('success', 'La noticia se creo Exitosamente');
-            
-        } catch (\Throwable $th) {
-            Log::error('NewsController - store -> Error: '.$th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
-        }
     }
 
     /**
@@ -199,6 +193,7 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
+        dd($id);
         try {
 
             $news = News::find($id);
