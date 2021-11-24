@@ -6,7 +6,7 @@
 
 <div class="card p-2">
     <div class="card-header d-flex justify-content-end">
-        <a href="{{ route('documents.create') }}" class="btn btn-primary">Subir nueva documento</a>
+        <a href="{{ route('documents.create') }}" class="btn btn-primary">Subir nuevo documento</a>
     </div>
     <table class="table myTable border rounded">
         <thead>
@@ -18,7 +18,7 @@
                 <th>Acción</th>
             </tr>
         </thead>
-        
+
         <tbody>
             @foreach ($documents as $item)
             <tr class="text-center">
@@ -36,8 +36,10 @@
                     <a href="{{ route('documents.edit', $item->id) }}"><i class="text-primary font-medium-3"
                             data-feather='edit'></i></a>
 
-                    <a href="#" class="delete"><i class="text-danger font-medium-3" data-feather='trash'></i>
-                        <form id="delete" action="{{ route('documents.destroy', $item->id) }}" method="POST">
+                    <a class="item-edit" onclick="destroy({{ $item->id }})"><i class="text-danger font-medium-3"
+                            data-id="{{ $item->id }}" data-feather='trash'></i>
+                        <form id="delete_{{ $item->id }}" action="{{ route('documents.destroy', $item->id) }}"
+                            method="POST">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -49,4 +51,26 @@
     </table>
 </div>
 
+@endsection
+
+@section('vendor-script')
+<script>
+    function destroy(id) {
+        form = $('#delete_' + id);
+        form.submit();
+    };
+
+</script>
+<script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
+<script>
+    //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [
+            [0, "desc"]
+        ],
+    })
+
+</script>
 @endsection

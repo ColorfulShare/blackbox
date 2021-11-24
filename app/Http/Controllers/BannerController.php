@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File; 
 
-use App\Models\News;
+use App\Models\Banner;
 
-class NewsController extends Controller
+class BannerController extends Controller
 {
     /**
      * Vista de la lista de registros
@@ -22,12 +22,12 @@ class NewsController extends Controller
     {
         try {
 
-            $news = News::all();
+            $banner = Banner::all();
 
-            return view('admin.interest.news.list', compact('news'));
+            return view('admin.interest.banner.list', compact('banner'));
 
         } catch (\Throwable $th) {
-            Log::error('NewsController-list -> Error: '.$th);
+            Log::error('BannerController-list -> Error: '.$th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
@@ -41,12 +41,12 @@ class NewsController extends Controller
     {
         try {
 
-            $count = DB::table('news')->orderby('created_at', 'desc')->first();
+            $count = DB::table('banner')->orderby('created_at', 'desc')->first();
 
-            return view('admin.interest.news.create', compact('count'));
+            return view('admin.interest.banner.create', compact('count'));
 
         } catch (\Throwable $th) {
-            Log::error('NewsController - create -> Error: '.$th);
+            Log::error('BannerController - create -> Error: '.$th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
@@ -62,44 +62,35 @@ class NewsController extends Controller
 
         $fields = [
             "title" => ['required'],
-            "description" => ['required'],
-            // "banner" => ['required'],
+            "banner" => ['required'],
             "status" => ['required'],
         ];
     
         $msj = [
             'title.required' => 'El titulo es Requerido',
-            'description.required' => 'El contenido es Requerido',
-            // 'banner.required' => 'La foto es Requerida',
+            'banner.required' => 'La foto es Requerida',
             'status.required' => 'El estado es Requerido',
         ];
         
         $this->validate($request, $fields, $msj);
+        
         //  guarda el banner
-        if ($request->hasFile('banner') == true) {
+        if ($request->hasFile('banner')) {
             $file = $request->banner;
             $filen = $file->getClientOriginalExtension();
             $name = $request->title.'.'.$filen;
-            $file->move(public_path('storage') . '/news-banner', $name);
+            $file->move(public_path('storage') . '/banner', $name);
 
             // crea el registro
-            News::create([
+            $banner = Banner::create([
                 'title' => $request->title,
-                'description' => $request->description,
                 'status' => $request->status,
                 'banner' => $name,
             ]);
-        }else{
-            News::create([
-                'title' => request('title'),
-                'description' => request('description'),
-                'banner' => null,
-                'status' => request('status'),
-            ]);
-
-        }
+            $banner->save();
+        } 
         
-        return redirect()->route('news.list')->with('success', 'La noticia se creo Exitosamente');
+        return redirect()->route('banner.list')->with('success', 'La noticia se creo Exitosamente');
     }
 
     /**
@@ -110,16 +101,7 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        try {
-
-            $news = News::find($id);
-
-            return view('admin.interest.news.show', compact('news'));
-
-        } catch (\Throwable $th) {
-            Log::error('NewsController - show -> Error: '.$th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
-        }
+        //
     }
 
     /**
@@ -132,12 +114,12 @@ class NewsController extends Controller
     {
         try {
 
-            $news = News::find($id);
+            $banner = Banner::find($id);
 
-            return view('admin.interest.news.edit', compact('news'));
+            return view('admin.interest.banner.edit', compact('banner'));
 
         } catch (\Throwable $th) {
-            Log::error('NewsController - edit -> Error: '.$th);
+            Log::error('BannerController - edit -> Error: '.$th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
@@ -153,49 +135,47 @@ class NewsController extends Controller
     {
         // try {
 
-          
-            $news = News::find($id);
+            $banner = Banner::find($id);
 
             $fields = [
                 "title" => ['required'],
-                "description" => ['required'],
                 "status" => ['required'],
             ];
     
             $msj = [
                 'title.required' => 'El titulo es Requerido',
-                'description.required' => 'El contenido es Requerido',
                 'status.required' => 'El estado es Requerido',
             ];
     
             $this->validate($request, $fields, $msj);
+
             // borra el anterior
             if ($request->banner) {
 
-                $news->destroy(public_path('storage').'/news-banner', $news->banner);
+                $image_path = public_path()."/storage/banner/".$banner->banner;
+                File::delete($image_path);
 
-                $file = $request->banner;
+                $file = $request->banner; 
                 $filen = $file->getClientOriginalExtension();
-                $name = 'storage/news-banner/'.$request->title.'.'.$filen;
-                $file->move(public_path('storage') . '/news-banner', $name);
+                $name = $request->title.'.'.$filen;
+                $file->move(public_path('storage') . '/banner', $name);
 
                 // crea el registro
-                $news = News::updating([
+                $banner->update([
                     'title' => $request->title,
-                    'description' => $request->description,
                     'status' => $request->status,
                     'banner' => $name,
                 ]);
-
+                
             }else{
-                // crea el registro
-                $news->update($request->all());
+                // actualiza el registro
+                $banner->update($request->all());
             }
 
-            return redirect()->route('news.list')->with('success', 'Noticia N°'.$id.' Actualizada ');
+            return redirect()->route('banner.list')->with('success', 'Noticia N°'.$id.' Actualizada ');
             
         // } catch (\Throwable $th) {
-        //     Log::error('NewsController - update -> Error: '.$th);
+        //     Log::error('BannerController - update -> Error: '.$th);
         //     abort(403, "Ocurrio un error, contacte con el administrador");
         // }
     }
@@ -210,17 +190,17 @@ class NewsController extends Controller
     {
         try {
 
-            $news = News::find($id);
+            $banner = Banner::find($id);
     
             // eliminar imagen
-            $image_path = public_path()."/storage/news-banner/".$news->banner;
+            $image_path = public_path()."/storage/banner/".$banner->banner;
             File::delete($image_path);
 
-            $news->delete();
+            $banner->delete();
             
-            return redirect()->route('news.list')->with('success', 'Noticia N°'.$id.' Eliminada');
+            return redirect()->route('banner.list')->with('success', 'Noticia N°'.$id.' Eliminada');
         } catch (\Throwable $th) {
-            Log::error('NewsController - destroy -> Error: '.$th);
+            Log::error('BannerController - destroy -> Error: '.$th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }

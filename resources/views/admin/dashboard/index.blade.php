@@ -67,7 +67,7 @@ function linkAdmin(){
 <section id="dashboard-analytics">
   <div class="row match-height">
     <!-- Greetings Card starts -->
-    <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="col-lg-3 col-md-12 col-sm-12">
       <div class="card ">
         <div class="card-body text-center">
           <div class="card-header d-flex align-items-center text-right pb-0 pt-0 white">
@@ -88,6 +88,16 @@ function linkAdmin(){
       </div>
     </div>
     <!-- Greetings Card ends -->
+
+       <!-- Greetings Card starts -->
+       <div class="col-lg-3 col-md-12 col-sm-12">
+        <div class="card ">
+          <div class="card-body text-center">
+            <img src="{{ asset('images/avatars/1.png') }}" alt="">
+          </div>
+        </div>
+      </div>
+      <!-- Greetings Card ends -->
 
     <!-- Subscribers Chart Card starts -->
     <div class="col-lg-3 col-sm-6 col-12">

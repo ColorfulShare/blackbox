@@ -65,36 +65,24 @@
       ]
     },
     {
-      "url": "news/list",
-      "name": "Noticias",
-      "icon": "trello",
-      "slug": "news"
-    },
-    {
-      "url": "documents/list",
-      "name": "Documentos",
-      "icon": "archive",
-      "slug": "documents"
-    },
-    {
       "name": "De Interés",
       "icon": "sidebar",
       "slug": "/",
       "submenu": [
         {
-          "url": "/",
+          "url": "news/list",
           "name": "Noticias",
           "icon": "circle",
           "slug": ""
         },
         {
-          "url": "/",
+          "url": "documents/list",
           "name": "Documentos",
           "icon": "circle",
           "slug": ""
         },
         {
-          "url": "/",
+          "url": "banner/list",
           "name": "Banner",
           "icon": "circle",
           "slug": ""

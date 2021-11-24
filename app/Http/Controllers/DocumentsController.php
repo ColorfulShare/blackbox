@@ -14,7 +14,7 @@ use App\Models\Documents;
 class DocumentsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Vista de la lista de registros
      *
      * @return \Illuminate\Http\Response
      */
@@ -24,7 +24,7 @@ class DocumentsController extends Controller
 
             $documents = Documents::all();
 
-            return view('documents.list', compact('documents'));
+            return view('admin.interest.documents.list', compact('documents'));
 
         } catch (\Throwable $th) {
             Log::error('DocumentsController-list -> Error: '.$th);
@@ -33,7 +33,7 @@ class DocumentsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Vista para crear un registro
      *
      * @return \Illuminate\Http\Response
      */
@@ -43,7 +43,7 @@ class DocumentsController extends Controller
 
             $count = DB::table('documents')->orderby('created_at', 'desc')->first();
 
-            return view('documents.create', compact('count'));
+            return view('admin.interest.documents.create', compact('count'));
 
         } catch (\Throwable $th) {
             Log::error('DocumentsController - create -> Error: '.$th);
@@ -52,14 +52,14 @@ class DocumentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crea un nuevo registro
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        try {
+        // try {
 
             //  guarda el archivo
                 $file = $request->file;
@@ -77,14 +77,14 @@ class DocumentsController extends Controller
 
         return redirect()->route('documents.list')->with('success', 'La noticia se creo Exitosamente');
             
-        } catch (\Throwable $th) {
-            Log::error('DocumentsController - store -> Error: '.$th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
-        }
+        // } catch (\Throwable $th) {
+        //     Log::error('DocumentsController - store -> Error: '.$th);
+        //     abort(403, "Ocurrio un error, contacte con el administrador");
+        // }
     }
 
     /**
-     * Display the specified resource.
+     * Ver un registro en especifico
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -95,7 +95,7 @@ class DocumentsController extends Controller
 
             $documents = Documents::all();
 
-            return view('documents.show', compact('documents'));
+            return view('admin.interest.documents.show', compact('documents'));
 
         } catch (\Throwable $th) {
             Log::error('DocumentsController-show -> Error: '.$th);
@@ -103,8 +103,8 @@ class DocumentsController extends Controller
         }
     }
 
-       /**
-     * Display the specified resource.
+    /**
+     * Ver un pdf en especifico
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -115,7 +115,7 @@ class DocumentsController extends Controller
 
             $documents = Documents::find($id);
 
-            return view('documents.pdf', compact('documents'));
+            return view('admin.interest.documents.pdf', compact('documents'));
 
         } catch (\Throwable $th) {
             Log::error('DocumentsController-pdf -> Error: '.$th);
@@ -124,7 +124,7 @@ class DocumentsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Vista para editar un registro
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -135,7 +135,7 @@ class DocumentsController extends Controller
 
             $documents = Documents::find($id);
 
-            return view('documents.edit', compact('documents'));
+            return view('admin.interest.documents.edit', compact('documents'));
 
         } catch (\Throwable $th) {
             Log::error('DocumentsController - edit -> Error: '.$th);
@@ -144,7 +144,7 @@ class DocumentsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza un registro en especifico
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -156,8 +156,22 @@ class DocumentsController extends Controller
 
             $documents = Documents::find($id);
                
+            //  guarda el archivo
+            if($request->file){
+            $file = $request->file;
+            $filen = $documents->type;
+            $name = $request->name.'.'.$filen;
+            $file->move(public_path('storage') . '/documents', $name);
+              
+            $documents->update([
+                'name' => $request->name,
+                'file' => $name,
+            ]);
+            $documents->save();
+        }else{
             $documents->update($request->all());
             $documents->save();
+        }
 
 
             return redirect()->route('documents.list')->with('success', 'Noticia N°'.$id.' Actualizada ');
@@ -169,7 +183,7 @@ class DocumentsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un registro en especifico
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -179,7 +193,7 @@ class DocumentsController extends Controller
         try {
 
             $documents = Documents::find($id);
-    dd($id);
+
             // eliminar imagen
             $image_path = public_path()."/storage/documents/".$documents->file;
             File::delete($image_path);

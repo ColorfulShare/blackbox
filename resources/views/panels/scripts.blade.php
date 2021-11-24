@@ -5,7 +5,6 @@
 <!-- BEGIN: Page Vendor JS-->
 <script src="{{asset(mix('vendors/js/ui/jquery.sticky.js'))}}"></script>
 <script src="{{asset(mix('js/scripts/jquery/jquery-validate.min.js'))}}"></script>
-<script src="{{asset(mix('js/scripts/jquery/jquery-confirm.js'))}}"></script>
 @yield('vendor-script')
 
 <!-- BEG IN: Theme JS-->
