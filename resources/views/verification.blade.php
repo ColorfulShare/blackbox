@@ -45,7 +45,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="form-group">
-                            <input type="text" placeholder="Pega tu código aquí" class="form-control" name="code"
+                            <input type="text" placeholder="Pegué Su Código Aquí" class="form-control" name="code"
                                 style="color: white; font-weight:bold; background-color: #151c2f;border:none;"
                                 >
 
