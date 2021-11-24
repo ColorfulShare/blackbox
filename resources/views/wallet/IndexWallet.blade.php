@@ -46,8 +46,9 @@
                                     <td>{{date('d-m-Y', strtotime($orden->created_at));}}</td>
                                     <td>
                                         <div class="d-flex flex-column">
-
-                                            <p>
+                                            {{$orden->descripcion}}
+                                            <br>
+                                               <p>
                                                 @if ($orden->status == '0')
                                                 <span class="dot enespera"></span> En Espera
                                                 @elseif($orden->status == '1')
@@ -55,16 +56,14 @@
                                                 @elseif($orden->status >= '2')
                                                 <span class="dot cancelado"></span> Cancelado
                                                 @endif
-                                                <br>
-                                                {{$orden->descripcion}}
                                             </p>
                                         </div>
                                     </td>
                                     <td>
                                         @if(isset($orden->getWalletReferred))
-                                        {{$orden->getWalletReferred->email}}
+                                            {{$orden->getWalletReferred->email}}
                                         @else
-                                        -
+                                         Sin referido
                                         @endif
                                     </td>
                                     <td>{{$orden->amount}}</td>

@@ -78,7 +78,7 @@
     },
     {
       "name": "De Interés",
-      "icon": "sidebar",
+      "icon": "file-text",
       "slug": "/",
       "submenu": [
         {
@@ -117,7 +117,7 @@
     {
       "url": "education/",
       "name": "Educación",
-      "icon": "shopping-cart",
+      "icon": "bar-chart-2",
       "slug": "education.index"
     },
     {
