@@ -25,7 +25,7 @@
                 <div class="card-body text-center">
 
                     <div class="col-12 text-center logobinari">
-                        <img src="{{asset('assets/img/pandora.png')}}" class="mb-2" alt="logo" width="200">
+                    <img src="{{asset('img/logo/blackbox.png')}}" style="width: 150px;">
                     </div>
 
                     <div class="card-text mt-2">

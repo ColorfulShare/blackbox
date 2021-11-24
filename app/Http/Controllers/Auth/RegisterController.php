@@ -98,8 +98,7 @@ class RegisterController extends Controller
         ];
 
         $user = User::create([
-
-
+            
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
             'username' => $data['username'],
@@ -109,11 +108,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'referral_code' => User::getUniqueReferralCode(),
-            'referred_id' => $this->getReferredBy(),
+            'referred_id' => $data['referred_id'],
             'referral_admin_red_code'=>User::getUniqueAdminRedReferralCode(),
             'referred_red_by'=> $this->getReferredAdmiBy(),
+            
         ]);
-
+      
         /* $encriptado = Crypt::encryptString($user->id);
         $ruta = route('checkemail', $encriptado);
 
