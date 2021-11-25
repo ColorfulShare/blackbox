@@ -11,7 +11,7 @@
 <body style="background-color: #011E0C;">
     
 	<div style="text-align: center;">    	
-        <img src="{{asset('assets/img/pandora.png')}}" style="width: 200px;">
+	<img src="{{asset('img/logo/blackbox.png')}}" style="width: 150px;">
     </div>	
 
 
