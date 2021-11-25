@@ -44,9 +44,9 @@ class OrdenPurchasesController extends Controller
             $user = User::findOrFail($orden->user_id);
             
             if($request->status == '2'){
-
+                
                 $inv = $user->inversionMasAlta();
-            
+                
                 if(isset($inv)){
                     
                     $inv->invested += $orden->amount;
@@ -60,7 +60,7 @@ class OrdenPurchasesController extends Controller
                     $user->status = '1';
                     $user->expired_status = Carbon::now()->addYear(1);
                     $user->save();
-                
+                    
                     $this->inversionController->store($orden, $user);
 
                     $user->notify(new userActivacionExitosa());

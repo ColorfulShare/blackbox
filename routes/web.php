@@ -178,6 +178,9 @@ Route::middleware('auth')->group(function () {
         Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
         Route::patch('/profile-user-Update',[UserController::class, 'ProfileUpdate'])->name('profile-user.update');
 
+        //AGENTE
+        Route::get('agente/invertir', [UserController::class, 'agenteInvertir'])->name('user.agenteInvertir');
+
     });
 
     //EDUCACION USER

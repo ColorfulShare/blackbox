@@ -140,9 +140,23 @@ class DashboardController extends Controller
       try {
         DB::beginTransaction();
         
+        if( $request->type == 'red'){
+          
+          $request->validate([
+            'monto' => 'required|numeric|min:500|max:5000'
+          ]);
+          
+        }elseif($request->type == 'profesional'){
+          $request->validate([
+            'monto' => 'required|numeric|min:5000'
+          ]);
+        }
+        
         $user = Auth::User();
         $user->type = $request->type;
+        
         $user->save();
+        
         
         $orden = OrdenPurchase::create([
             'user_id' => $user->id,

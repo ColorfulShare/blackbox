@@ -68,13 +68,14 @@ class LiquidationController extends Controller
         }
         try {
             if ($validate) {
+                DB::beginTransaction();
                 $users = Auth::user();
                 $idliquidation = $request->idliquidation;
                 $liquidation = Liquidation::find($idliquidation);
                 $accion = 'No Procesada';
 
                 if ($this->reversarRetiro30Min()) {
-                    return redirect()->back()->with('msj-danger', 'El tiempo limite fue excedido');
+                    return redirect()->back()->with('danger', 'El tiempo limite fue excedido');
                 }
 
                 if (session()->has('intentos_fallidos')) {
@@ -91,7 +92,7 @@ class LiquidationController extends Controller
 
                 if (!$this->doubleAuthController->checkCode($liquidation->user_id, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
                     session(['intentos_fallidos' => (session('intentos_fallidos') + 1)]);
-                    return redirect()->back()->with('msj-danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
+                    return redirect()->back()->with('danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
                 }
 
                 $accion = 'No Procesada';
@@ -139,13 +140,16 @@ class LiquidationController extends Controller
                     'descripcion' => $concepto,
                     'status' => 0,
                     'tipo_transaction' => 1,
-                ];
+                    'percentage' => 0
+                ];  
+                
+                Wallet::create($arrayWallet);
 
-                $this->walletController->saveWallet($arrayWallet);
-
-                return redirect()->back()->with('msj-success', 'La Liquidacion fue ' . $accion . ' con exito');
+                DB::commit();
+                return back()->with('success', 'La Liquidacion fue ' . $accion . ' con exito');
             }
         } catch (\Throwable $th) {
+            DB::rollback();
             Log::error('Liquidaction - saveLiquidation -> Error: ' . $th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }

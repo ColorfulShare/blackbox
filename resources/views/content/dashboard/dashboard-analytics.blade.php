@@ -291,80 +291,24 @@
   </div>
 
   <!--  -->
-  <div class="row">
+  <div class="row container">
     <div class="col-lg-4 col-12">
       <div class="card ">
         <div class="card-header d-flex align-items-center text-right">
-            <h3 class=""><b>Conviertete en :</b></h3>
+            <h3 class=""><b>Conviertete en profesional o agente de red:</b></h3>
         </div>
         <div class="row g-0 card-header align-items-center h-100">
 
-          <div class="col">
-            <div class="d-grid gap-2">
-              <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRed">
-                  Agente red
-              </a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="d-grid gap-2">
-              <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalProfesional">
-                Profesional
-              </a>
-            </div>
+          <div class="col-12">
+            <a class="btn btn-primary" href="{{route('user.agenteInvertir')}}">
+              Invertir
+          </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal Agente de red-->
-  <div class="modal fade" id="modalRed" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Agente de red</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="{{route('dashboard.convertir')}}" method="POST">
-        @csrf
-        <div class="modal-body">
-          <input type="hidden" name="type" value="red">
-          <label for="monto">Monto a invertir:</label>
-          <input type="number" id="monto" name="monto" class="form-control" required >
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal profesional-->
-  <div class="modal fade" id="modalProfesional" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Profesional</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="{{route('dashboard.convertir')}}" method="POST">
-        @csrf
-        <div class="modal-body">
-          <input type="hidden" name="type" value="profesional">
-          <label for="monto2">Monto a invertir:</label>
-          <input type="number" id="monto2" class="form-control" name="monto" required >
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
   <!--/ List DataTable -->
 </section>
 <!-- Dashboard Analytics end -->

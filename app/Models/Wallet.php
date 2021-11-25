@@ -11,7 +11,7 @@ class Wallet extends Model
 
     protected $fillable = [
         'user_id', 'amount', 'percentage', 'descripcion',
-        'status', 'inversion_id'
+        'status', 'inversion_id', 'referred_id', 'tipo_transaction'
     ];
 
     public function user()
@@ -36,5 +36,14 @@ class Wallet extends Model
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
-
+    public function status()
+    {
+        if ($this->status == '0'){
+            return "Esperando";
+        }elseif($this->status == '1'){
+            return "Aprobado";
+        }elseif($this->status == '2'){
+            return "Rechazado";
+        }
+    }
 }

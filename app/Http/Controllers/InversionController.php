@@ -118,7 +118,8 @@ class InversionController extends Controller
                 'descripcion' => 'Bono unilevel nivel '.$user->nivel. ' del usuario '.$usuario->email,
                 'status' => 0,
                 'percentage' => 0,
-                'inversion_id' => $idInversion
+                'inversion_id' => $idInversion,
+                'referred_id' => $usuario->id
             ]);
 
         }
@@ -206,7 +207,8 @@ class InversionController extends Controller
                 'descripcion' => 'Bono Directo del usuario '.$user->email,
                 'inversion_id' => $inversion->id,
                 'percentage' => 0.03,
-                'status' => 0
+                'status' => 0,
+                'referred_id' => $user->id
             ]);
 
             DB::commit();

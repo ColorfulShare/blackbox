@@ -239,4 +239,9 @@ class UserController extends Controller
 
         return view('/content/pages/page-profile', ['breadcrumbs' => $breadcrumbs], compact('user','referidos'));
     }
+
+    public function agenteInvertir()
+    {
+        return view('user.agente-form');
+    }
 }

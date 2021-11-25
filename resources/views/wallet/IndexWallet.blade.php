@@ -1,6 +1,17 @@
 @extends('layouts/contentLayoutMaster')
 
 
+@section('title', 'Retiros')
+
+@section('vendor-style')
+  <!-- vendor css files -->
+  <link rel="stylesheet" href="{{ asset(mix('vendors/css/tables/datatable/dataTables.bootstrap5.min.css')) }}">
+@endsection
+
+@section('page-style')
+  <!-- Page css files -->
+
+@endsection
 {{-- contenido --}}
 @section('content')
 
@@ -29,12 +40,13 @@
                 <div class="card-body card-dashboard p-0">
                     <div class="table-responsive">
                         <h3 class=" p-1">Billetera</h3>
-                        <table class="table nowrap scroll-horizontal-vertical myTable2">
+                        <table class="table  myTable">
                             <thead>
 
                                 <tr class="text-center text-dark text-uppercase pl-2">
                                     <th>Fecha</th>
                                     <th>Descripción</th>
+                                    <th>Estado</th>
                                     <th>Email</th>
                                     <th>Monto</th>
                                 </tr>
@@ -45,20 +57,12 @@
                                 <tr class="text-center">
                                     <td>{{date('d-m-Y', strtotime($orden->created_at));}}</td>
                                     <td>
-                                        <div class="d-flex flex-column">
-
-                                            <p>
-                                                @if ($orden->status == '0')
-                                                <span class="dot enespera"></span> En Espera
-                                                @elseif($orden->status == '1')
-                                                <span class="dot completado"></span> Completado
-                                                @elseif($orden->status >= '2')
-                                                <span class="dot cancelado"></span> Cancelado
-                                                @endif
-                                                <br>
-                                                {{$orden->descripcion}}
-                                            </p>
-                                        </div>
+                                        {{$orden->descripcion}}        
+                                    </td>
+                                    <td>
+                                        <button type="button"
+                                            class="@if ($orden->status == '0') btn btn-warning text-white text-bold-600 @elseif($orden->status == '1') btn btn-success text-white text-bold-600 @elseif($orden->status == '3') btn btn-danger text-white text-bold-600 @endif">{{$orden->status()}}
+                                        </button>
                                     </td>
                                     <td>
                                         @if(isset($orden->getWalletReferred))
@@ -79,6 +83,21 @@
     </div>
 </div>
 
+@endsection
 
-
+@section('vendor-script')
+  <!-- vendor files -->
+  <script src="{{ asset(mix('vendors/js/tables/datatable/jquery.dataTables.min.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
+  <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.responsive.min.js')) }}"></script>
+ 
+@endsection
+@section('page-script')
+    <script>
+        //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [[ 0, "desc" ]],
+    })
+    </script>
 @endsection
