@@ -74,14 +74,24 @@
 
         $("label[for='" + $(input).attr('id') + "']").text(input.files[0].name);
 
-        // View the original file
-
         let originalFileURL = URL.createObjectURL(originalFile);
         $('#c_pdf').remove();
         $("#display-pdf").append(`<object data="${originalFileURL}"
-        type="application/pdf" id="c_pdf" width="100%" height="850px"></object>`)
+        type="application/pdf" id="c_pdf" width="100%" height="600px"></object>`)
      
     };
+
+        // preview video
+    $(document).on("change", ".file_multi_video", function (input) {
+        // var $source = $('#preview_vid');
+        // $source[0].src = URL.createObjectURL(this.files[0]);
+        // $source.parent()[0].load();
+
+        input = $(".file_multi_video").val();
+        console.log(input);
+        $("label[for='mp4']").text(input);
+
+    });
     
     // select document
     $(document).ready(function () {
@@ -107,7 +117,7 @@
                     '<div class="form-group">' +
                     '<div class="row d-flex justify-content-center"><div class="col-12 d-flex justify-content-center my-2"><label class="btn btn-primary btn-lg btn-block" for="mp4">Selecciona un video</label></div>' +
                     '<div class="col-12"><input type="file" name="file" id="mp4" class="file_multi_video form-control d-none" accept="video/mp4,video/x-m4v,video/*"></div></div>' +
-                    '<div class="row"><div class="col-12 d-flex justify-content-center p-3"><video width="800" muted autoplay controls><source src="#" id="preview_vid">Your browser does not support HTML5 video.</video></div></div>' +
+                    '<div class="row"><div class="col-12 d-flex justify-content-center p-3"></div></div>' +
                     '</div>');
             }
 

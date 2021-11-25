@@ -21,6 +21,14 @@
     #tracker{
       width: 30%;
     }
+
+
+
+    .fit-image{
+width: 100%;
+object-fit: cover;
+height: 300px; /* only if you want fixed height */
+}
   </style>
   @endsection
 <script>
@@ -66,9 +74,27 @@ function linkAdmin(){
 <!-- Dashboard Analytics Start -->
 <section id="dashboard-analytics">
   <div class="row match-height">
+
+
+       <!-- Greetings Card starts -->
+       <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="card-body text-center banner">
+            @if ($banner != null)
+            @foreach ($banner as $item)
+            <img src="{{asset('storage/banner/'.$item->banner)}}" class="img-responsive fit-image" alt="">
+            @endforeach
+            @else
+            <img src="{{asset('img/logo/diseño_w.jpg')}}" class="img-responsive fit-image" alt="">
+            @endif
+          </div>
+        </div>
+      </div>
+      <!-- Greetings Card ends -->
+
     <!-- Greetings Card starts -->
     <div class="col-lg-6 col-md-12 col-sm-12">
-      <div class="card ">
+      <div class="card banner">
         <div class="card-body text-center">
           <div class="card-header d-flex align-items-center text-right pb-0 pt-0 white">
             <h2 class="mt-1 mb-0"><b>Ganacia Actual</b></h2>

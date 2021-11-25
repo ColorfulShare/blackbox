@@ -61,7 +61,9 @@
     </table>
 </div>
 
-@push('js')
+@endsection
+
+@section('vendor-script')
 <script>
     function modal($data, $url) {
 
@@ -81,7 +83,16 @@
     }
 
 </script>
+<script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
+<script>
+    //datataables ordenes
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [
+            [0, "desc"]
+        ],
+    })
 
-@endpush
-
+</script>
 @endsection

@@ -14,7 +14,8 @@
 
         <div class="card-content">
             <div class="card-body">
-                <form action="{{route('news.update', $news->id)}}" id="validate" method="POST" enctype="multipart/form-data">
+                <form action="{{route('news.update', $news->id)}}" id="validate" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
 
@@ -39,7 +40,8 @@
                         <div class="col-12 mt-2">
                             <div class="form-group">
                                 <label class="form-label" for="description"><b>Contenido de la noticia</b></label>
-                                <textarea name="description" id="tiny" class="form-control" cols="30" rows="5">{{ $news->description }}</textarea>
+                                <textarea name="description" id="tiny" class="form-control" cols="30"
+                                    rows="5">{{ $news->description }}</textarea>
                             </div>
                         </div>
 
@@ -48,10 +50,12 @@
                             <div class="form-group">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-12 d-flex justify-content-center my-2">
-                                        <label class="btn btn-primary btn-lg btn-block" for="banner">Selecciona una imagen de portada</label>
+                                        <label class="btn btn-primary btn-lg btn-block" for="banner">Selecciona una
+                                            imagen de portada</label>
                                     </div>
                                     <div class="col-12">
-                                        <input type="file" name="banner" id="banner" class="form-control d-none" onchange="previewFile(this, 'photo_preview')" accept="image/*">
+                                        <input type="file" name="banner" id="banner" class="form-control d-none"
+                                            onchange="previewFile(this, 'photo_preview')" accept="image/*">
                                     </div>
                                 </div>
 
@@ -79,18 +83,40 @@
 @endsection
 
 @section('vendor-script')
-<!-- vendor files -->
-<script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
-<script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
-<script src="{{ asset('assets/js/forms/form-tinymce.min.js') }}"></script>
 
 <script>
-    $(document).ready(function() {
-        @if($news->banner != NULL)
-            previewPersistedFile("{{asset('storage/news-banner/'.$news->banner)}}", 'photo_preview');
+    $(document).ready(function () {
+        @if($news-> banner != NULL)
+        previewPersistedFile("{{asset('storage/news-banner/'.$news->banner)}}", 'photo_preview');
         @endif
     });
+
+    // preview imagen
+    function previewFile(input, preview_id) {
+
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#" + preview_id).attr('src', e.target.result);
+                $("#" + preview_id).css('height', '100%');
+                $("#" + preview_id).parent().parent().removeClass('d-none');
+            }
+            $("label[for='" + $(input).attr('id') + "']").text(input.files[0].name);
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function previewPersistedFile(url, preview_id) {
+        $("#" + preview_id).attr('src', url);
+        $("#" + preview_id).css('height', '100%');
+        $("#" + preview_id).parent().parent().removeClass('d-none');
+    }
+
 </script>
+
+<script src="{{ asset('assets/js/forms/form-tinymce.min.js') }}"></script>
 
 <script>
     // textarea

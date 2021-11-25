@@ -15,6 +15,7 @@ use App\Notifications\userActivacionExitosa;
 use App\Models\OrdenPurchase;
 use App\Models\Inversion;
 use App\Models\Ticket;
+use App\Models\Banner;
 
 class DashboardController extends Controller
 {
@@ -29,6 +30,7 @@ class DashboardController extends Controller
     $linkReferido = route('referral.link', ['referralCode' => auth()->user()->referral_code]);
     $linkAdminRed = route('referral.Admin.Red.link', ['referral_admin_red_code' => auth()->user()->referral_admin_red_code]);
 
+    $banner = Banner::where('id', '1')->first();
     if(Auth::user()->admin == '1'){
 
       $users = User::orderBy('id', 'desc')->where('status', '1')->whereHas('inversiones', function($inversion){
@@ -68,10 +70,10 @@ class DashboardController extends Controller
     $user = Auth::user();
 
     if($user->admin != 1){
-      return view('/content/dashboard/dashboard-analytics', compact('porcentaje','linkReferido','linkAdminRed', 'user'));
+      return view('/content/dashboard/dashboard-analytics', compact('porcentaje','linkReferido','linkAdminRed', 'user', 'banner'));
     }else{
       // El dashboard del admin
-      return view('/admin/dashboard/index', compact('porcentaje', 'users','linkReferido','linkAdminRed', 'user', 'ordenes', 'listOrdenes', 'estadisticas'));
+      return view('/admin/dashboard/index', compact('porcentaje', 'users','linkReferido','linkAdminRed', 'user', 'ordenes', 'listOrdenes', 'estadisticas', 'banner'));
     }
   }
 

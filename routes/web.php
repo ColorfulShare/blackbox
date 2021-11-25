@@ -28,6 +28,7 @@ use App\Http\Controllers\InversionController;
 use App\Http\Controllers\ImpersonateController;
 use App\Http\Controllers\LiquidationController;
 use App\Http\Controllers\TicketsController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\RendimientoController;
@@ -132,14 +133,24 @@ Route::middleware('auth')->group(function () {
           Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
         });
 
-        //NOTICIAS
-        Route::group(['prefix' => 'news'], function () {
+          //NOTICIAS
+          Route::group(['prefix' => 'news'], function () {
             Route::get('list', [NewsController::class, 'list'])->name('news.list');
             Route::get('create', [NewsController::class, 'create'])->name('news.create');
             Route::post('store', [NewsController::class, 'store'])->name('news.store');
             Route::get('edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
             Route::delete('destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
             Route::patch('update/{id}', [NewsController::class, 'update'])->name('news.update');
+        });
+
+        //BANNER
+        Route::group(['prefix' => 'banner'], function () {
+            Route::get('list', [BannerController::class, 'list'])->name('banner.list');
+            Route::get('create', [BannerController::class, 'create'])->name('banner.create');
+            Route::post('store', [BannerController::class, 'store'])->name('banner.store');
+            Route::get('edit/{id}', [BannerController::class, 'edit'])->name('banner.edit');
+            Route::delete('destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
+            Route::patch('update/{id}', [BannerController::class, 'update'])->name('banner.update');
         });
 
         //DOCUMENTOS
@@ -205,6 +216,11 @@ Route::middleware('auth')->group(function () {
         Route::post('convertir', [DashboardController::class, 'convertir'])->name('dashboard.convertir');
     });
 
+
+    //NOTICIAS
+      Route::group(['prefix' => 'news'], function () {
+        Route::get('show/{id}', [NewsController::class, 'show'])->name('news.show');
+    });
 
     //DOCUMENTOS
     Route::group(['prefix' => 'documents'], function () {
