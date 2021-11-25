@@ -54,7 +54,7 @@
 
                                                             {{-- admin --}}
                                                             <div class="chat">
-                                                                <div class="chat-body">
+                                                                <div class="chat-body" style="background:rgb(0, 0, 255,0.1)">
                                                                     <div class="chat-content">
 
                                                                         <div class="email-admin mb-1">{{$admin}}</div>
@@ -69,7 +69,7 @@
                                                             {{-- user --}}
                                                             @if ($item->type == 0)
                                                             <div class="chat chat-left">
-                                                                <div class="chat-body">
+                                                                <div class="chat-body" style="background:rgb(0, 0, 255,0.1)">
                                                                     <div class="chat-content">
                                                                         <div class="name-user mb-1">{{ $item->getUser->firstname}} {{$item->getUser->lastname}}</div>
                                                                         <p>{{ $item->message }}</p>
@@ -80,7 +80,7 @@
                                                             {{-- admin --}}
                                                             @elseif ($item->type == 1)
                                                             <div class="chat">   
-                                                                <div class="chat-body">
+                                                                <div class="chat-body" style="background:rgb(0, 0, 255,0.1)">
                                                                     <div class="chat-content">
                                                                         <div class="name-admin mb-1">{{ $item->getAdmin->firstname}} {{$item->getAdmin->lastname}}</div>
                                                                         <p>{{ $item->message }}</p>

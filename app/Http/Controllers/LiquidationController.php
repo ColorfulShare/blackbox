@@ -26,7 +26,8 @@ class LiquidationController extends Controller
     }
 
     public function withdraw()
-    {
+    { 
+      
         $this->reversarRetiro30Min();
         return view('wallet.withdraw');
     }
@@ -324,6 +325,7 @@ class LiquidationController extends Controller
         }
     }
     public function realizados(){
+       
         $liquidaciones = Liquidation::where('status', 1)->get();
         foreach ($liquidaciones as $liqui) {
             $liqui->fullname = $liqui->getUserLiquidation->username;
@@ -342,15 +344,14 @@ class LiquidationController extends Controller
     public function retiroHistory()
     {
         try {
-            $users = Auth::user();
+
             $id = Auth::id();
             $liquidaciones = Liquidation::where('user_id', $id)->get();
-            foreach ($liquidaciones as $liqui) {
-                $liqui->fullname = $liqui = $users->fullName();
-            }
+            
             return view('withdraw.retiros', compact('liquidaciones'));
         } catch (\Throwable $th) {
             Log::error('Liquidaction - retiroHistory -> Error: '.$th);
             abort(403, "Ocurrio un error, contacte con el administrador");
-        }}
+        }
+    }
 }

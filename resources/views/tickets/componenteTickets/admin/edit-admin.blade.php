@@ -76,7 +76,7 @@
                                     <div class="col-12 mt-2 mb-2">
                                         <label class="form-label " for="note"><b>Chat con el usuario</b></label>
                                         @if(count($message) > 0 )
-                                            <div class="">
+                                            <div class="chat-body clearfix">
                                                 <div class="col-12 mx-auto">
                                                     <div class="card fondo">
                                                         <div class="card-body chat-care rounded">
@@ -85,11 +85,11 @@
                                                                 {{-- user --}}
                                                                 @if ($item->type == 0)
                                                                 <li class="agent clearfix">
-                                                                    <div class="chat-body clearfix">
+                                                                    <div class="chat-body clearfix" style="background:rgb(0, 0, 255,0.1)">
                                                                         <div class="header clearfix ">
                                                                             <strong class="primary-font">{{ $item->getUser->firstname}} {{$item->getUser->lastname}}</strong>
                                                                         </div>
-                                                                        <p class="primary-font ">
+                                                                        <p class="primary-font " >
                                                                             {{ $item->message }}
                                                                         </p>
                                                                     </div>
@@ -97,7 +97,7 @@
                                                                 {{-- admin --}}
                                                                 @elseif ($item->type == 1)
                                                                 <li class="admin clearfix">
-                                                                    <div class="chat-body clearfix">
+                                                                    <div class="chat-body clearfix" style="background:rgb(0, 0, 255,0.1)">
                                                                         <div class="header clearfix ">
                                                                             <strong class="right primary-font">{{ $item->getAdmin->firstname}} {{$item->getAdmin->lastname}}</strong>
                                                                         </div>
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" class="col-12 btn btn-danger mb-1 waves-effect waves-light float-right">Enviar Ticket</button>
+                                    <button type="submit" class="col-12 btn btn-primary mb-1 waves-effect waves-light float-right">Enviar Ticket</button>
                                 </div>
                             </div>
                         </form>
