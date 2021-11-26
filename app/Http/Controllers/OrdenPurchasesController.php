@@ -66,6 +66,11 @@ class OrdenPurchasesController extends Controller
                     $user->notify(new userActivacionExitosa());
                 }
 
+                if($orden->convertir != null){
+                    $user->type = $orden->convertir;
+                    $user->save();
+                }
+
             }elseif($request->status == '3'){
 
                 $user->notify(new userActivacionRechazada());

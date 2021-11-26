@@ -13,7 +13,8 @@ class OrdenPurchase extends Model
 
     protected $fillable = [
         'user_id','amount', 'fee', 'comprobante',
-        'status', 'package_id', 'hash', 'type_payment', 'genero_comision', 'activacion'
+        'status', 'package_id', 'hash', 'type_payment', 'genero_comision', 'activacion',
+        'convertir'
     ];
 
     public function user()

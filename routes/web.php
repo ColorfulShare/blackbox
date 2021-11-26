@@ -244,6 +244,44 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'inversiones'], function () {
         Route::get('/', [InversionController::class, 'index'])->name('inversiones.index');
     });
+
+    //Ruta de los Tickets
+    Route::group(['prefix' => 'tickets'], function () {
+        Route::get('ticket-create', [TicketsController::class, 'create'])->name('ticket.create');
+        Route::post('ticket-store', [TicketsController::class, 'store'])->name('ticket.store');
+
+        // Para el usuario
+        Route::get('ticket-edit-user/{id}', [TicketsController::class, 'editUser'])->name('ticket.edit-user');
+        Route::patch('ticket-update-user/{id}', [TicketsController::class, 'updateUser'])->name('ticket.update-user');
+        Route::get('ticket-list-user', [TicketsController::class, 'listUser'])->name('ticket.list-user');
+        Route::get('ticket-show-user/{id}', [TicketsController::class, 'showUser'])->name('ticket.show-user');
+
+        // Para el Admin
+        Route::get('ticket-edit-admin/{id}', [TicketsController::class, 'editAdmin'])->name('ticket.edit-admin');
+        Route::patch('ticket-update-admin/{id}', [TicketsController::class, 'updateAdmin'])->name('ticket.update-admin');
+        Route::get('ticket-list-admin', [TicketsController::class, 'listAdmin'])->name('ticket.list-admin');
+        Route::get('ticket-show-admin/{id}',  [TicketsController::class, 'showAdmin'])->name('ticket.show-admin');
+    });
+
+    /* Wallets */
+    Route::group(['prefix' => 'wallet'], function () {
+        Route::get('IndexWallet', [WalletController::class, 'indexWallet'])->name('wallet.IndexWallet');
+
+        Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
+
+        Route::post('/process', [LiquidationController::class, 'procesarLiquidacion'])->name('settlement.process');
+
+        Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
+    });
+
+
+    /* Withdraw */
+    Route::group(['prefix' => 'withdraw'], function () {
+
+        Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
+        Route::get('/Realizados', [LiquidationController::class, 'realizados'])->name('withdraw.realizados');
+        Route::get('retiros', [LiquidationController::class, 'retiroHistory'])->name('withdraw.retiros');
+    });
 });
 //BONOSS
 Route::get('/bonoContruccion', [InversionController::class, 'bonoContruccion'])->name('bonoContruccion');
@@ -378,53 +416,11 @@ Route::group(['prefix' => 'form'], function () {
 });
 /* Route Forms */
 
-//Ruta de los Tickets
-Route::group(['prefix' => 'tickets'], function () {
-    Route::get('ticket-create', [TicketsController::class, 'create'])->name('ticket.create');
-    Route::post('ticket-store', [TicketsController::class, 'store'])->name('ticket.store');
-
-    // Para el usuario
-    Route::get('ticket-edit-user/{id}', [TicketsController::class, 'editUser'])->name('ticket.edit-user');
-    Route::patch('ticket-update-user/{id}', [TicketsController::class, 'updateUser'])->name('ticket.update-user');
-    Route::get('ticket-list-user', [TicketsController::class, 'listUser'])->name('ticket.list-user');
-    Route::get('ticket-show-user/{id}', [TicketsController::class, 'showUser'])->name('ticket.show-user');
-
-    // Para el Admin
-    Route::get('ticket-edit-admin/{id}', [TicketsController::class, 'editAdmin'])->name('ticket.edit-admin');
-    Route::patch('ticket-update-admin/{id}', [TicketsController::class, 'updateAdmin'])->name('ticket.update-admin');
-    Route::get('ticket-list-admin', [TicketsController::class, 'listAdmin'])->name('ticket.list-admin');
-    Route::get('ticket-show-admin/{id}',  [TicketsController::class, 'showAdmin'])->name('ticket.show-admin');
-});
-
-
-
-
 /* Route Tables */
 Route::group(['prefix' => 'table'], function () {
     Route::get('', [TableController::class, 'table'])->name('table');
     Route::get('datatable/basic', [TableController::class, 'datatable_basic'])->name('datatable-basic');
     Route::get('datatable/advance', [TableController::class, 'datatable_advance'])->name('datatable-advance');
-});
-
-
-/* Wallets */
-Route::group(['prefix' => 'wallet'], function () {
-    Route::get('IndexWallet', [WalletController::class, 'indexWallet'])->name('wallet.IndexWallet');
-
-    Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
-
-    Route::post('/process', [LiquidationController::class, 'procesarLiquidacion'])->name('settlement.process');
-
-    Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
-});
-
-
-/* Withdraw */
-Route::group(['prefix' => 'withdraw'], function () {
-
-    Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
-    Route::get('/Realizados', [LiquidationController::class, 'realizados'])->name('withdraw.realizados');
-    Route::get('retiros', [LiquidationController::class, 'retiroHistory'])->name('withdraw.retiros');
 });
 
 /* Route Tables */

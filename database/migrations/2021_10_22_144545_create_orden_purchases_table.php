@@ -25,6 +25,7 @@ class CreateOrdenPurchasesTable extends Migration
             $table->enum('status', [0, 1, 2, 3])->default(0)->comment('0 - En Espera, 1 - finalizado, 2 - Aprobado, 3 Rechazada');
             $table->boolean('genero_comision')->default(1);
             $table->enum('activacion', ['real', 'manual'])->default('real');
+            $table->enum('convertir', ['red', 'profesional'])->nullable();
             $table->timestamps();
         });
     }

@@ -154,18 +154,15 @@ class DashboardController extends Controller
           ]);
         }
         
-        $user = Auth::User();
-        $user->type = $request->type;
-        
-        $user->save();
-        
+        $user = Auth::User();   
         
         $orden = OrdenPurchase::create([
             'user_id' => $user->id,
             'amount' => $request->monto,
             'fee' => 0,
             'package_id' => null,
-            'status' => '2'
+            'status' => '2',
+            'convertir' => $request->type
         ]);
 
         
