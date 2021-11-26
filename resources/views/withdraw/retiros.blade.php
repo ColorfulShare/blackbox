@@ -39,7 +39,7 @@
                                                 {{$liqui->feed}}
                                             @endif   
                                         </td>
-                                        <td>@if($liqui->hash === NULL)
+                                        <td>@if($liqui->hash === '')
                                                 -
                                             @else
                                                 {{$liqui->hash}}
