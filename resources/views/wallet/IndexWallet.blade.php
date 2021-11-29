@@ -23,7 +23,7 @@
             </div>
             
             <div class="d-flex">
-                <h1 class="px-2"><b>$ {{$saldoDisponible}}</b></h1>
+                <h1 class="px-2"><b>$ {{ number_format($saldoDisponible, 2, ',', '.')}}</b></h1>
             </div>
 
             @if(!Request::post('user_id'))

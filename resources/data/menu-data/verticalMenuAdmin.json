@@ -136,7 +136,7 @@
     {
       "url": "/tickets/ticket-list-admin",
       "name": "Tickets",
-      "icon": "alert-circle",
+      "icon": "activity",
       "slug": ""
     },
     {
