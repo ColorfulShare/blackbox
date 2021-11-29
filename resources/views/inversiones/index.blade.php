@@ -27,8 +27,8 @@
                                     <th>#</th>
                                     @if(Auth::user()->admin == 1)<th>Correo</th>@endif
                                     <th>Inversion</th>
-                                    <th>Ganancia</th>
-                                    <th>Capital</th>
+                                   {{-- <th>Ganancia</th> --}}
+                                   {{-- <th>Capital</th> --}}
                                     <th>Estado</th>
                                     <th>Fecha</th>
                                 </tr>
@@ -41,8 +41,8 @@
                                     <td>{{$inversion->id}}</td>
                                     @if(Auth::user()->admin == 1)<td>{{$inversion->user->email}}</td>@endif
                                     <td>$ {{number_format($inversion->invested, 2)}}</td>
-                                    <td>$ {{number_format($inversion->gain, 2)}}</td>
-                                    <td>{{number_format($inversion->capital,2)}} </td>
+                                  {{-- <td>$ {{number_format($inversion->gain, 2)}}</td> --}}
+                                {{-- <td>{{number_format($inversion->capital,2)}} </td> --}}
                                     <td>
                                         @if($inversion->status == 1)
                                             Activo
