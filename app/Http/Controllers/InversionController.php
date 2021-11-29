@@ -61,19 +61,22 @@ class InversionController extends Controller
         try {
 
             DB::beginTransaction();
-            $inversion = Inversion::create([
-                'user_id'=> $ordenpurchase->user_id,
-                //'package_id'=>$ordenpurchase->package_id,
-                //'orden_purchases_id'=>$ordenpurchase->id,
-                'invested'=>$ordenpurchase->amount,
-                'capital'=>$ordenpurchase->amount,
-                'gain'=>0,
-                'status'=>1
-            ]);
+            if($ordenpurchase->convertir != null){
+                
+                $inversion = Inversion::create([
+                    'user_id'=> $ordenpurchase->user_id,
+                    //'package_id'=>$ordenpurchase->package_id,
+                    //'orden_purchases_id'=>$ordenpurchase->id,
+                    'invested'=>$ordenpurchase->amount,
+                    'capital'=>$ordenpurchase->amount,
+                    'gain'=>0,
+                    'status'=>1
+                ]);
 
-            $ordenpurchase->inversion_id = $inversion->id;
-            $ordenpurchase->save();
-            
+                $ordenpurchase->inversion_id = $inversion->id;
+                $ordenpurchase->save();
+            }
+
             if($comision == true){
                 $users = $this->getDataFather($user, 6);
     
@@ -83,6 +86,7 @@ class InversionController extends Controller
             //BONO DIRECTO
             
             if(isset($user->refirio) && $user->refirio->type == 'red'){
+                
                 $this->bonoDirecto($inversion, $user);
             }
             
@@ -115,7 +119,7 @@ class InversionController extends Controller
             Wallet::create([
                 'user_id' => $user->id,
                 'amount' => $monto,
-                'descripcion' => 'Bono unilevel nivel '.$user->nivel. ' del usuario '.$usuario->email,
+                'descripcion' => 'Bono unilevel nivel '.$user->nivel,
                 'status' => 0,
                 'percentage' => 0,
                 'inversion_id' => $idInversion,
@@ -177,9 +181,10 @@ class InversionController extends Controller
                     Wallet::create([
                         'user_id' => $user->refirio->id,
                         'amount' => $wallet->amount * 0.10,
-                        'descripcion' => 'Bono Construnccion del usuario '.$user->email,
+                        'descripcion' => 'Bono Construnccion',
                         'status' => 0,
                         'percentage' => 0.10,
+                        'referred_id' => $user->id
                     ]);
                 }
             }
@@ -204,7 +209,7 @@ class InversionController extends Controller
             Wallet::create([
                 'user_id' => $user->refirio->id,
                 'amount' => $inversion->invested * 0.03,
-                'descripcion' => 'Bono Directo del usuario '.$user->email,
+                'descripcion' => 'Bono Directo',
                 'inversion_id' => $inversion->id,
                 'percentage' => 0.03,
                 'status' => 0,
