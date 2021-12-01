@@ -43,6 +43,7 @@ class LiquidationController extends Controller
     public function edit($id)
     {
         try {
+
             $comiciones = Wallet::where([
                 ['liquidation_id', '=', $id],
             ])->get();
@@ -58,6 +59,7 @@ class LiquidationController extends Controller
 
             $detalles = [
                 'idliquidation' => $id,
+                'referred_id' => $user->referred_id,
                 'user_id' => $user->id,
                 'fullname' => $user->fullname(),
                 'comisiones' => $comiciones,
@@ -72,6 +74,8 @@ class LiquidationController extends Controller
     }
 
 
+
+
     /**
      * Permite elegir que opcion hacer con las solicitud de retiro
      *
@@ -81,16 +85,16 @@ class LiquidationController extends Controller
     public function procesarSocilitud(Request $request)
     {
         try {
-
+            $users = Auth::user();
             $idliquidation = $request->idliquidation;
             $liquidation = Liquidation::find($idliquidation);
 
-            $fullname = auth()->user()->fullname();
+            $fullname = $users->fullname();
 
             $iduser = auth()->user()->id;
             $total = $liquidation->total;
 
-            $fullname = $request->fullname();
+            $fullname = $users->fullname();
             $iduser = $request->user_id;
             $total = str_replace(',', '.', str_replace('.', '', $request->total));
             $total = round($total, 2);
@@ -103,8 +107,6 @@ class LiquidationController extends Controller
                 $this->aprovarLiquidacion($idliquidation, $request->hash, $request->comentario);
             }
 
-
-
             $concepto = 'Liquidacion del usuario ' . $fullname . ' por un monto de ' . $total;
             $referred_id = User::find($iduser)->referred_id;
             $arrayWallet = [
@@ -114,7 +116,7 @@ class LiquidationController extends Controller
                 'descripcion' => $concepto,
                 'status' => 0,
                 'tipo_transaction' => 1,
-                'porcentage' => 0
+                'percentage' => 0
             ];
 
             Wallet::create($arrayWallet);
@@ -170,43 +172,7 @@ class LiquidationController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        try {
-            $comiciones = Wallet::where([
-                ['status', '=', 0],
-                ['liquidation_id', '=', null],
-                ['tipo_transaction', '=', 0],
-                ['user_id', '=', $id]
-            ])->get();
 
-            foreach ($comiciones as $comi) {
-                $fecha = new Carbon($comi->created_at);
-                $comi->fecha = $fecha->format('Y-m-d');
-                $referido = User::find($comi->referred_id);
-                $comi->referido = ($referido != null) ? $referido->only('fullname') : 'Usuario no Disponible';
-            }
-
-            $user = User::find($id);
-
-            $detalles = [
-                'user_id' => $id,
-                'fullname' => $user->fullname(),
-                'comisiones' => $comiciones,
-                'total' => number_format($comiciones->sum('amount'), 2, ',', '.')
-            ];
-
-            return json_encode($detalles);
-        } catch (\Throwable $th) {
-            Log::error('Liquidation - show -> Error: ' . $th);
-            abort(403, "Ocurrio un error, contacte con el administrador");
-        }
-    }
 
 
     /**
@@ -220,7 +186,6 @@ class LiquidationController extends Controller
         $liquidacion = Liquidation::create($data);
         return $liquidacion->id;
     }
-
 
 
     /**
@@ -253,7 +218,7 @@ class LiquidationController extends Controller
                 $accion = 'No Procesada';
 
                 if ($this->reversarRetiro30Min()) {
-                    return redirect()->back()->with('danger', 'El tiempo limite fue excedido');
+                    return redirect()->back()->with('msj-danger', 'El tiempo limite fue excedido');
                 }
 
                 if (session()->has('intentos_fallidos')) {
@@ -270,22 +235,22 @@ class LiquidationController extends Controller
 
                 if (!$this->doubleAuthController->checkCode($liquidation->user_id, $request->google_code) && $liquidation->code_correo != $request->correo_code && session()->has('intentos_fallidos')) {
                     session(['intentos_fallidos' => (session('intentos_fallidos') + 1)]);
-                    return redirect()->back()->with('danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
+                    return redirect()->back()->with('msj-danger', 'La Liquidacion fue ' . $accion . ' con exito, Codigos incorrectos');
                 }
 
                 $accion = 'No Procesada';
-                if (!isset($request->fullname) && !isset($request->user_id) && !isset($request->total)) {
+                if (!isset($request->fullname) && !isset($request->iduser) && !isset($request->total)) {
                     $this->aprovarLiquidacion($idliquidation, '', '');
 
                     $accion = 'Aprobada';
                     $request->comentario = '';
 
-                    $fullname = $users->fullName();
+                    $fullname = $users->fullname();
 
                     $iduser = auth()->user()->id;
                     $total = $liquidation->total;
                 } else {
-                    $fullname = $request->fullname();
+                    $fullname = $users->fullname();
                     $iduser = $request->user_id;
                     $total = str_replace(',', '.', str_replace('.', '', $request->total));
                     $total = round($total, 2);
@@ -298,7 +263,6 @@ class LiquidationController extends Controller
                         $this->aprovarLiquidacion($idliquidation, $request->hash, $request->comentario);
                     }
                 }
-
 
                 if ($accion != 'No Procesada') {
                     $arrayLog = [
@@ -318,20 +282,21 @@ class LiquidationController extends Controller
                     'descripcion' => $concepto,
                     'status' => 0,
                     'tipo_transaction' => 1,
-                    'percentage' => 0
                 ];
+
 
                 Wallet::create($arrayWallet);
 
                 DB::commit();
-                return back()->with('success', 'La Liquidacion fue ' . $accion . ' con exito');
+                return redirect()->back()->with('msj-success', 'La Liquidacion fue ' . $accion . ' con exito');
             }
         } catch (\Throwable $th) {
-            DB::rollback();
             Log::error('Liquidaction - saveLiquidation -> Error: ' . $th);
             abort(403, "Ocurrio un error, contacte con el administrador");
         }
     }
+
+
 
 
     /**

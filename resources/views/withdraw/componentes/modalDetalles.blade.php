@@ -1,10 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="modalModalDetalles" tabindex="-1" role="dialog" aria-labelledby="modalModalDetallesTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-xl" role="document">
-        <div class="modal-content" style="background: #11262C;">
-            <div class="modal-header" style="background: #11262C;">
-                <h5 class="modal-title text-white" id="modalModalDetallesTitle">Detalles de comisiones del usuario (@{{ComisionesDetalles.firstname}})</h5>
+<div class="modal fade" id="modalModalDetalles" tabindex="-1" role="dialog" aria-labelledby="modalModalDetallesTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" style="background: #283046;">
+            <div class="modal-header" style="background: #283046;">
+                <h4 class="modal-title text-white" id="modalModalDetallesTitle">Detalles de comisiones del usuario: <span class="fw-bold">@{{ComisionesDetalles.fullname}}</span></h4>
                 <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -43,7 +42,7 @@
                                 <td v-text="item.fecha"></td>
                                 <td v-text="item.descripcion"></td>
                                 <td v-text="item.referred_id"></td>
-                                <td v-text="item.referido.firstname"></td>
+                                <td v-text="item.referred_id.fullname"></td>
                                 <td v-text="item.amount +' $'"></td>
                             </tr>
                         </tbody>
