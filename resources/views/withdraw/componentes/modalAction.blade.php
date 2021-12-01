@@ -3,9 +3,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-white" id="modalModalAccionTitle" v-text="(StatusProcess == 'reverse') ? 'Reversar Liquidacion' : 'Aprobar Liquidacion'"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <a data-dismiss="modal" aria-label="Close">
+                    X
+                </a>
             </div>
             <div class="modal-body text-justify">
                 <form action="{{route('withdraw.retirement')}}" method="post">
@@ -16,17 +16,17 @@
                     <input type="hidden" name="total" :value="ComisionesDetalles.total">
 
                     <input type="hidden" name="action" :value="StatusProcess">
-                    <h5 class="text-white">Usuario: <strong v-text="ComisionesDetalles.fullname"></strong></h5>
+                    <h4 class="text-white">Usuario: <strong v-text="ComisionesDetalles.fullname"></strong></h4>
                     <br>
-                    <h5 class="text-white">Total: <strong v-text="ComisionesDetalles.total"></strong></h5>
+                    <h4 class="text-white">Total: <strong v-text="ComisionesDetalles.total"></strong></h4>
                     <br>
                     <div class="form-group" v-if="StatusProcess == 'aproved'">
-                        <label for="">Hash</label>
+                        <label for="" class="h4">Hash</label>
                         <input type="text" name="hash" class="form-control" required>
                     </div>
                     <br>
                     <div class="form-group">
-                        <label for="">Comentario</label>
+                        <label for="" class="h4">Comentario</label>
                         <textarea name="comentario" class="form-control" :required="(StatusProcess == 'reverse') ? true : false"></textarea>
                     </div>
 

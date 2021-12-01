@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Liquidation;
 use App\Models\LogLiquidation;
+use App\Models\Porcentaje;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Support\Str;
@@ -43,7 +44,6 @@ class LiquidationController extends Controller
     public function edit($id)
     {
         try {
-
             $comiciones = Wallet::where([
                 ['liquidation_id', '=', $id],
             ])->get();
@@ -53,6 +53,7 @@ class LiquidationController extends Controller
                 $comi->fecha = $fecha->format('Y-m-d');
                 $referido = User::find($comi->referred_id);
                 $comi->referido = ($referido != null) ? $referido->only('fullname()') : 'Usuario no Disponible';
+                
             }
 
             $user = User::find($comiciones->pluck('user_id')[0]);
@@ -282,6 +283,7 @@ class LiquidationController extends Controller
                     'descripcion' => $concepto,
                     'status' => 0,
                     'tipo_transaction' => 1,
+                    'porcentage' => 0
                 ];
 
 

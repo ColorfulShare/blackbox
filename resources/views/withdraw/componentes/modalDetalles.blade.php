@@ -4,9 +4,9 @@
         <div class="modal-content" style="background: #283046;">
             <div class="modal-header" style="background: #283046;">
                 <h4 class="modal-title text-white" id="modalModalDetallesTitle">Detalles de comisiones del usuario: <span class="fw-bold">@{{ComisionesDetalles.fullname}}</span></h4>
-                <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <a type="button" class="text-white" data-bs-dismiss="modal" aria-label="Close">
+                X
+                </a>
             </div>
             <div class="modal-body text-justify">
                 <form action="{{route('liquidation.store')}}" method="post">
@@ -27,7 +27,7 @@
                                 <th>Fecha</th>
                                 <th>Concepto</th>
                                 <th>ID Referido</th>
-                                <th>Referido</th>
+                                <!-- <th>Referido</th> -->
                                 <th>Monto</th>
                             </tr>
                         </thead>
@@ -42,7 +42,7 @@
                                 <td v-text="item.fecha"></td>
                                 <td v-text="item.descripcion"></td>
                                 <td v-text="item.referred_id"></td>
-                                <td v-text="item.referred_id.fullname"></td>
+                                <!-- <td v-text="item.referred_id.fullname"></td> -->
                                 <td v-text="item.amount +' $'"></td>
                             </tr>
                         </tbody>

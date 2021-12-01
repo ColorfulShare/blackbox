@@ -10,9 +10,9 @@
                 <div class="card-body card-dashboard">
                     <div class="table-responsive">
                         <h1 class="">Solicitud de Retiros</h1>
-                        <table class="table nowrap scroll-horizontal-vertical myTable table-striped">
-                            <thead class="">
-                                <tr class="text-center bg-purple-alt2">
+                        <table class="table myTable ">
+                            <thead>
+                            <tr class="text-center ">
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     {{--<th>Total</th>̣--}}
@@ -27,7 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($liquidaciones as $liqui)
+                            @foreach ($liquidaciones as $liqui)
                                 <tr class="text-center ">
                                     <td>{{$liqui->id}}</td>
                                     <td>{{$liqui->fullname}}</td>
@@ -49,40 +49,35 @@
                                         @endif
                                     </td>
                                     <td>{{date('Y-m-d', strtotime($liqui->created_at))}}</td>
-                                    <td>{{$liqui->getuser->type}}</td>
                                     <td>
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-4 ">
-                                                    <button class="btn btn-primary ml-2" onclick="vm_liquidation.getDetailComisionLiquidation({{$liqui->id}})">
-                                                        <i data-feather='eye'></i>
-                                                    </button>
-                                                </div>
-                                                <div class="col-4">
-                                                    <button class="btn btn-success" onclick="vm_liquidation.getDetailComisionLiquidationStatus({{$liqui->id}}, 'aproved')">
-                                                        <i data-feather='check'></i>
-                                                    </button>
-                                                </div>
-                                                <div class="col-4">
+                                        @if($liqui->getuser->type === NULL)
+                                        -
+                                        @else
+                                        {{$liqui->getuser->type}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary font-medium-3" onclick="vm_liquidation.getDetailComisionLiquidation({{$liqui->id}})">
+                                            <i data-feather='eye'></i>
+                                        </a>
 
-                                                    <button class="btn btn-danger" onclick="vm_liquidation.getDetailComisionLiquidationStatus({{$liqui->id}}, 'reverse')">
-                                                        <i data-feather='repeat'></i>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        <a class="btn btn-Success font-medium-3" onclick="vm_liquidation.getDetailComisionLiquidationStatus({{$liqui->id}}, 'aproved')">
+                                            <i data-feather='check'></i>
+                                        </a>
+
+                                        <a class="btn btn-danger font-medium-3" onclick="vm_liquidation.getDetailComisionLiquidationStatus({{$liqui->id}}, 'reverse')">
+                                            <i data-feather='repeat'></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
-
                         </table>
                     </div>
                     @include('withdraw.componentes.modalDetalles', ['all' => false])
                     @include('withdraw.componentes.modalAction')
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>
