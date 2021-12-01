@@ -169,7 +169,7 @@ class UserController extends Controller
             $user->status = '1';
             $user->expired_status = Carbon::now()->addYear(1);
             $user->save();
-
+            
             if(isset($request->comision)){
                 $this->inversionController->store($orden, $user);
             }else{

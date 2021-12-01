@@ -75,19 +75,19 @@ class InversionController extends Controller
 
                 $ordenpurchase->inversion_id = $inversion->id;
                 $ordenpurchase->save();
+
+                //BONO DIRECTO
+            
+                if(isset($user->refirio) && $user->refirio->type == 'red'){
+                    
+                    $this->bonoDirecto($inversion, $user);
+                }
             }
 
             if($comision == true){
                 $users = $this->getDataFather($user, 6);
-    
-                $this->bonoUnilevel($users, $user, $inversion->id);
-            }
-    
-            //BONO DIRECTO
-            
-            if(isset($user->refirio) && $user->refirio->type == 'red'){
                 
-                $this->bonoDirecto($inversion, $user);
+                $this->bonoUnilevel($users, $user);
             }
             
             DB::commit();
