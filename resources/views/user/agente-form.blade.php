@@ -44,7 +44,6 @@
                                             class="form-control"
                                             name="monto"
                                             placeholder="Monto a invertir"
-                                            min="500"
                                             />
                                         </div>
                                         </div>

@@ -42,8 +42,6 @@ class User extends Authenticatable
         'date_reset_points_binary',
         'not_payment_binary_point_direct',
         'referral_code',
-        'referral_admin_red_code',
-        'referred_red_by',
         'code_email',
         'code_email_date',
         'status',
@@ -140,17 +138,6 @@ class User extends Authenticatable
         } while (User::where('referral_code', $code)->exists());
         return $code;
     }
-
-    public static function getUniqueAdminRedReferralCode()
-    {
-        do {
-            $codeAdminRed = Str::random(7);
-        } while (User::where('referral_admin_red_code', $codeAdminRed)->exists());
-        return $codeAdminRed;
-    }
-
-
-
 
     /**
      * Permite obtener todas las ordenes de compra de saldo realizadas

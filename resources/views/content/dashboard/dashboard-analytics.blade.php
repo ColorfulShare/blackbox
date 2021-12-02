@@ -90,10 +90,10 @@
           <h2 class="fw-bolder mt-1">Link de referido</h2>
           <p class="card-text">Subscribers Gained</p>
 
-<!-- botone para link de referidos -->
-          <div class="btn-group mb-1">
-          <button class="btn btn-sm btn-primary" onclick="link()">normal referred</button>
-          <button class="btn btn-sm btn-danger" onclick=" linkAdmin()">Admin Red</button>
+          <!-- botone para link de referidos -->
+          
+          <div class="mb-1 d-grid gap-2 w-100">
+            <button class="btn btn-primary" onclick="link()">Copiar link de referido</button>
           </div>
 
         </div>
@@ -334,7 +334,6 @@
     --}}
   <script>
     const linkReferido = @json($linkReferido);
-    const linkAdminRed = @json($linkAdminRed);
 
    function link(){
       let aux = document.createElement('input');
@@ -345,22 +344,6 @@
       document.body.removeChild(aux);
       Swal.fire({
            title: "Link Copiado",
-           icon: 'success',
-           text: "Ya puedes pegarlo en su navegador",
-           type: "success",
-           confirmButtonClass: 'btn btn-outline-primary',
-       })
-}
-
-function linkAdmin(){
-      let aux = document.createElement('input');
-      aux.setAttribute('value',linkAdminRed);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand('copy');
-      document.body.removeChild(aux);
-      Swal.fire({
-           title: "Link Administrador de Red Copiado",
            icon: 'success',
            text: "Ya puedes pegarlo en su navegador",
            type: "success",
