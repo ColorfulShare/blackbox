@@ -28,7 +28,6 @@ class DashboardController extends Controller
   public function index()
   {
     $linkReferido = route('referral.link', ['referralCode' => auth()->user()->referral_code]);
-    $linkAdminRed = route('referral.Admin.Red.link', ['referral_admin_red_code' => auth()->user()->referral_admin_red_code]);
 
     $banner = Banner::where('id')->where('status', '1')->first();
     if (Auth::user()->admin == '1') {
@@ -68,11 +67,11 @@ class DashboardController extends Controller
 
     $user = Auth::user();
 
-    if ($user->admin != 1) {
-      return view('/content/dashboard/dashboard-analytics', compact('porcentaje', 'linkReferido', 'linkAdminRed', 'user', 'banner'));
-    } else {
+    if($user->admin != 1){
+      return view('/content/dashboard/dashboard-analytics', compact('porcentaje','linkReferido', 'user', 'banner'));
+    }else{
       // El dashboard del admin
-      return view('/admin/dashboard/index', compact('porcentaje', 'users', 'linkReferido', 'linkAdminRed', 'user', 'ordenes', 'listOrdenes', 'estadisticas', 'banner'));
+      return view('/admin/dashboard/index', compact('porcentaje', 'users','linkReferido', 'user', 'ordenes', 'listOrdenes', 'estadisticas', 'banner'));
     }
   }
 
@@ -140,26 +139,27 @@ class DashboardController extends Controller
     try {
       DB::beginTransaction();
 
-      if ($request->type == 'red') {
-
+      if( $request->type == 'red'){
+          
         $request->validate([
-          'monto' => 'required|numeric|min:500|max:5000'
+          'monto' => 'required|numeric|max:6000'
         ]);
-      } elseif ($request->type == 'profesional') {
+        
+      }elseif($request->type == 'profesional'){
         $request->validate([
-          'monto' => 'required|numeric|min:5000'
+          'monto' => 'required|numeric|min:6000'
         ]);
       }
-
-      $user = Auth::User();
-
+      
+      $user = Auth::User();   
+      
       $orden = OrdenPurchase::create([
-        'user_id' => $user->id,
-        'amount' => $request->monto,
-        'fee' => 0,
-        'package_id' => null,
-        'status' => '2',
-        'convertir' => $request->type
+          'user_id' => $user->id,
+          'amount' => $request->monto,
+          'fee' => 0,
+          'package_id' => null,
+          'status' => '2',
+          'convertir' => $request->type
       ]);
 
 

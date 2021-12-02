@@ -25,6 +25,7 @@
 
                                 <tr class="text-center ">
                                     <th>#</th>
+                                    <th>Usuario</th>
                                     @if(Auth::user()->admin == 1)<th>Correo</th>@endif
                                     <th>Inversion</th>
                                    {{-- <th>Ganancia</th> --}}
@@ -39,6 +40,7 @@
 
                                 <tr class="text-center">
                                     <td>{{$inversion->id}}</td>
+                                    <td>{{$inversion->user->firstname}} {{$inversion->user->lastname}}</td>
                                     @if(Auth::user()->admin == 1)<td>{{$inversion->user->email}}</td>@endif
                                     <td>$ {{number_format($inversion->invested, 2)}}</td>
                                   {{-- <td>$ {{number_format($inversion->gain, 2)}}</td> --}}

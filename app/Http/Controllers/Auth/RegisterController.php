@@ -108,9 +108,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'referral_code' => User::getUniqueReferralCode(),
-            'referred_id' => $this->getReferredBy() ?? $this->getReferredBy(),
-            'referral_admin_red_code'=>User::getUniqueAdminRedReferralCode(),
-            'referred_red_by'=> $this->getReferredAdmiBy(),
+            'referred_id' => $this->getReferredBy() ?? $this->getReferredBy()
             
         ]);
       
@@ -159,15 +157,6 @@ class RegisterController extends Controller
         $referralCode = Cookie::get('referral');
         if($referralCode){
             return User::where('referral_code', $referralCode)->value('id');
-
-        }
-        return null;
-    }
-
-    private function getReferredAdmiBy(){
-        $referral_admin_red_code = Cookie::get('referralAdminRed');
-        if($referral_admin_red_code){
-            return User::where('referral_admin_red_code', $referral_admin_red_code)->value('id');
 
         }
         return null;
