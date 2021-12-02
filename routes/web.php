@@ -95,6 +95,11 @@ Route::middleware('auth')->group(function () {
         Route::put('/cambiar-porcentaje', [UserController::class, 'cambiarPorcentaje'])->name('cambiarPorcentaje');
         Route::post('/pagar-red', [InversionController::class, 'pagarRed'])->name('pagarRed');
 
+        Route::get('liquidation-edit/{id}', [LiquidationController::class, 'edit'])->name('liquidation.edit');
+
+        Route::get('liquidation-show/{id}', [LiquidationController::class, 'show'])->name('liquidation.show');
+
+
         //USER
         Route::prefix('user')->group(function () {
             Route::get('user-list', [UserController::class, 'listUser'])->name('users.list-user');
@@ -129,12 +134,12 @@ Route::middleware('auth')->group(function () {
 
 
         //COMISIONES
-        Route::prefix('comisions')->group( function() {
-          Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
+        Route::prefix('comisions')->group(function () {
+            Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
         });
 
-          //NOTICIAS
-          Route::group(['prefix' => 'news'], function () {
+        //NOTICIAS
+        Route::group(['prefix' => 'news'], function () {
             Route::get('list', [NewsController::class, 'list'])->name('news.list');
             Route::get('create', [NewsController::class, 'create'])->name('news.create');
             Route::post('store', [NewsController::class, 'store'])->name('news.store');
@@ -187,11 +192,10 @@ Route::middleware('auth')->group(function () {
 
         //PROFILE
         Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
-        Route::patch('/profile-user-Update',[UserController::class, 'ProfileUpdate'])->name('profile-user.update');
+        Route::patch('/profile-user-Update', [UserController::class, 'ProfileUpdate'])->name('profile-user.update');
 
         //AGENTE
         Route::get('agente/invertir', [UserController::class, 'agenteInvertir'])->name('user.agenteInvertir');
-
     });
 
     //EDUCACION USER
@@ -218,7 +222,7 @@ Route::middleware('auth')->group(function () {
 
 
     //NOTICIAS
-      Route::group(['prefix' => 'news'], function () {
+    Route::group(['prefix' => 'news'], function () {
         Route::get('show/{id}', [NewsController::class, 'show'])->name('news.show');
     });
 
@@ -266,23 +270,24 @@ Route::middleware('auth')->group(function () {
     /* Wallets */
     Route::group(['prefix' => 'wallet'], function () {
         Route::get('IndexWallet', [WalletController::class, 'indexWallet'])->name('wallet.IndexWallet');
-
         Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
-
         Route::post('/process', [LiquidationController::class, 'procesarLiquidacion'])->name('settlement.process');
-
         Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
     });
 
 
     /* Withdraw */
     Route::group(['prefix' => 'withdraw'], function () {
+        Route::get('liquidation-store', [LiquidationController::class, 'store'])->name('liquidation.store');
+        Route::post('/process-retirement', [LiquidationController::class, 'procesarSocilitud'])->name('withdraw.retirement');
 
         Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
         Route::get('/Realizados', [LiquidationController::class, 'realizados'])->name('withdraw.realizados');
         Route::get('retiros', [LiquidationController::class, 'retiroHistory'])->name('withdraw.retiros');
     });
 });
+
+
 //BONOSS
 Route::get('/bonoContruccion', [InversionController::class, 'bonoContruccion'])->name('bonoContruccion');
 
@@ -481,6 +486,7 @@ Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
 //Ruta de enlace de referidos
 Route::get('r/{referralCode}', [ReferralController::class, 'link'])->name('referral.link');
+
 
 //Ruta referidos administrador red
 Route::get('rAdminRed/{referral_admin_red_code}', [ReferralController::class, 'linkAdminRed'])->name('referral.Admin.Red.link');

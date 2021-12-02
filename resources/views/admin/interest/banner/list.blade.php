@@ -33,11 +33,9 @@
 
                 <td>{{ date('d-m-Y', strtotime($item->created_at))}}</td>
                 <td>
-                    <a href="{{ route('banner.edit', $item->id) }}" class="item-edit"><i
-                            class="text-primary font-medium-3" data-feather='edit'></i></a>
-                            
-                    <a class="item-edit" onclick="destroy({{ $item->id }})"><i class="text-danger font-medium-3"
-                            data-id="{{ $item->id }}" data-feather='trash'></i>
+                    <a href="{{ route('banner.edit', $item->id) }}" class="item-edit"><i class="text-primary font-medium-3" data-feather='edit'></i></a>
+
+                    <a class="item-edit" onclick="destroy({{ $item->id }})"><i class="text-danger font-medium-3" data-id="{{ $item->id }}" data-feather='trash'></i>
                         <form id="delete_{{ $item->id }}" action="{{ route('banner.destroy', $item->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -58,15 +56,16 @@
         form = $('#delete_' + id);
         form.submit();
     };
-
 </script>
 <script src="{{ asset(mix('vendors/js/tables/datatable/datatables.min.js')) }}"></script>
 <script src="{{ asset(mix('vendors/js/tables/datatable/dataTables.bootstrap5.min.js')) }}"></script>
 <script>
     //datataables ordenes
-$('.myTable').DataTable({
-    responsive: true,
-    order: [[ 0, "desc" ]],
-})
+    $('.myTable').DataTable({
+        responsive: true,
+        order: [
+            [0, "desc"]
+        ],
+    })
 </script>
 @endsection
