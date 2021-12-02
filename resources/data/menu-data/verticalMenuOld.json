@@ -21,7 +21,6 @@
         }
       ]
     },
-
     {
       "navheader": "Apps & Pages",
       "slug": ""
@@ -49,7 +48,7 @@
       "name": "Calendar",
       "icon": "calendar",
       "slug": "app-calendar"
-    },
+    }, 
     {
       "url": "app/kanban",
       "name": "Kanban",

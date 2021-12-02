@@ -36,9 +36,9 @@
   @else
   <nav class="header-navbar navbar navbar-expand-lg align-items-center {{ $configData['navbarClass'] }} navbar-light navbar-shadow {{ $configData['navbarColor'] }} {{ ($configData['layoutWidth'] === 'boxed' && $configData['verticalMenuNavbarType']  === 'navbar-floating') ? 'container-xxl' : '' }}">
     @endif
-    <div class="navbar-container d-flex content">
+  <div class="navbar-container d-flex content">
         <div class="bookmark-wrapper d-flex align-items-center">
-          <ul class="nav navbar-nav d-xl-none">
+      {{--<ul class="nav navbar-nav d-xl-none">
             <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
           </ul>
           <ul class="nav navbar-nav bookmark-icons">
@@ -46,7 +46,7 @@
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('app/chat')}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat"><i class="ficon" data-feather="message-square"></i></a></li>
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('app/calendar')}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Calendar"><i class="ficon" data-feather="calendar"></i></a></li>
             <li class="nav-item d-none d-lg-block"><a class="nav-link" href="{{url('app/todo')}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Todo"><i class="ficon" data-feather="check-square"></i></a></li>
-          </ul>
+          </ul> 
           <ul class="nav navbar-nav">
             <li class="nav-item d-none d-lg-block">
               <a class="nav-link bookmark-star">
@@ -60,7 +60,7 @@
                 <ul class="search-list search-list-bookmark"></ul>
               </div>
             </li>
-          </ul>
+          </ul> --}}
         </div>
         <ul class="nav navbar-nav align-items-center ms-auto">
           <li class="nav-item dropdown dropdown-language">
@@ -88,33 +88,33 @@
             </div>
           </li>
           <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon" data-feather="{{($configData['theme'] === 'dark') ? 'sun' : 'moon' }}"></i></a></li>
-          <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon" data-feather="search"></i></a>
+         {{-- <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon" data-feather="search"></i></a>
             <div class="search-input">
               <div class="search-input-icon"><i data-feather="search"></i></div>
               <input class="form-control input" type="text" placeholder="Explore Vuexy..." tabindex="-1" data-search="search">
               <div class="search-input-close"><i data-feather="x"></i></div>
               <ul class="search-list search-list-main"></ul>
             </div>
-          </li>
+          </li> 
           <li class="nav-item dropdown dropdown-cart me-25">
             <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
-              <i class="ficon" data-feather="shopping-cart"></i>
+              <i class="ficon" data-feather="shopping-cart"></i> 
               <span class="badge rounded-pill bg-primary badge-up cart-item-count">6</span>
-            </a>
+            </a> --}}
             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
               <li class="dropdown-menu-header">
                 <div class="dropdown-header d-flex">
                   <h4 class="notification-title mb-0 me-auto">My Cart</h4>
                   <div class="badge rounded-pill badge-light-primary">4 Items</div>
                 </div>
-              </li>
+              </li> 
               <li class="scrollable-container media-list">
                 <div class="list-item align-items-center">
                   <img class="d-block rounded me-1" src="{{asset('images/pages/eCommerce/1.png')}}" alt="donuts" width="62">
                   <div class="list-item-body flex-grow-1">
                     <i class="ficon cart-item-remove" data-feather="x"></i>
                     <div class="media-heading">
-                      <h6 class="cart-item-title"><a class="text-body" href="{{url('app/ecommerce/details')}}"> Apple watch 5</a></h6><small class="cart-item-by">By Apple</small>
+                      <h6 class="cart-item-title"><a class="text-body" href="{{url('app/ecommerce/details')}}"> Apple watch 5</a></h6><small class="cart-item-by">By Apple</small> 
                     </div>
                     <div class="cart-item-qty">
                       <div class="input-group">
@@ -184,21 +184,21 @@
                     <h5 class="cart-item-price">$2,999.00</h5>
                   </div>
                 </div>
-              </li>
+              </li> 
               <li class="dropdown-menu-footer">
                 <div class="d-flex justify-content-between mb-1">
                   <h6 class="fw-bolder mb-0">Total:</h6>
                   <h6 class="text-primary fw-bolder mb-0">$10,999.00</h6>
-                </div>
+                </div> 
                 <a class="btn btn-primary w-100" href="{{url('app/ecommerce/checkout')}}">Checkout</a>
-              </li>
-            </ul>
-          </li>
+              </li> 
+            </ul> 
+          </li> 
           <li class="nav-item dropdown dropdown-notification me-25">
-            <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
+           {{-- <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
               <i class="ficon" data-feather="bell"></i>
               <span class="badge rounded-pill bg-danger badge-up">5</span>
-            </a>
+            </a> --}}
             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
               <li class="dropdown-menu-header">
                 <div class="dropdown-header d-flex">
@@ -325,7 +325,7 @@
             <a class="dropdown-item" href="{{route('user.profile')}}">
               <i class="me-50" data-feather="user"></i> Profile
             </a>
-            <a class="dropdown-item" href="{{url('app/email')}}">
+      {{--  <a class="dropdown-item" href="{{url('app/email')}}">
               <i class="me-50" data-feather="mail"></i> Inbox
             </a>
             <a class="dropdown-item" href="{{url('app/todo')}}">
@@ -343,7 +343,7 @@
             </a>
             <a class="dropdown-item" href="{{url('page/faq')}}">
               <i class="me-50" data-feather="help-circle"></i> FAQ
-            </a>
+            </a> --}}
             @if (session('impersonated_by'))
 
             <a class="dropdown-item"  href="{{ route('impersonate.stop') }}">

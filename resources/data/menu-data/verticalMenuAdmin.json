@@ -57,8 +57,14 @@
       "slug": "/",
       "submenu": [
         {
-          "url": "/inversiones",
+          "url": "inversiones",
           "name": "Lista",
+          "icon": "circle",
+          "slug": "inversiones.index"
+        },
+         {
+          "url": "inversiones/assign",
+          "name": "Asignar inversion",
           "icon": "circle",
           "slug": "inversiones.index"
         }

@@ -168,6 +168,12 @@ Route::middleware('auth')->group(function () {
             Route::delete('destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
             Route::patch('update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
         });
+        //inversiones
+        Route::group(['prefix' => 'inversiones'], function () {
+        Route::get('/assign', [InversionController::class, 'assign'])->name('inversiones.assign');
+        Route::get('/{id}', [InversionController::class, 'activation'])->name('inversiones.activation');
+        Route::post('/asignar', [InversionController::class, 'action'])->name('inversiones.action');
+        });
     });
     //
     // Red de usuario
@@ -247,6 +253,7 @@ Route::middleware('auth')->group(function () {
     //INVERSIONES
     Route::group(['prefix' => 'inversiones'], function () {
         Route::get('/', [InversionController::class, 'index'])->name('inversiones.index');
+       
     });
 
     //Ruta de los Tickets
