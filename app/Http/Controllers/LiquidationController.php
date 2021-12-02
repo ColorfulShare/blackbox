@@ -283,7 +283,7 @@ class LiquidationController extends Controller
                     'descripcion' => $concepto,
                     'status' => 0,
                     'tipo_transaction' => 1,
-                    'porcentage' => 0
+                    'percentage' => 0
                 ];
 
 
