@@ -78,10 +78,8 @@ Route::get('/storage-link', function () {
 //Route::get('checkEmail/{id}', [UserController::class, 'checkEmail'])->name('checkemail');
 /*  */
 
-Route::middleware('auth', 'check.email')->group(function () {
 
-
-
+Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'dashboard'], function () {
         //Route::get('/send-email-verification', [UserController::class, 'sendCodeEmail'])->name('user.send.code');
@@ -89,208 +87,209 @@ Route::middleware('auth', 'check.email')->group(function () {
         Route::patch('/verifyAccount/{user}', [UserController::class, 'verifyAccount'])->name('verify-account');
     });
 
-    //RUTAS ADMIN
-    Route::middleware('admin')->group(function () {
-
-        Route::put('/cambiar-porcentaje', [UserController::class, 'cambiarPorcentaje'])->name('cambiarPorcentaje');
-        Route::post('/pagar-red', [InversionController::class, 'pagarRed'])->name('pagarRed');
-
-        Route::get('liquidation-edit/{id}', [LiquidationController::class, 'edit'])->name('liquidation.edit');
-
-        Route::get('liquidation-show/{id}', [LiquidationController::class, 'show'])->name('liquidation.show');
-
-
-        //USER
-        Route::prefix('user')->group(function () {
-            Route::get('user-list', [UserController::class, 'listUser'])->name('users.list-user');
-            Route::post('/impersonate/{user}/start', [ImpersonateController::class, 'start'])->name('impersonate.start');
-            Route::get('/activacion', [UserController::class, 'activacion'])->name('user.activacion');
-            Route::post('/activar', [UserController::class, 'activar'])->name('user.activar');
-            Route::patch('/profile-Update', [UserController::class, 'ProfileUpdate'])->name('profile.update');
-
-            //REFERIDOS
-            Route::get('/referidos/buscar', [ReferralController::class, 'buscar'])->name('referidos.buscar');
-            Route::get('/referidos', [ReferralController::class, 'listReferidos'])->name('referidos.index');
-        });
-
-        //RENDIMIENTOS
-        Route::prefix('rendimientos')->group(function () {
-            Route::get('/', [RendimientoController::class, 'index'])->name('rendimiento.index');
-            Route::post('/pagarrendimiento', [RendimientoController::class, 'savePorcentage'])->name('rendimiento.save.porcentage');
-        });
-
-        //EDUCACION
-        Route::prefix('education')->group(function () {
-            Route::get('/', [EducationController::class, 'index'])->name('education.componentAdmin.index');
-            Route::get('/create', [EducationController::class, 'create'])->name('education.create');
-            Route::post('/', [EducationController::class, 'store'])->name('education.store');
-        });
-
-        //GENEALOGY
-        Route::prefix('genealogy')->group(function () {
-            Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
-            Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
-        });
-
-
-        //COMISIONES
-        Route::prefix('comisions')->group(function () {
-            Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
-        });
-
-        //NOTICIAS
-        Route::group(['prefix' => 'news'], function () {
-            Route::get('list', [NewsController::class, 'list'])->name('news.list');
-            Route::get('create', [NewsController::class, 'create'])->name('news.create');
-            Route::post('store', [NewsController::class, 'store'])->name('news.store');
-            Route::get('edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
-            Route::delete('destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
-            Route::patch('update/{id}', [NewsController::class, 'update'])->name('news.update');
-        });
-
-        //BANNER
-        Route::group(['prefix' => 'banner'], function () {
-            Route::get('list', [BannerController::class, 'list'])->name('banner.list');
-            Route::get('create', [BannerController::class, 'create'])->name('banner.create');
-            Route::post('store', [BannerController::class, 'store'])->name('banner.store');
-            Route::get('edit/{id}', [BannerController::class, 'edit'])->name('banner.edit');
-            Route::delete('destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
-            Route::patch('update/{id}', [BannerController::class, 'update'])->name('banner.update');
-        });
-
-        //DOCUMENTOS
-        Route::group(['prefix' => 'documents'], function () {
-            Route::get('list', [DocumentsController::class, 'list'])->name('documents.list');
-            Route::get('show', [DocumentsController::class, 'show'])->name('documents.show');
-            Route::get('create', [DocumentsController::class, 'create'])->name('documents.create');
-            Route::post('store', [DocumentsController::class, 'store'])->name('documents.store');
-            Route::get('edit/{id}', [DocumentsController::class, 'edit'])->name('documents.edit');
-            Route::delete('destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
-            Route::patch('update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
-        });
-        //inversiones
-        Route::group(['prefix' => 'inversiones'], function () {
-        Route::get('/assign', [InversionController::class, 'assign'])->name('inversiones.assign');
-        Route::get('/{id}', [InversionController::class, 'activation'])->name('inversiones.activation');
-        Route::post('/asignar', [InversionController::class, 'action'])->name('inversiones.action');
-        });
-    });
-    //
-    // Red de usuario
-    Route::prefix('genealogy')->group(function () {
-        // Ruta para ver la lista de usuarios
-        //Route::get('users/{network}', [TreController::class, 'indexNewtwork'])->name('genealogy_list_network');
-        // Ruta para visualizar el arbol o la matriz
-        Route::get('/', [TreController::class, 'index'])->name('genealogy_type');
-        // Ruta para visualizar el arbol o la matriz de un usuario en especifico
-        Route::get('/{id}', [TreController::class, 'moretree'])->name('genealogy_type_id');
-
-        /*
-        Route::post('{type}', 'TreeController@moretreeEmail')->name('genealogy_type_email');
-        */
-    });
-
-    //User
-    Route::prefix('user')->group(function () {
-        Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
-        Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
-        Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
-
-        //PROFILE
-        Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
-        Route::patch('/profile-user-Update', [UserController::class, 'ProfileUpdate'])->name('profile-user.update');
-
-        //AGENTE
-        Route::get('agente/invertir', [UserController::class, 'agenteInvertir'])->name('user.agenteInvertir');
-    });
-
-    //EDUCACION USER
-    Route::prefix('educations')->group(function () {
-        Route::get('/', [EducationController::class, 'index'])->name('education.componentUser.index');
-    });
-
     // 2fact
     Route::get('/2fact', [DoubleAutenticationController::class, 'index'])->name('2fact');
     Route::post('/2fact', [DoubleAutenticationController::class, 'checkCodeLogin'])->name('2fact.post');
     Route::post('/2fact-perfil', [DoubleAutenticationController::class, 'checkCodePerfil'])->name('2fact-perfil.post');
+    
+
+    Route::middleware('check.email')->group(function () {
+        //RUTAS ADMIN
+        Route::middleware('admin')->group(function () {
+
+            Route::put('/cambiar-porcentaje', [UserController::class, 'cambiarPorcentaje'])->name('cambiarPorcentaje');
+            Route::post('/pagar-red', [InversionController::class, 'pagarRed'])->name('pagarRed');
+
+            Route::get('liquidation-edit/{id}', [LiquidationController::class, 'edit'])->name('liquidation.edit');
+
+            Route::get('liquidation-show/{id}', [LiquidationController::class, 'show'])->name('liquidation.show');
 
 
+            //USER
+            Route::prefix('user')->group(function () {
+                Route::get('user-list', [UserController::class, 'listUser'])->name('users.list-user');
+                Route::post('/impersonate/{user}/start', [ImpersonateController::class, 'start'])->name('impersonate.start');
+                Route::get('/activacion', [UserController::class, 'activacion'])->name('user.activacion');
+                Route::post('/activar', [UserController::class, 'activar'])->name('user.activar');
+                Route::patch('/profile-Update', [UserController::class, 'ProfileUpdate'])->name('profile.update');
 
-    //DASHBOARD
+                //REFERIDOS
+                Route::get('/referidos/buscar', [ReferralController::class, 'buscar'])->name('referidos.buscar');
+                Route::get('/referidos', [ReferralController::class, 'listReferidos'])->name('referidos.index');
+            });
 
-    //Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard')->middleware('check.email');
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+            //RENDIMIENTOS
+            Route::prefix('rendimientos')->group(function () {
+                Route::get('/', [RendimientoController::class, 'index'])->name('rendimiento.index');
+                Route::post('/pagarrendimiento', [RendimientoController::class, 'savePorcentage'])->name('rendimiento.save.porcentage');
+            });
 
-    Route::group(['prefix' => 'dashboard'], function () {
-        Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
-        Route::post('convertir', [DashboardController::class, 'convertir'])->name('dashboard.convertir');
-    });
+            //EDUCACION
+            Route::prefix('education')->group(function () {
+                Route::get('/', [EducationController::class, 'index'])->name('education.componentAdmin.index');
+                Route::get('/create', [EducationController::class, 'create'])->name('education.create');
+                Route::post('/', [EducationController::class, 'store'])->name('education.store');
+            });
 
-
-    //NOTICIAS
-    Route::group(['prefix' => 'news'], function () {
-        Route::get('show/{id}', [NewsController::class, 'show'])->name('news.show');
-    });
-
-    //DOCUMENTOS
-    Route::group(['prefix' => 'documents'], function () {
-        Route::get('show', [DocumentsController::class, 'show'])->name('documents.show');
-        Route::get('pdf/{id}', [DocumentsController::class, 'pdf'])->name('documents.pdf');
-    });
-
-    //TIENDA
-    Route::prefix('shop')->group(function () {
-        Route::get('/', [TiendaController::class, 'index'])->name('shop');
-        Route::post('/', [TiendaController::class, 'proccess'])->name('shop.proccess');
-        Route::post('/store', [TiendaController::class, 'store'])->name('shop.store');
-    });
-
-    Route::group(['prefix' => 'ordenes'], function () {
-        Route::get('/', [OrdenPurchasesController::class, 'index'])->name('orders.index');
-        Route::post('/cambiarStatus', [OrdenPurchasesController::class, 'cambiar_status'])->name('orders.cambiarStatus');
-    });
-
-    //INVERSIONES
-    Route::group(['prefix' => 'inversiones'], function () {
-        Route::get('/', [InversionController::class, 'index'])->name('inversiones.index');
-       
-    });
-
-    //Ruta de los Tickets
-    Route::group(['prefix' => 'tickets'], function () {
-        Route::get('ticket-create', [TicketsController::class, 'create'])->name('ticket.create');
-        Route::post('ticket-store', [TicketsController::class, 'store'])->name('ticket.store');
-
-        // Para el usuario
-        Route::get('ticket-edit-user/{id}', [TicketsController::class, 'editUser'])->name('ticket.edit-user');
-        Route::patch('ticket-update-user/{id}', [TicketsController::class, 'updateUser'])->name('ticket.update-user');
-        Route::get('ticket-list-user', [TicketsController::class, 'listUser'])->name('ticket.list-user');
-        Route::get('ticket-show-user/{id}', [TicketsController::class, 'showUser'])->name('ticket.show-user');
-
-        // Para el Admin
-        Route::get('ticket-edit-admin/{id}', [TicketsController::class, 'editAdmin'])->name('ticket.edit-admin');
-        Route::patch('ticket-update-admin/{id}', [TicketsController::class, 'updateAdmin'])->name('ticket.update-admin');
-        Route::get('ticket-list-admin', [TicketsController::class, 'listAdmin'])->name('ticket.list-admin');
-        Route::get('ticket-show-admin/{id}',  [TicketsController::class, 'showAdmin'])->name('ticket.show-admin');
-    });
-
-    /* Wallets */
-    Route::group(['prefix' => 'wallet'], function () {
-        Route::get('IndexWallet', [WalletController::class, 'indexWallet'])->name('wallet.IndexWallet');
-        Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
-        Route::post('/process', [LiquidationController::class, 'procesarLiquidacion'])->name('settlement.process');
-        Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
-    });
+            //GENEALOGY
+            Route::prefix('genealogy')->group(function () {
+                Route::get('/buscar', [TreController::class, 'buscar'])->name('genealogy.buscar');
+                Route::post('/buscar', [TreController::class, 'search'])->name('genealogy.search');
+            });
 
 
-    /* Withdraw */
-    Route::group(['prefix' => 'withdraw'], function () {
-        Route::get('liquidation-store', [LiquidationController::class, 'store'])->name('liquidation.store');
-        Route::post('/process-retirement', [LiquidationController::class, 'procesarSocilitud'])->name('withdraw.retirement');
+            //COMISIONES
+            Route::prefix('comisions')->group(function () {
+                Route::get('/', [ComisionController::class, 'index'])->name('comision.index');
+            });
 
-        Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
-        Route::get('/Realizados', [LiquidationController::class, 'realizados'])->name('withdraw.realizados');
-        Route::get('retiros', [LiquidationController::class, 'retiroHistory'])->name('withdraw.retiros');
+            //NOTICIAS
+            Route::group(['prefix' => 'news'], function () {
+                Route::get('list', [NewsController::class, 'list'])->name('news.list');
+                Route::get('create', [NewsController::class, 'create'])->name('news.create');
+                Route::post('store', [NewsController::class, 'store'])->name('news.store');
+                Route::get('edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
+                Route::delete('destroy/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+                Route::patch('update/{id}', [NewsController::class, 'update'])->name('news.update');
+            });
+
+            //BANNER
+            Route::group(['prefix' => 'banner'], function () {
+                Route::get('list', [BannerController::class, 'list'])->name('banner.list');
+                Route::get('create', [BannerController::class, 'create'])->name('banner.create');
+                Route::post('store', [BannerController::class, 'store'])->name('banner.store');
+                Route::get('edit/{id}', [BannerController::class, 'edit'])->name('banner.edit');
+                Route::delete('destroy/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
+                Route::patch('update/{id}', [BannerController::class, 'update'])->name('banner.update');
+            });
+
+            //DOCUMENTOS
+            Route::group(['prefix' => 'documents'], function () {
+                Route::get('list', [DocumentsController::class, 'list'])->name('documents.list');
+                Route::get('show', [DocumentsController::class, 'show'])->name('documents.show');
+                Route::get('create', [DocumentsController::class, 'create'])->name('documents.create');
+                Route::post('store', [DocumentsController::class, 'store'])->name('documents.store');
+                Route::get('edit/{id}', [DocumentsController::class, 'edit'])->name('documents.edit');
+                Route::delete('destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
+                Route::patch('update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
+            });
+            //inversiones
+            Route::group(['prefix' => 'inversiones'], function () {
+            Route::get('/assign', [InversionController::class, 'assign'])->name('inversiones.assign');
+            Route::get('/{id}', [InversionController::class, 'activation'])->name('inversiones.activation');
+            Route::post('/asignar', [InversionController::class, 'action'])->name('inversiones.action');
+            });
+        });
+        //
+        // Red de usuario
+        Route::prefix('genealogy')->group(function () {
+            // Ruta para ver la lista de usuarios
+            //Route::get('users/{network}', [TreController::class, 'indexNewtwork'])->name('genealogy_list_network');
+            // Ruta para visualizar el arbol o la matriz
+            Route::get('/', [TreController::class, 'index'])->name('genealogy_type');
+            // Ruta para visualizar el arbol o la matriz de un usuario en especifico
+            Route::get('/{id}', [TreController::class, 'moretree'])->name('genealogy_type_id');
+
+            /*
+            Route::post('{type}', 'TreeController@moretreeEmail')->name('genealogy_type_email');
+            */
+        });
+
+        //User
+        Route::prefix('user')->group(function () {
+            Route::get('/impersonate/stop', [ImpersonateController::class, 'stop'])->name('impersonate.stop');
+            Route::get('dataGrafica', [DashboardController::class, 'dataGrafica'])->name('dataGrafica');
+            Route::get('list/referidos', [UserController::class, 'referidos'])->name('list.referidos');
+
+            //PROFILE
+            Route::get('profile', [UserController::class, 'profile'])->name('user.profile');
+            Route::patch('/profile-user-Update', [UserController::class, 'ProfileUpdate'])->name('profile-user.update');
+
+            //AGENTE
+            Route::get('agente/invertir', [UserController::class, 'agenteInvertir'])->name('user.agenteInvertir');
+        });
+
+        //EDUCACION USER
+        Route::prefix('educations')->group(function () {
+            Route::get('/', [EducationController::class, 'index'])->name('education.componentUser.index');
+        });
+
+        //DASHBOARD
+
+        //Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard')->middleware('check.email');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::group(['prefix' => 'dashboard'], function () {
+            Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');
+            Route::post('convertir', [DashboardController::class, 'convertir'])->name('dashboard.convertir');
+        });
+
+
+        //NOTICIAS
+        Route::group(['prefix' => 'news'], function () {
+            Route::get('show/{id}', [NewsController::class, 'show'])->name('news.show');
+        });
+
+        //DOCUMENTOS
+        Route::group(['prefix' => 'documents'], function () {
+            Route::get('show', [DocumentsController::class, 'show'])->name('documents.show');
+            Route::get('pdf/{id}', [DocumentsController::class, 'pdf'])->name('documents.pdf');
+        });
+
+        //TIENDA
+        Route::prefix('shop')->group(function () {
+            Route::get('/', [TiendaController::class, 'index'])->name('shop');
+            Route::post('/', [TiendaController::class, 'proccess'])->name('shop.proccess');
+            Route::post('/store', [TiendaController::class, 'store'])->name('shop.store');
+        });
+
+        Route::group(['prefix' => 'ordenes'], function () {
+            Route::get('/', [OrdenPurchasesController::class, 'index'])->name('orders.index');
+            Route::post('/cambiarStatus', [OrdenPurchasesController::class, 'cambiar_status'])->name('orders.cambiarStatus');
+        });
+
+        //INVERSIONES
+        Route::group(['prefix' => 'inversiones'], function () {
+            Route::get('/', [InversionController::class, 'index'])->name('inversiones.index');
+        
+        });
+
+        //Ruta de los Tickets
+        Route::group(['prefix' => 'tickets'], function () {
+            Route::get('ticket-create', [TicketsController::class, 'create'])->name('ticket.create');
+            Route::post('ticket-store', [TicketsController::class, 'store'])->name('ticket.store');
+
+            // Para el usuario
+            Route::get('ticket-edit-user/{id}', [TicketsController::class, 'editUser'])->name('ticket.edit-user');
+            Route::patch('ticket-update-user/{id}', [TicketsController::class, 'updateUser'])->name('ticket.update-user');
+            Route::get('ticket-list-user', [TicketsController::class, 'listUser'])->name('ticket.list-user');
+            Route::get('ticket-show-user/{id}', [TicketsController::class, 'showUser'])->name('ticket.show-user');
+
+            // Para el Admin
+            Route::get('ticket-edit-admin/{id}', [TicketsController::class, 'editAdmin'])->name('ticket.edit-admin');
+            Route::patch('ticket-update-admin/{id}', [TicketsController::class, 'updateAdmin'])->name('ticket.update-admin');
+            Route::get('ticket-list-admin', [TicketsController::class, 'listAdmin'])->name('ticket.list-admin');
+            Route::get('ticket-show-admin/{id}',  [TicketsController::class, 'showAdmin'])->name('ticket.show-admin');
+        });
+
+        /* Wallets */
+        Route::group(['prefix' => 'wallet'], function () {
+            Route::get('IndexWallet', [WalletController::class, 'indexWallet'])->name('wallet.IndexWallet');
+            Route::get('withdraw', [LiquidationController::class, 'withdraw'])->name('wallet.withdraw');
+            Route::post('/process', [LiquidationController::class, 'procesarLiquidacion'])->name('settlement.process');
+            Route::get('{wallet}/sendcodeemail', [LiquidationController::class, 'sendCodeEmail'])->name('send-code-email');
+        });
+
+
+        /* Withdraw */
+        Route::group(['prefix' => 'withdraw'], function () {
+            Route::get('liquidation-store', [LiquidationController::class, 'store'])->name('liquidation.store');
+            Route::post('/process-retirement', [LiquidationController::class, 'procesarSocilitud'])->name('withdraw.retirement');
+
+            Route::get('/pending', [LiquidationController::class, 'indexPendientes'])->name('withdraw.pending');
+            Route::get('/Realizados', [LiquidationController::class, 'realizados'])->name('withdraw.realizados');
+            Route::get('retiros', [LiquidationController::class, 'retiroHistory'])->name('withdraw.retiros');
+        });
     });
 });
 
