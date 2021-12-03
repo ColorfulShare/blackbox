@@ -91,11 +91,6 @@ class RegisterController extends Controller
             //s$binary_id = $this->treeController->getPosition($data['referred_id'], $userR->binary_side_register);
             $binary_side = $userR->binary_side_register;
         }
-        $billetera = [
-            'activa' => 'USDTTR20',
-            'USDTTR20' => $data['wallet'],
-            'BTC' => ''
-        ];
 
         $user = User::create([
             
@@ -104,7 +99,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'phone' => $data['phone'],
             'countrie_id' => $data['countrie_id'],
-            'wallet' => json_encode($billetera),
+            'wallet' => $data['wallet'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'referral_code' => User::getUniqueReferralCode(),

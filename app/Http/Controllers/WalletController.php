@@ -19,6 +19,7 @@ class WalletController extends Controller
     {
         try {
             $wallets = Auth::user()->getWallet->where('tipo_transaction', 0)->sortByDesc('id');
+            
             $saldoDisponible = $wallets->where('status', 0)->sum('amount');
             return view('wallet.IndexWallet', compact('wallets', 'saldoDisponible'));
         } catch (\Throwable $th) {

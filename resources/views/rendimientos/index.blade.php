@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label for="">Rendimiento a pagar</label>
                             <input type="number" name="porcentage" step="any" class="form-control mb-2" onkeyup="calcular(this.value)">
-                            <h5>El porcentaje de dividira automaticamente en el sistema</h5>
+                            <h5>El porcentaje se dividira automaticamente en el sistema</h5>
                             <h5>Porcentaje real a pagar: <span id="mostrar"></span> %</h5>
                         </div>
                         <div class="form-group text-center">

@@ -57,15 +57,15 @@ height: 300px; /* only if you want fixed height */
 <section id="dashboard-analytics">
   <div class="row match-height">
 
-
+      
        <!-- Greetings Card starts -->
        <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
           <div class="card-body text-center banner">
             @if ($banner != null)
-            @foreach ($banner as $item)
-            <img src="{{asset('storage/banner/'.$item->banner)}}" class="img-responsive fit-image" alt="">
-            @endforeach
+      
+            <img src="{{asset('storage/banner/'.$banner->banner)}}" class="img-responsive fit-image" alt="">
+      
             @else
             <img src="{{asset('img/logo/diseño_w.jpg')}}" class="img-responsive fit-image" alt="">
             @endif
@@ -363,6 +363,7 @@ height: 300px; /* only if you want fixed height */
                 <th>Correo</th>
                 <th>Número de cuenta</th>
                 <th>Pagar red</th>
+                <th>Pagar bono directo</th>
               </thead>
               <tbody>
                 @if($users != null)
@@ -373,7 +374,12 @@ height: 300px; /* only if you want fixed height */
                     <td>{{$user->wallet}}</td>
                     <td>
                       <div class="form-check">
-                        <input class="form-check-input" name="user{{$user->id}}" type="checkbox" value="{{$user->id}}" id="checkPagarRed{{$user->id}}" checked>
+                        <input class="form-check-input" name="checkPagarRed-{{$user->id}}" type="checkbox" value="{{$user->id}}" id="checkPagarRed-{{$user->id}}">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input" name="checkPagarBono-{{$user->id}}" type="checkbox" value="{{$user->id}}" id="checkPagarBono-{{$user->id}}" @if($user->hasBonoDirecto()) checked @endif>
                       </div>
                     </td>
                   </tr>

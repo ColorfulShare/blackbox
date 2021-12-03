@@ -78,7 +78,7 @@ Route::get('/storage-link', function () {
 //Route::get('checkEmail/{id}', [UserController::class, 'checkEmail'])->name('checkemail');
 /*  */
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'check.email')->group(function () {
 
 
 
@@ -213,7 +213,7 @@ Route::middleware('auth')->group(function () {
     //DASHBOARD
 
     //Route::get('/', [DashboardController::class, 'dashboardEcommerce'])->name('dashboard')->middleware('check.email');
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('check.email');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('analytics', [DashboardController::class, 'dashboardAnalytics'])->name('dashboard-analytics');

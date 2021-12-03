@@ -29,7 +29,7 @@ class DashboardController extends Controller
   {
     $linkReferido = route('referral.link', ['referralCode' => auth()->user()->referral_code]);
 
-    $banner = Banner::where('id')->where('status', '1')->first();
+    $banner = Banner::orderBy('id', 'desc')->where('status', '1')->first();
     if (Auth::user()->admin == '1') {
 
       $users = User::orderBy('id', 'desc')->where('status', '1')->whereHas('inversiones', function ($inversion) {

@@ -134,14 +134,18 @@ class InversionController extends Controller
     {
         try {
             DB::beginTransaction();
-
-            foreach($request->except(['_token']) as $id){
-                
+            
+            foreach($request->except(['_token']) as $key => $id){
+        
+                $pos = strpos($key, 'checkPagarBono');
                 $user = User::findOrFail($id);
-
                 if(isset($user)){
-                    $users = $this->getDataFather($user, 6);
-                    $this->bonoUnilevel($users, $user);
+                    if($pos == false){
+                        $users = $this->getDataFather($user, 6);
+                        $this->bonoUnilevel($users, $user);
+                    }else{
+                        $this->bonoDirecto($user->inversionMasAlta(), $user);
+                    }
                 }
             }
             $porcentaje = Porcentaje::orderBy('id', 'desc')->first();
@@ -165,7 +169,7 @@ class InversionController extends Controller
         try {
             DB::beginTransaction();
 
-            $users = User::whereHas('refirio', function($user){
+            $users = User::where('type', 'profesional')->whereHas('refirio', function($user){
                 $user->where('type', 'profesional');
             })->get();
         
@@ -173,19 +177,52 @@ class InversionController extends Controller
             $finalDelMes = Carbon::now()->subMonth(1)->endOfMonth();
             
             foreach($users as $user){
+                dump('usuario encontrado');
+                dump($user);
                 //wallets
-                $wallets = $user->wallets->whereBetween('created_at', [$inicioDelMes, $finalDelMes]);
-                
+                $wallets = $user->wallets;
+                //$wallets = $user->wallets->whereBetween('created_at', [$inicioDelMes, $finalDelMes]);
+                dump('wallets encontradas');
+                dump($wallets);
                 foreach($wallets as $wallet){
 
-                    Wallet::create([
+                    dump('wallet creada directo');
+                    $wallet = Wallet::create([
                         'user_id' => $user->refirio->id,
-                        'amount' => $wallet->amount * 0.10,
-                        'descripcion' => 'Bono Construnccion',
+                        'amount' => $wallet->amount * 0.07,
+                        'descripcion' => 'Bono Construnccion directo',
                         'status' => 0,
-                        'percentage' => 0.10,
+                        'percentage' => 0.07,
                         'referred_id' => $user->id
                     ]);
+                    dump($wallet);
+                }
+
+                if(count($user->referidos) > 0){
+                    foreach($user->referidos as $referido){
+                        dump('usuario indirecto');
+                        dump($referido);
+                        //wallets
+                        //$wallets = $referido->wallets->where('descripcion', 'like',  '%' . 'Pago de rendimiento' . '%')->whereBetween('created_at', [$inicioDelMes, $finalDelMes]);
+                        $wallets = $referido->wallets->reject(function($query){
+                            return mb_strpos($query, 'Pago de rendimiento') === false;
+                        });
+                        dump('wallets encontradas indirectas');
+                        dump($wallets);
+                        foreach($wallets as $wallet){
+
+                            $wallet = Wallet::create([
+                                'user_id' => $user->refirio->id,
+                                'amount' => $wallet->amount * 0.03,
+                                'descripcion' => 'Bono Construnccion indirecto',
+                                'status' => 0,
+                                'percentage' => 0.03,
+                                'referred_id' => $user->id
+                            ]);
+                            dump('wallet creada indirecta');
+                            dump($wallet);
+                        }
+                    }   
                 }
             }
 

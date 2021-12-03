@@ -78,7 +78,7 @@ class BannerController extends Controller
         if ($request->hasFile('banner')) {
             $file = $request->banner;
             $filen = $file->getClientOriginalExtension();
-            $name = $request->title.'.'.$filen;
+            $name = time() . $file->getClientOriginalName();
             $file->move(public_path('storage') . '/banner', $name);
 
             // crea el registro

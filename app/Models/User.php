@@ -261,4 +261,15 @@ class User extends Authenticatable
     {
         $this->notify(new MyResetPassword($token));
     }
+
+    public function hasBonoDirecto()
+    {
+        $wallets = Wallet::where('referred_id', $this->id)->where('descripcion', 'like',  '%' . 'Bono Directo' . '%')->get();
+
+        if(count($wallets) > 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

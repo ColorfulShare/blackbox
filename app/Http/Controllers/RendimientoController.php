@@ -52,7 +52,7 @@ class RendimientoController extends Controller
 
                 DB::commit();
                 
-                return redirect()->back()->with('msj-success', 'Rendimiento pagado con exito');
+                return redirect()->back()->with('success', 'Rendimiento pagado con exito');
             }
         } catch (\Throwable $th) {
             DB::rollback();
