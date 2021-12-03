@@ -20,6 +20,7 @@ return [
     "Usuarios" => "Usuarios",
     "Wallet" => "Wallet",
     "Inversiones" => "Inversiones",
+    "Asignar inversion" => "Asignar inversion",
     "De Interés" => "De Interés",
     "Noticias" => "Noticias",
     "Documentos" => "Documentos",

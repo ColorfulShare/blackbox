@@ -32,7 +32,7 @@
                                 <th>referido</th>
                                 <th>monto</th>
                                 <th>estado</th>
-                                <th>nivel</th> 
+                                <th>tipo</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -58,11 +58,13 @@
                                   @endif  
                                 </td> 
 	                              <td>
-	                              <!--  @if ($item->getUser->rank_id == '0')
-                                    <a class=" btn btn-primary text-white text-bold-600">Normal</a>
-                                  @else($item->getUser->rank_id == '1')
-                                    <a class=" btn btn-danger text-white text-bold-600">Admin de red</a>
-                                  @endif -->
+	                               @if ($item->getUser->rank_id == '0')
+                                    <a class=" btn btn-primary text-white text-bold-600">Unilevel</a>
+                                 @elseif($item->getUser->rank_id == '1')
+                                    <a class=" btn btn-primary text-white text-bold-600">directa</a>
+                                 @else($item->getUser->rank_id == '1')
+                                    <a class=" btn btn-danger text-white text-bold-600">Construccion</a>
+                                 @endif 
 	                              </td>  
 	                            </tr>
                             @endforeach

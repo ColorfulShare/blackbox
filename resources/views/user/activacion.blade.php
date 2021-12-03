@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
 @endsection
 
+
 @section('content')
 <div class="card">
     <div class="card-body">
@@ -112,6 +113,3 @@
         }
     </script>
 @endsection
-
-
-
